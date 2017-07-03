@@ -16,8 +16,6 @@
 RakNet::RakPeerInterface	*pRakClient;
 RakNet::RPC4				*pRPC4Plugin;
 
-extern CGame				*pGame;
-
 int							iGtaVersion = 0;
 
 GAME_SETTINGS				tSettings;
