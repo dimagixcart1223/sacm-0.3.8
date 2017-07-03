@@ -1,12 +1,3 @@
-/*
-
-SA:CM Multiplayer Modification
-Copyright 2004-2005 SA:CM Team
-
-Version: $Id: menu.cpp,v 1.0 2007/02/13 15:35:32 Y_Less Exp $
-
-*/
-
 #include "main.h"
 extern CNetGame *pNetGame;
 

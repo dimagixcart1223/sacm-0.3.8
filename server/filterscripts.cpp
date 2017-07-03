@@ -1,15 +1,3 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2006 SA:CM Team
-
-	file:
-		filterscripts.cpp
-	desc:
-		FilterScript Event Executive.
-
-*/
-
 #include "main.h"
 
 extern "C" int amx_CoreInit(AMX* amx);
@@ -24,8 +12,8 @@ extern "C" int amx_TimeInit(AMX* amx);
 extern "C" int amx_TimeCleanup(AMX* amx);
 extern "C" int amx_DGramInit(AMX* amx);
 extern "C" int amx_DGramCleanup(AMX* amx);
-extern "C" int amx_sampDbInit(AMX *amx);
-extern "C" int amx_sampDbCleanup(AMX *amx);
+extern "C" int amx_serverDbInit(AMX *amx);
+extern "C" int amx_serverDbCleanup(AMX *amx);
 
 int AMXAPI aux_LoadProgram(AMX* amx, char* filename);
 int AMXAPI aux_LoadProgramFromMemory(AMX* amx, char* filedata);
@@ -93,7 +81,7 @@ bool CFilterScripts::LoadFilterScript(char* pFileName)
 	amx_TimeInit(amx);
 	//amx_DGramInit(amx);
 	amx_CustomInit(amx);
-	amx_sampDbInit(amx);
+	amx_serverDbInit(amx);
 
 	pPlugins->DoAmxLoad(amx);
 
@@ -141,7 +129,7 @@ bool CFilterScripts::LoadFilterScriptFromMemory(char* pFileName, char* pFileData
 	amx_TimeInit(amx);
 	//amx_DGramInit(amx);
 	amx_CustomInit(amx);
-	amx_sampDbInit(amx);
+	amx_serverDbInit(amx);
 
 	pPlugins->DoAmxLoad(amx);
 
@@ -206,7 +194,7 @@ void CFilterScripts::RemoveFilterScript(int iIndex)
 	aux_FreeProgram(m_pFilterScripts[iIndex]);
 	pPlugins->DoAmxUnload(m_pFilterScripts[iIndex]);
 	//amx_DGramCleanup(m_pFilterScripts[iIndex]);
-	amx_sampDbCleanup(m_pFilterScripts[iIndex]);
+	amx_serverDbCleanup(m_pFilterScripts[iIndex]);
 	amx_TimeCleanup(m_pFilterScripts[iIndex]);
 	amx_FileCleanup(m_pFilterScripts[iIndex]);
 	amx_StringCleanup(m_pFilterScripts[iIndex]);

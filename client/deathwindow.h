@@ -1,10 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2006 SA:CM team
-//
-//----------------------------------------------------------
-
 #pragma once
 
 #define MAX_DISP_DEATH_MESSAGES	5

@@ -1,12 +1,3 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-	Version: $Id: netrpc.cpp,v 1.52 2006/06/02 13:24:21 mike Exp $
-
-*/
-
 #include "main.h"
 #include "vehmods.h"
 

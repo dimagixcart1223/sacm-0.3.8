@@ -332,7 +332,7 @@ static cell AMX_NATIVE_CALL n_get_field_assoc(AMX* amx, cell* params)
 #if defined __cplusplus
   extern "C"
 #endif
-AMX_NATIVE_INFO sampDb_Natives[] = {
+AMX_NATIVE_INFO serverDb_Natives[] = {
   { "db_open",			n_open },
   { "db_close",			n_close },
   { "db_query",			n_query },
@@ -346,12 +346,12 @@ AMX_NATIVE_INFO sampDb_Natives[] = {
   { NULL, NULL }        /* terminator */
 };
 
-int AMXEXPORT amx_sampDbInit(AMX *amx)
+int AMXEXPORT amx_serverDbInit(AMX *amx)
 {
-	return amx_Register(amx, sampDb_Natives, -1);
+	return amx_Register(amx, serverDb_Natives, -1);
 }
 
-int AMXEXPORT amx_sampDbCleanup(AMX *amx)
+int AMXEXPORT amx_serverDbCleanup(AMX *amx)
 {
 	return AMX_ERR_NONE;
 }

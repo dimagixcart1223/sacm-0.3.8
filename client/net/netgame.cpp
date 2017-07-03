@@ -1,10 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2006 SA:CM team
-//
-//----------------------------------------------------------
-
 #include "../main.h"
 #include "../game/util.h"
 #include "../mod.h"

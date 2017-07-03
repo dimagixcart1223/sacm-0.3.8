@@ -1,19 +1,5 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-	file:
-		console.h
-	desc:
-		Console command and variable system header file.
-
-    Version: $Id: console.h,v 1.6 2006/03/20 17:59:34 kyeman Exp $
-
-*/
-
-#ifndef SAMPSRV_CONSOLE_H
-#define SAMPSRV_CONSOLE_H
+#ifndef CONSOLE_H
+#define CONSOLE_H
 
 enum CON_VARTYPE {CON_VARTYPE_FLOAT, CON_VARTYPE_INT, CON_VARTYPE_BOOL, CON_VARTYPE_STRING};
 

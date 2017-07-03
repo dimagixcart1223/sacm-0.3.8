@@ -1,12 +1,3 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-    Version: $Id: vehiclepool.cpp,v 1.10 2006/04/12 19:26:45 mike Exp $
-
-*/
-
 #include "main.h"
 
 //----------------------------------------------------

@@ -1,10 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2006 SA:CM team
-//
-//----------------------------------------------------------
-
 #include "main.h"
 #include <string>
 
@@ -313,7 +306,7 @@ void GetScreenshotFileName(std::string & FileName)
     HANDLE h;
     for (int i = 0; i < 1000; i++)
     {
-        wsprintf(Buf, (FileName + "SA-CM-%03i.png").c_str(), i);
+        wsprintf(Buf, (FileName + "screenshot-%03i.png").c_str(), i);
         h = FindFirstFile(Buf, &ffd);
         if(h != INVALID_HANDLE_VALUE) {   
 			FindClose(h);

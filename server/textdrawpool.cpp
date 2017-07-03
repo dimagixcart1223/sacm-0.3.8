@@ -1,12 +1,3 @@
-/*
-
-SA:CM Multiplayer Modification
-Copyright 2004-2005 SA:CM Team
-
-Version: $Id: textdrawpool.cpp,v 1.0 2007/05/18 19:26:45 Y_Less Exp $
-
-*/
-
 #include "main.h"
 
 extern CNetGame* pNetGame;

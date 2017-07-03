@@ -1,12 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2006 SA:CM team
-//
-//----------------------------------------------------------
-
-// Basic Task Control Class
-
 #pragma once
 
 class CPlayerPed;

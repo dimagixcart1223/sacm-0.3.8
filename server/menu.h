@@ -1,14 +1,5 @@
-/*
-
-SA:CM Multiplayer Modification
-Copyright 2004-2005 SA:CM Team
-
-Version: $Id: menu.h,v 1.0 2007/02/13 19:26:45 Y_Less Exp $
-
-*/
-
-#ifndef SAMPSRV_MENU_H
-#define SAMPSRV_MENU_H
+#ifndef MENU_H
+#define MENU_H
 
 #define MAX_MENU_ITEMS 12
 #define MAX_MENU_LINE 32
@@ -71,5 +62,5 @@ public:
 	
 };
 
-#endif // SAMPSRV_MENU_H
+#endif // MENU_H
 

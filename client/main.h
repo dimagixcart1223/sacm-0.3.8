@@ -1,10 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2006 SA:CM team
-//
-//----------------------------------------------------------
-
 #pragma once
 
 #define WIN32_LEAN_AND_MEAN

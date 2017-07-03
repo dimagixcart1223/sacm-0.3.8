@@ -1,10 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2006 SA:CM team
-//
-//----------------------------------------------------------
-
 #include <math.h>
 #include <stdio.h>
 
@@ -63,7 +56,7 @@ CVehicle::CVehicle( int iType, float fPosX, float fPosY,
 			ScriptCommand(&set_car_numberplate, iType, szNumberPlate);
 		}
 		else {
-			ScriptCommand(&set_car_numberplate, iType, "SA:CM");
+			ScriptCommand(&set_car_numberplate, iType, "SA-CM");
 		}
 
 		ScriptCommand(&create_car,iType,fPosX,fPosY,fPosZ+0.1f,&dwRetID);

@@ -1,10 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2006 SA:CM team
-//
-//----------------------------------------------------------
-
 #include "../main.h"
 
 extern CGame		 *pGame;
@@ -543,22 +536,16 @@ void ConnectionRejected(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 	bitStream->Read(byteRejectReason);
 
 	if (byteRejectReason == REJECT_REASON_BAD_VERSION) {
-		pChatWindow->AddInfoMessage("CONNECTION REJECTED. INCORRECT SA-CM VERSION!");
-	}
-	else if (byteRejectReason == REJECT_REASON_BAD_NICKNAME)
-	{
+		pChatWindow->AddInfoMessage("CONNECTION REJECTED. INCORRECT SA:CM VERSION!");
+	} else if (byteRejectReason == REJECT_REASON_BAD_NICKNAME) {
 		pChatWindow->AddInfoMessage("CONNECTION REJECTED. BAD NICKNAME!");
 		pChatWindow->AddInfoMessage("Please choose another nick between 3-16 characters");
 		pChatWindow->AddInfoMessage("containing only A-Z a-z 0-9 [ ] or _");
 		pChatWindow->AddInfoMessage("Use /quit to exit or press ESC and select Quit Game");
-	}
-	else if (byteRejectReason == REJECT_REASON_BAD_MOD)
-	{
+	} else if (byteRejectReason == REJECT_REASON_BAD_MOD) {
 		pChatWindow->AddInfoMessage("CONNECTION REJECTED");
 		pChatWindow->AddInfoMessage("YOUR'RE USING AN INCORRECT MOD!");
-	}
-	else if (byteRejectReason == REJECT_REASON_BAD_PLAYERID)
-	{
+	} else if (byteRejectReason == REJECT_REASON_BAD_PLAYERID) {
 		pChatWindow->AddInfoMessage("Connection was closed by the server.");
 		pChatWindow->AddInfoMessage("Unable to allocate a player slot. Try again.");
 	}

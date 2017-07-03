@@ -1,12 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2006 SA:CM team
-//
-//----------------------------------------------------------
-
-//#pragma twice <- that's a joke btw.
-
 #pragma once
 
 #define MAX_CMD_INPUT   128

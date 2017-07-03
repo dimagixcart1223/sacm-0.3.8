@@ -1,16 +1,5 @@
 #pragma once
 
-/*
-
-SA:CM Multiplayer Modification
-Copyright 2004-2005 SA:CM Team
-
-Version: $Id: gangzonepool.h,v 1.0 2007/05/25 19:26:45 Y_Less Exp $
-
-*/
-
-//----------------------------------------------------
-
 class CGangZonePool
 {
 private:
@@ -35,5 +24,3 @@ public:
 		return m_bSlotState[wZone];
 	};
 };
-
-//----------------------------------------------------

@@ -1,14 +1,5 @@
-/*
-
-SA:CM Multiplayer Modification
-Copyright 2004-2005 SA:CM Team
-
-Version: $Id: menupool.h,v 1.0 2007/02/13 19:26:45 Y_Less Exp $
-
-*/
-
-#ifndef SAMPSRV_MENUPOOL_H
-#define SAMPSRV_MENUPOOL_H
+#ifndef MENUPOOL_H
+#define MENUPOOL_H
 
 //----------------------------------------------------
 

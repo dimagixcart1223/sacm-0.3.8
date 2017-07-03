@@ -1,12 +1,3 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-	Version: $Id: main.cpp,v 1.26 2006/05/08 17:35:55 kyeman Exp $
-
-*/
-
 #include "main.h"
 
 CNetGame					*pNetGame = NULL;
@@ -246,9 +237,9 @@ int main(int argc, char** argv)
 
 	// Write welcome message.
 	logprintf("");
-	logprintf("SA-CM Dedicated Server");
+	logprintf("SA:CM Dedicated Server");
 	logprintf("----------------------");
-	logprintf("v" SACM_VERSION ", (C)2017 SA-CM Team\n");
+	logprintf("v" SACM_VERSION ", (c) 2017 SA:CM Team\n");
 
 #ifdef _DEBUG
 	logprintf("Debug Build Info:\n   NET_VERSION=%d\n   BUILD_DATE=%s\n   BUILD_TIME=%s\n",
@@ -298,9 +289,9 @@ int main(int argc, char** argv)
 
 	pConsole->AddVariable("timestamp", CON_VARTYPE_BOOL, 0, &bEnableTimestamp);
 	pConsole->AddStringVariable("password", 0, NULL, ServerPasswordChanged);
-	pConsole->AddStringVariable("hostname", 0, "SA:CM Server");
+	pConsole->AddStringVariable("hostname", 0, "San Andreas Cooperative Mode");
 	pConsole->AddStringVariable("mapname", CON_VARFLAG_RULE, "San Andreas");
-	pConsole->AddStringVariable("weburl", CON_VARFLAG_RULE, "www.SA-CM.com");
+	pConsole->AddStringVariable("weburl", CON_VARFLAG_RULE, "www.google.com");
 	pConsole->AddStringVariable("rcon_password", 0, "changeme");
 	pConsole->AddStringVariable("gravity", CON_VARFLAG_RULE, "0.008");
 	pConsole->AddStringVariable("weather", CON_VARFLAG_RULE, "10");

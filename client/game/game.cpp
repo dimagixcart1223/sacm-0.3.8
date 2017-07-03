@@ -1,10 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2006 SA:CM team
-//
-//----------------------------------------------------------
-
 #include "../main.h"
 #include "game.h"
 #include "util.h"
@@ -177,7 +170,7 @@ void CGame::InitGame()
 
 	if(!ApplyPreGamePatches()) {
 		MessageBox(0,
-			"I can't determine your GTA version.\r\nSA-CM only supports GTA:SA v1.0 USA/EU",
+			"I can't determine your GTA version.\r\nSA:CM only supports GTA:SA v1.0 USA/EU",
 			"Version Error",MB_OK | MB_ICONEXCLAMATION);
 		ExitProcess(1);
 	}

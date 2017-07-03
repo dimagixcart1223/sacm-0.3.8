@@ -1,12 +1,3 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-	Version: $Id: playerpool.cpp,v 1.19 2006/05/07 15:35:32 kyeman Exp $
-
-*/
-
 #include "main.h"
 extern CNetGame *pNetGame;
 

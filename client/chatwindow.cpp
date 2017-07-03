@@ -1,10 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2006 SA:CM team
-//
-//----------------------------------------------------------
-
 #include "main.h"
 #include <string>
 
@@ -320,8 +313,7 @@ void CChatWindow::PushBack()
 
 //----------------------------------------------------
 
-typedef struct _COLOR_TAG
-{
+typedef struct _COLOR_TAG {
 	DWORD _color;
 	bool _alpha;
 	bool _valid;
@@ -333,8 +325,7 @@ typedef struct _PARTS_OF_MESSAGE {
 	int iEndPos;
 } PARTS_OF_MESSAGE;
 
-static signed char HexToDec(signed char ch)
-{
+static signed char HexToDec(signed char ch) {
 	if (ch >= '0' && ch <= '9')
 		return ch - '0';
 	if (ch >= 'A' && ch <= 'F')
@@ -345,10 +336,10 @@ static signed char HexToDec(signed char ch)
 	return -1;
 }
 
-bool IsValidHex(const std::string& hex)
-{
+bool IsValidHex(const std::string& hex) {
 	if (hex.empty())
 		return false;
+
 	for (size_t i = 0, len = hex.length(); i < len; i++)
 	{
 		if (HexToDec(hex[i]) == -1)
@@ -357,26 +348,21 @@ bool IsValidHex(const std::string& hex)
 	return true;
 }
 
-COLOR_TAG GetColorTag(const char *text, size_t maxLen)
-{
+COLOR_TAG GetColorTag(const char *text, size_t maxLen) {
 	COLOR_TAG color = { 0, false, false };
-	const int minLen = 8; // { + XXXXXX + } = 8
+	const int minLen = 8;
 
 	if (text == nullptr || *text != '{' || maxLen < minLen)
 		return color;
 
-	if (text[7] == '}')
-	{
+	if (text[7] == '}') {
 		color._alpha = false;
 		color._valid = true;
-	}
-	else if (minLen + 2 <= maxLen && text[9] == '}')
-	{
+	} else if (minLen + 2 <= maxLen && text[9] == '}') {
 		color._alpha = true;
 		color._valid = true;
 	}
-	if (color._valid)
-	{
+	if (color._valid) {
 		if (IsValidHex(std::string(text).substr(1, color._alpha ? 8 : 6)))
 			color._color = strtol(&text[1], nullptr, 16);
 		else
@@ -385,8 +371,7 @@ COLOR_TAG GetColorTag(const char *text, size_t maxLen)
 	return color;
 }
 
-LONG CChatWindow::GetWidth(const char * szString)
-{
+LONG CChatWindow::GetWidth(const char * szString) {
 	RECT rcRect = { 0,0,0,0 };
 	if (m_pD3DFont) {
 		m_pD3DFont->DrawText(NULL, szString, strlen(szString), &rcRect, DT_CALCRECT, D3DCOLOR_XRGB(0, 0, 0));

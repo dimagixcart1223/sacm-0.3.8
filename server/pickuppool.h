@@ -1,25 +1,5 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-	file:
-		pickuppool.h
-	desc:
-		Umm, Pickups?
-
-*/
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-    Version: $Id: pickuppool.h,v 1.2 2006/03/20 17:59:34 kyeman Exp $
-
-*/
-
-#ifndef SAMPSRV_PICKUPPOOL_H
-#define SAMPSRV_PICKUPPOOL_H
+#ifndef PICKUPPOOL_H
+#define PICKUPPOOL_H
 
 #define MAX_PICKUPS 400
 

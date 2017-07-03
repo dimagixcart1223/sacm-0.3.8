@@ -1,14 +1,5 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-    Version: $Id: vehiclepool.h,v 1.8 2006/04/12 19:26:45 mike Exp $
-
-*/
-
-#ifndef SAMPSRV_VEHICLEPOOL_H
-#define SAMPSRV_VEHICLEPOOL_H
+#ifndef VEHICLEPOOL_H
+#define VEHICLEPOOL_H
 
 //----------------------------------------------------
 

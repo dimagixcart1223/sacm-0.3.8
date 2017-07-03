@@ -1,14 +1,5 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-    Version: $Id: player.h,v 1.30 2006/05/07 15:35:32 kyeman Exp $
-
-*/
-
-#ifndef SAMPSRV_PLAYER_H
-#define SAMPSRV_PLAYER_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #define PLAYER_STATE_NONE						0
 #define PLAYER_STATE_ONFOOT						1

@@ -1,17 +1,3 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-	file:
-		scrcore.cpp
-	desc:
-		Scripting custom functions
-
-	Version: $Id: scrcustom.cpp,v 1.60 2006/05/20 08:28:04 kyeman Exp $
-
-*/
-
 #include "main.h"
 
 #define CHECK_PARAMS(n) { if (params[0] != (n * sizeof(cell))) { logprintf("SCRIPT: Bad parameter count (Count is %d, Should be %d): ", params[0] / sizeof(cell), n); return 0; } }

@@ -1,17 +1,3 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-	file:
-		console.cpp
-	desc:
-		Console command and variable system.
-
-    Version: $Id: console.cpp,v 1.21 2006/04/15 17:21:15 kyeman Exp $
-
-*/
-
 #include "main.h"
 
 extern bool	bQuitApp;

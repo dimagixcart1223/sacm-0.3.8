@@ -1,5 +1,5 @@
-#ifndef SAMPSRV_VEHMODS_H
-#define SAMPSRV_VEHMODS_H
+#ifndef VEHMODS_H
+#define VEHMODS_H
 
 // NOV = vehicle
 // 160 = sultan

@@ -1,12 +1,3 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-	Version: $Id: netgame.cpp,v 1.86 2006/05/09 12:41:37 kyeman Exp $
-
-*/
-
 #include "main.h"
 
 float fRestartWaitTime = 0.0f;

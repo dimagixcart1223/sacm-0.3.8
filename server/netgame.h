@@ -1,14 +1,5 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-    Version: $Id: netgame.h,v 1.26 2006/04/15 18:58:21 spookie Exp $
-
-*/
-
-#ifndef SAMPSRV_NETGAME_H
-#define SAMPSRV_NETGAME_H
+#ifndef NETGAME_H
+#define NETGAME_H
 
 //----------------------------------------------------
 

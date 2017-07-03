@@ -1,10 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2006 SA:CM team
-//
-//----------------------------------------------------------
-
 #include "main.h"
 #include <stdio.h>
 
@@ -26,7 +19,7 @@ void CHelpDialog::Draw()
 	rect.left		= 10;
 	rect.bottom		= rect.top + 16;
 
-	pDefaultFont->RenderText("--- SA:CM Key Binds ---",rect,0xFFFFFFFF); rect.top += 16; rect.bottom += 16;
+	pDefaultFont->RenderText("--- SA:CM Help ---",rect,0xFFFFFFFF); rect.top += 16; rect.bottom += 16;
 	pDefaultFont->RenderText("F1: Display this help dialog",rect,0xFFFFFFFF); rect.top += 16; rect.bottom += 16;
 	pDefaultFont->RenderText("TAB: Display the scoreboard",rect,0xFFFFFFFF); rect.top += 16; rect.bottom += 16;
 	pDefaultFont->RenderText("F4: Allows you to change class next time you respawn",rect,0xFFFFFFFF); rect.top += 16; rect.bottom += 16;

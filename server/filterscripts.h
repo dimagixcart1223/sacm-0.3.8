@@ -1,16 +1,5 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2006 SA:CM Team
-
-	file:
-		filterscripts.h
-	desc:
-		FilterScript functions and management header file. 
-*/
-
-#ifndef SAMPSRV_FILTERSCRIPTS_H
-#define SAMPSRV_FILTERSCRIPTS_H
+#ifndef FILTERSCRIPTS_H
+#define FILTERSCRIPTS_H
 
 //----------------------------------------------------------------------------------
 

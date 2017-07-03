@@ -1,10 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2007 SA:CM Team
-//
-//----------------------------------------------------------
-
 #ifndef _PLUGINCOMMON_H_INCLUDED
 #define _PLUGINCOMMON_H_INCLUDED
 

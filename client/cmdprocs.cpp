@@ -1,10 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2006 SA:CM team
-//
-//----------------------------------------------------------
-
 #include "main.h"
 #include "game/game.h"
 #include "game/util.h"
@@ -21,21 +14,7 @@ extern GAME_SETTINGS tSettings;
 extern BYTE	*pbyteCameraMode;
 extern bool bShowDebugLabels;
 
-CRemotePlayer *pTestPlayer;
-
-VEHICLE_TYPE *pTrain;
-
-int iCurrentPlayerTest=1;
-
-extern float fFarClip;
-
-//////////////////////////////////////////////////////
-//
-// -------R E L E A S E   C O M M A N D S--------
-//
-// (INCLUDES SCRIPTING UTILS)
-//
-//////////////////////////////////////////////////////
+//----------------------------------------------------
 
 void cmdDefaultCmdProc(PCHAR szCmd)
 {
@@ -45,12 +24,6 @@ void cmdDefaultCmdProc(PCHAR szCmd)
 		pLocalPlayer->Say(szCmd);
 	}
 }
-
-//----------------------------------------------------
-
-extern BOOL gDisableAllFog;
-
-BOOL bDontProcessVehiclePool=FALSE;
 
 //----------------------------------------------------
 

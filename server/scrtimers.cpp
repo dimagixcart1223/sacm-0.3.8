@@ -1,19 +1,3 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2006 SA:CM Team
-
-	file:
-		scrtimers.cpp
-	desc:
-		Gamemode script timers.
-
-    Version: $Id: scrtimers.cpp,v 1.7 2006/03/25 09:12:48 kyeman Exp $
-
-*/
-
-//----------------------------------------------------------------------------------
-
 #include "main.h"
 
 extern CNetGame* pNetGame;

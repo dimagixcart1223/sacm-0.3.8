@@ -1,5 +1,5 @@
-#ifndef SAMPSRV_MAIN_H
-#define SAMPSRV_MAIN_H
+#ifndef MAIN_H
+#define MAIN_H
 
 #pragma warning(disable:4786)
 #pragma warning(disable:4996)
@@ -154,4 +154,4 @@ long GetTickCount();
 char* strlwr(char* str);
 #endif
 
-#endif // SAMPSRV_MAIN_H
+#endif // MAIN_H

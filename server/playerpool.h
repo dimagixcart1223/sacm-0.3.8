@@ -1,19 +1,5 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-	file:
-		playerpool.h
-	desc:
-		Player pool handling header file.
-
-    Version: $Id: playerpool.h,v 1.12 2006/04/09 09:54:46 kyeman Exp $
-
-*/
-
-#ifndef SAMPSRV_PLAYERPOOL_H
-#define SAMPSRV_PLAYERPOOL_H
+#ifndef PLAYERPOOL_H
+#define PLAYERPOOL_H
 
 #define INVALID_PLAYER_ID 255
 #define NO_TEAM 255

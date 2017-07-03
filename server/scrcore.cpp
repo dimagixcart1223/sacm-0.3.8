@@ -1,18 +1,3 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-	file:
-		scrcore.cpp
-	desc:
-		Scripting core functions
-
-    Version: $Id: scrcore.cpp,v 1.7 2006/03/30 07:52:25 kyeman Exp $
-
-*/
-
-
 #include "main.h"
 #include <ctype.h> 
 #include "format.h"

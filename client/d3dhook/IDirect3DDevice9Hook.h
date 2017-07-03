@@ -1,10 +1,3 @@
-//----------------------------------------------------------
-//
-//   SA:CM Multiplayer Modification For GTA:SA
-//   Copyright 2004-2006 SA:CM team
-//
-//----------------------------------------------------------
-
 #pragma once
 #ifndef IDIRECT3DDEVICE9HOOK_H
 #define IDIRECT3DDEVICE9HOOK_H

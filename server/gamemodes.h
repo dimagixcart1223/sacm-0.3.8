@@ -1,18 +1,5 @@
-/*
-
-	SA:CM Multiplayer Modification
-	Copyright 2004-2005 SA:CM Team
-
-	file:
-		gamemodes.h
-	desc:
-		GameMode script functions and management header file. 
-
-	Version: $Id: gamemodes.h,v 1.12 2006/04/15 18:58:19 spookie Exp $
-*/
-
-#ifndef SAMPSRV_GAMEMODES_H
-#define SAMPSRV_GAMEMODES_H
+#ifndef GAMEMODES_H
+#define GAMEMODES_H
 
 extern char szGameModeFileName[256];
 
