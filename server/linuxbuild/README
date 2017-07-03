@@ -1,0 +1,9 @@
+SA:MP Server Build
+==================
+
+The basics:
+    user@host:~/saco/trunk/$ cp server/linuxbuild/* .
+    user@host:~/saco/trunk/$ autoreconf -i
+    user@host:~/saco/trunk/$ ./configure
+    user@host:~/saco/trunk/$ make
+
