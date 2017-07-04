@@ -134,7 +134,7 @@ extern CConsole* pConsole;
 extern CNetGame* pNetGame;
 extern CPlugins* pPlugins;
 
-extern BYTE byteRconUser;
+extern SACMPLAYER byteRconUser;
 extern BOOL bRconSocketReply;
 
 // -------------------
