@@ -44,8 +44,8 @@ CNetGame::CNetGame(PCHAR szHostOrIp, int iPort, PCHAR szPlayerName, PCHAR szPass
 	pRPC4Plugin = RakNet::RPC4::GetInstance();
 	pRakClient->AttachPlugin(pRPC4Plugin);
 
-	RegisterRPCs();
-	RegisterScriptRPCs();
+	RegisterRPCs(pRPC4Plugin);
+	RegisterScriptRPCs(pRPC4Plugin);
 
 	pRakClient->Startup(1, &RakNet::SocketDescriptor(), 1);
 
@@ -83,9 +83,9 @@ CNetGame::CNetGame(PCHAR szHostOrIp, int iPort, PCHAR szPlayerName, PCHAR szPass
 
 CNetGame::~CNetGame()
 {
-	pRakClient->Shutdown(0);
-	UnRegisterRPCs();
-	UnRegisterScriptRPCs();	// Unregister server-side scripting RPCs.
+	pRakClient->Shutdown(500);
+	UnRegisterRPCs(pRPC4Plugin);
+	UnRegisterScriptRPCs(pRPC4Plugin);	// Unregister server-side scripting RPCs.
 	SAFE_DELETE(m_pPlayerPool);
 	SAFE_DELETE(m_pVehiclePool);
 	SAFE_DELETE(m_pPickupPool);
@@ -751,20 +751,6 @@ void CNetGame::ResetMapIcons()
 
 void CNetGame::SendRPC(char *szPacket, RakNet::BitStream *bsData) {
 	GetRPC()->Call(szPacket, bsData, IMMEDIATE_PRIORITY, RELIABLE, NULL, RakNet::UNASSIGNED_SYSTEM_ADDRESS, TRUE);
-}
-
-//----------------------------------------------------
-
-RakNet::RakPeerInterface *CNetGame::GetRakClient()
-{ 
-	return pRakClient; 
-}
-
-//----------------------------------------------------
-
-RakNet::RPC4 *CNetGame::GetRPC()
-{ 
-	return pRPC4Plugin; 
 }
 
 //----------------------------------------------------

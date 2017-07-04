@@ -104,8 +104,6 @@ BOOL CPlayerPool::Delete(SACMPLAYER PlayerId, BYTE byteReason)
 		pObjectPool->DeleteForPlayer(PlayerId, i);
 	}
 
-	logprintf("[part] %s has left the server (%u:%u)", m_szPlayerName[PlayerId], PlayerId, byteReason);
-
 	m_iPlayerCount--;
 
 	return TRUE;

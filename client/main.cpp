@@ -359,7 +359,7 @@ void TheGraphicsLoop()
 
 void QuitGame()
 {
-	if (pNetGame && pNetGame->GetGameState() == GAMESTATE_CONNECTED) {
+	if (pNetGame) {
 		pNetGame->GetRakClient()->Shutdown(500);
 	}
 	bQuitGame = TRUE;

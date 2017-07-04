@@ -66,7 +66,7 @@ CNetGame::CNetGame()
 	pRPC4Plugin = RakNet::RPC4::GetInstance();
 	pRakServer->AttachPlugin(pRPC4Plugin);
 
-	//RegisterRPCs();
+	RegisterRPCs(pRPC4Plugin);
 
 	if (pRakServer->Startup(dwMaxPlayers, &RakNet::SocketDescriptor(dwPort, szBindAddress), 1) != RakNet::RAKNET_STARTED)
 	{
@@ -161,7 +161,7 @@ CNetGame::~CNetGame()
 	SAFE_DELETE(m_pGangZonePool);
 
 	pRakServer->Shutdown(100);
-	UnRegisterRPCs();
+	UnRegisterRPCs(pRPC4Plugin);
 }
 
 //----------------------------------------------------
@@ -959,6 +959,7 @@ void CNetGame::Packet_NewIncomingConnection(RakNet::Packet* packet)
 
 void CNetGame::Packet_DisconnectionNotification(RakNet::Packet* packet)
 {
+	logprintf("[part] %s has left the server (%u:1)", m_pPlayerPool->GetPlayerName(packet->systemAddress.systemIndex), packet->systemAddress.systemIndex);
 	m_pPlayerPool->Delete(packet->systemAddress.systemIndex, 1);
 }
 
@@ -966,6 +967,7 @@ void CNetGame::Packet_DisconnectionNotification(RakNet::Packet* packet)
 
 void CNetGame::Packet_ConnectionLost(RakNet::Packet* packet)
 {
+	logprintf("[part] %s has left the server (%u:0)", m_pPlayerPool->GetPlayerName(packet->systemAddress.systemIndex), packet->systemAddress.systemIndex);
 	m_pPlayerPool->Delete(packet->systemAddress.systemIndex, 0);
 }
 
@@ -1408,20 +1410,6 @@ const PCHAR CNetGame::GetWeaponName(int iWeaponID)
 	}
 
 	return "";
-}
-
-//----------------------------------------------------
-
-RakNet::RakPeerInterface *CNetGame::GetRakServer() 
-{
-	return pRakServer; 
-}
-
-//----------------------------------------------------
-
-RakNet::RPC4 *CNetGame::GetRPC() 
-{ 
-	return pRPC4Plugin; 
 }
 
 //----------------------------------------------------
