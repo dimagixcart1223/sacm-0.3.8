@@ -23,6 +23,7 @@ bld/
 # Private src things
 [Ll]auncher/
 [Aa]rchiver/
+[Rr]aknet/
 
 # Visual Studio 2015 cache/options directory
 .vs/
