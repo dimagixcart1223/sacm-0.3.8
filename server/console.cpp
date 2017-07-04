@@ -209,10 +209,8 @@ void con_players() {
 
 	logprintf("ID\tName\tPing\tIP");
 
-	for( int i = 0; i < MAX_PLAYERS; i++)
-	{
-		if ( pPlayerPool->GetSlotState(i) == TRUE)
-		{
+	for (SACMPLAYER i = 0; i < MAX_PLAYERS; i++) {
+		if (pPlayerPool->GetSlotState(i) == TRUE) {
 			logprintf("%d\t%s\t%d\t%s", i, pPlayerPool->GetPlayerName(i), pNetGame->GetRakServer()->GetLastPing(pNetGame->GetRakServer()->GetSystemAddressFromIndex(i)), pNetGame->GetRakServer()->GetSystemAddressFromIndex(i).ToString(true));
 		}
 	}

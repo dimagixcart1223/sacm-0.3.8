@@ -157,7 +157,7 @@ void CScoreBoard::Draw()
 	Players[0].dwPing = pPlayerPool->GetLocalPlayerPing();
 	Players[0].dwColor = pPlayerPool->GetLocalPlayer()->GetPlayerColorAsARGB();
 	int i = 1;
-	int x;
+	SACMPLAYER x;
 	for (x=0; x<MAX_PLAYERS; x++)
 	{
 		if (pPlayerPool->GetSlotState(x) == TRUE && x != localplayer)

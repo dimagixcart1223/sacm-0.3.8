@@ -11,7 +11,7 @@ CObjectPool::CObjectPool()
 		m_bObjectSlotState[byteObjectID] = FALSE;
 		m_pObjects[byteObjectID] = NULL;
 		m_bPlayersObject[byteObjectID] = FALSE;
-		for (int i = 0; i < MAX_PLAYERS; i++)
+		for (SACMPLAYER i = 0; i < MAX_PLAYERS; i++)
 		{
 			m_bPlayerObjectSlotState[i][byteObjectID] = FALSE;
 			m_pPlayerObjects[i][byteObjectID] = NULL;
@@ -165,7 +165,7 @@ BOOL CObjectPool::DeleteForPlayer(SACMPLAYER bytePlayerID, SACMOBJECT byteObject
 	m_bPlayerObjectSlotState[bytePlayerID][byteObjectID] = FALSE;
 	delete m_pPlayerObjects[bytePlayerID][byteObjectID];
 	m_pPlayerObjects[bytePlayerID][byteObjectID] = NULL;
-	for (int i = 0; i < MAX_PLAYERS; i++) // Check if anyone has it anymore
+	for (SACMPLAYER i = 0; i < MAX_PLAYERS; i++) // Check if anyone has it anymore
 	{	
 		if (m_bPlayerObjectSlotState[i][byteObjectID]) return TRUE;
 	}

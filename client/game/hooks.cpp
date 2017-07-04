@@ -911,7 +911,7 @@ BOOL _stdcall IsFriendlyFire(PED_TYPE *pIssuer,PED_TYPE *pPlayer)
 			if (RemotePlayerID == INVALID_PLAYER_ID) {
 				RemoteVehicleID = pNetGame->GetVehiclePool()->FindIDFromGtaPtr((VEHICLE_TYPE *)pIssuer);
 				if (RemoteVehicleID != INVALID_VEHICLE_ID) {
-					for (int i=0; i<MAX_PLAYERS; i++) {
+					for (SACMPLAYER i=0; i<MAX_PLAYERS; i++) {
 						if (pPlayerPool->GetSlotState(i)) {
 							if (pPlayerPool->GetAt(i)->m_VehicleID == RemoteVehicleID) {
 								RemotePlayerID = i;

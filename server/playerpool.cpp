@@ -75,8 +75,7 @@ BOOL CPlayerPool::New(SACMPLAYER PlayerId, PCHAR szPlayerName)
 
 BOOL CPlayerPool::Delete(SACMPLAYER PlayerId, BYTE byteReason)
 {
-	if (!GetSlotState(PlayerId) || !m_pPlayers[PlayerId])
-	{
+	if (!GetSlotState(PlayerId) || !m_pPlayers[PlayerId]) {
 		return FALSE; // Player already deleted or not used.
 	}
 
@@ -98,8 +97,7 @@ BOOL CPlayerPool::Delete(SACMPLAYER PlayerId, BYTE byteReason)
 	pNetGame->SendRPC(RPC_ServerQuit, &bsSend, PlayerId, TRUE);
 
 	CObjectPool* pObjectPool = pNetGame->GetObjectPool();
-	for (BYTE i = 0; i < MAX_OBJECTS; i++)
-	{
+	for (BYTE i = 0; i < MAX_OBJECTS; i++) {
 		// Remove all personal objects (checking done by the function)
 		pObjectPool->DeleteForPlayer(PlayerId, i);
 	}
@@ -181,7 +179,7 @@ void CPlayerPool::InitSpawnsForPlayer(SACMPLAYER PlayerId)
 //----------------------------------------------------
 // Return constant describing the type of kill.
 
-BYTE CPlayerPool::GetKillType(BYTE byteWhoKilled, BYTE byteWhoDied)
+BYTE CPlayerPool::GetKillType(SACMPLAYER byteWhoKilled, SACMPLAYER byteWhoDied)
 {
 
 	if (byteWhoKilled != INVALID_PLAYER_ID &&
@@ -212,7 +210,7 @@ BYTE CPlayerPool::GetKillType(BYTE byteWhoKilled, BYTE byteWhoDied)
 
 //----------------------------------------------------
 
-float CPlayerPool::GetDistanceFromPlayerToPlayer(BYTE bytePlayer1, BYTE bytePlayer2)
+float CPlayerPool::GetDistanceFromPlayerToPlayer(SACMPLAYER bytePlayer1, SACMPLAYER bytePlayer2)
 {
 	VECTOR	*vecFromPlayer;
 	VECTOR	*vecThisPlayer;
@@ -233,7 +231,7 @@ float CPlayerPool::GetDistanceFromPlayerToPlayer(BYTE bytePlayer1, BYTE bytePlay
 
 //----------------------------------------------------
 
-float CPlayerPool::GetDistanceSquaredFromPlayerToPlayer(BYTE bytePlayer1, BYTE bytePlayer2)
+float CPlayerPool::GetDistanceSquaredFromPlayerToPlayer(SACMPLAYER bytePlayer1, SACMPLAYER bytePlayer2)
 {
 	VECTOR	*vecFromPlayer;
 	VECTOR	*vecThisPlayer;
@@ -256,10 +254,10 @@ float CPlayerPool::GetDistanceSquaredFromPlayerToPlayer(BYTE bytePlayer1, BYTE b
 
 BOOL CPlayerPool::IsNickInUse(PCHAR szNick)
 {
-	int x = 0;
-	while (x != MAX_PLAYERS) {
-		if (GetSlotState((BYTE)x)) {
-			if (!stricmp(GetPlayerName((BYTE)x), szNick)) {
+	SACMPLAYER x = 0;
+	while (x < MAX_PLAYERS) {
+		if (GetSlotState(x)) {
+			if (!stricmp(GetPlayerName(x), szNick)) {
 				return TRUE;
 			}
 		}

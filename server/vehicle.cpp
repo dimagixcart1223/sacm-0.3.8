@@ -198,8 +198,8 @@ BOOL CVehicle::IsOccupied()
 	CPlayer *pPlayer;
 
 	// find drivers or passengers of this vehicle
-	int x=0;
-	while(x!=MAX_PLAYERS) {
+	SACMPLAYER x = 0;
+	while(x < MAX_PLAYERS) {
 		if(pNetGame->GetPlayerPool()->GetSlotState(x)) {
 			pPlayer = pNetGame->GetPlayerPool()->GetAt(m_DriverID);
 

@@ -337,8 +337,7 @@ void TheGraphicsLoop()
 
 	if (bQuitGame) {
 		if ((GetTickCount() - dwStartQuitTick) > 1000) {
-			if (pNetGame)
-			{
+			if (pNetGame) {
 				delete pNetGame;
 				pNetGame = NULL;
 			}

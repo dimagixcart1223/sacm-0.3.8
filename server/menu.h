@@ -49,11 +49,11 @@ public:
 	
 	void SetID(BYTE byteMenuID) { m_byteMenuID = byteMenuID; };
 	
-	void InitForPlayer(BYTE bytePlayerID);
-	void ShowForPlayer(BYTE bytePlayerID);
-	void HideForPlayer(BYTE bytePlayerID);
+	void InitForPlayer(SACMPLAYER bytePlayerID);
+	void ShowForPlayer(SACMPLAYER bytePlayerID);
+	void HideForPlayer(SACMPLAYER bytePlayerID);
 	
-	void ResetPlayer(BYTE bytePlayerID)
+	void ResetPlayer(SACMPLAYER bytePlayerID)
 	{
 		if (bytePlayerID < MAX_PLAYERS) m_bInitedForPlayer[bytePlayerID] = FALSE;
 	};

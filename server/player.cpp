@@ -182,7 +182,6 @@ void CPlayer::Process(float fElapsedTime)
 			}
 		}
 	}
-
 }
 
 //----------------------------------------------------
@@ -190,7 +189,6 @@ void CPlayer::Process(float fElapsedTime)
 void CPlayer::BroadcastSyncData()
 {
 	RakNet::BitStream bsSync;
-	//RakNet::BitStream bsAim;
 
 	WORD wKeys;
 
@@ -201,7 +199,7 @@ void CPlayer::BroadcastSyncData()
 		bsSync.Write((BYTE)ID_PLAYER_SYNC);
 		bsSync.Write(m_bytePlayerID);
 		bsSync.Write((PCHAR)&ofSync, sizeof(ONFOOT_SYNC_DATA));
-		pNetGame->BroadcastData(&bsSync, HIGH_PRIORITY, UNRELIABLE_SEQUENCED, 0, m_bytePlayerID);
+		pNetGame->BroadcastData(&bsSync, IMMEDIATE_PRIORITY, RELIABLE, 0, m_bytePlayerID);
 	}
 	else if (GetState() == PLAYER_STATE_DRIVER &&
 		m_byteUpdateFromNetwork == UPDATE_TYPE_INCAR)
@@ -209,7 +207,6 @@ void CPlayer::BroadcastSyncData()
 		// storing
 		bsSync.Write((BYTE)ID_VEHICLE_SYNC);
 		bsSync.Write(m_bytePlayerID);
-		//bsSync.Write((PCHAR)&m_icSync,sizeof (INCAR_SYNC_DATA));
 
 		// SACMVEHICLE
 		bsSync.Write(m_icSync.VehicleID);
@@ -296,7 +293,7 @@ void CPlayer::BroadcastSyncData()
 			bsSync.Write(false);
 		}
 
-		pNetGame->BroadcastData(&bsSync, HIGH_PRIORITY, UNRELIABLE_SEQUENCED, 0, m_bytePlayerID);
+		pNetGame->BroadcastData(&bsSync, IMMEDIATE_PRIORITY, RELIABLE, 0, m_bytePlayerID);
 	}
 	else if (GetState() == PLAYER_STATE_PASSENGER &&
 		m_byteUpdateFromNetwork == UPDATE_TYPE_PASSENGER)
@@ -307,7 +304,7 @@ void CPlayer::BroadcastSyncData()
 		if (m_psSync.byteCurrentWeapon == 43) m_psSync.wKeys &= NOT_KEY_FIRE;
 		bsSync.Write((PCHAR)&m_psSync, sizeof(PASSENGER_SYNC_DATA));
 		m_psSync.wKeys = wKeys;
-		pNetGame->BroadcastData(&bsSync, HIGH_PRIORITY, UNRELIABLE_SEQUENCED, 0, m_bytePlayerID);
+		pNetGame->BroadcastData(&bsSync, IMMEDIATE_PRIORITY, RELIABLE, 0, m_bytePlayerID);
 	}
 
 	if (m_bHasAimUpdates) {
@@ -315,7 +312,7 @@ void CPlayer::BroadcastSyncData()
 		bsSync.Write((BYTE)ID_AIM_SYNC);
 		bsSync.Write(m_bytePlayerID);
 		bsSync.Write((PCHAR)&m_aimSync, sizeof(AIM_SYNC_DATA));
-		pNetGame->BroadcastData(&bsSync, HIGH_PRIORITY, UNRELIABLE_SEQUENCED, 0, m_bytePlayerID, TRUE, TRUE);
+		pNetGame->BroadcastData(&bsSync, IMMEDIATE_PRIORITY, RELIABLE, 0, m_bytePlayerID, TRUE, TRUE);
 		m_bHasAimUpdates = FALSE;
 	}
 
@@ -324,7 +321,7 @@ void CPlayer::BroadcastSyncData()
 		bsSync.Write((BYTE)ID_TRAILER_SYNC);
 		bsSync.Write(m_bytePlayerID);
 		bsSync.Write((PCHAR)&m_trSync, sizeof(TRAILER_SYNC_DATA));
-		pNetGame->BroadcastData(&bsSync, HIGH_PRIORITY, UNRELIABLE_SEQUENCED, 0, m_bytePlayerID, TRUE);
+		pNetGame->BroadcastData(&bsSync, IMMEDIATE_PRIORITY, RELIABLE, 0, m_bytePlayerID, TRUE);
 		m_bHasTrailerUpdates = FALSE;
 	}
 
@@ -602,13 +599,13 @@ void CPlayer::Say(unsigned char * szText, BYTE byteTextLen)
 		// we only send to players within pNetGame->m_fGlobalChatRadius
 		// and the player who send it
 		CPlayerPool *pPlayerPool = pNetGame->GetPlayerPool();
-		int x = 0;
+		SACMPLAYER x = 0;
 		float fDist;
 		float fAllowedDist = pNetGame->m_fGlobalChatRadius;
 
-		while (x != MAX_PLAYERS) {
+		while (x < MAX_PLAYERS) {
 			if ((x != m_bytePlayerID) && pPlayerPool->GetSlotState(x)) {
-				fDist = pPlayerPool->GetDistanceFromPlayerToPlayer(m_bytePlayerID, (BYTE)x);
+				fDist = pPlayerPool->GetDistanceFromPlayerToPlayer(m_bytePlayerID, x);
 				if (fDist <= fAllowedDist) {
 					pNetGame->SendRPC(RPC_Chat, &bsSend, x, FALSE);
 				}

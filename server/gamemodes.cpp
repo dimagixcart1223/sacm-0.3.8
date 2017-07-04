@@ -319,8 +319,8 @@ int CGameMode::OnPlayerText(cell playerid, unsigned char * szText)
 		amx_Release(&m_amx, amx_addr);
 	}
 
-	if (ret && pNetGame->GetPlayerPool()->GetSlotState((BYTE)playerid)) {
-		pNetGame->GetPlayerPool()->GetAt((BYTE)playerid)->Say(szText, strlen((char*)szText));
+	if (ret && pNetGame->GetPlayerPool()->GetSlotState(playerid)) {
+		pNetGame->GetPlayerPool()->GetAt(playerid)->Say(szText, strlen((char*)szText));
 	}
 
 	return (int)ret;
@@ -337,7 +337,7 @@ int CGameMode::OnPlayerCommandText(cell playerid, unsigned char * szCommandText)
 	cell ret = 0;
 	int orig_strlen = strlen((char*)szCommandText);
 
-	if(!pNetGame->GetPlayerPool()->GetSlotState((BYTE)playerid))
+	if(!pNetGame->GetPlayerPool()->GetSlotState(playerid))
 		return (int)ret;
 
 	if (!amx_FindPublic(&m_amx, "OnPlayerCommandText", &idx))
@@ -380,7 +380,7 @@ int CGameMode::OnPlayerRequestClass(cell playerid, cell classid)
 	int idx;
 	cell ret = 1;	// DEFAULT TO 1!
 	
-	if(!pNetGame->GetPlayerPool()->GetSlotState((BYTE)playerid))
+	if(!pNetGame->GetPlayerPool()->GetSlotState(playerid))
 		return (int)ret;
 
 	if (!amx_FindPublic(&m_amx, "OnPlayerRequestClass", &idx))
@@ -402,7 +402,7 @@ int CGameMode::OnPlayerRequestSpawn(cell playerid)
 	int idx;
 	cell ret = 1;	// DEFAULT TO 1!
 
-	if(!pNetGame->GetPlayerPool()->GetSlotState((BYTE)playerid))
+	if(!pNetGame->GetPlayerPool()->GetSlotState(playerid))
 		return (int)ret;
 
 	if (!amx_FindPublic(&m_amx, "OnPlayerRequestSpawn", &idx))
@@ -423,7 +423,7 @@ int CGameMode::OnPlayerEnterVehicle(cell playerid, cell vehicleid, cell ispassen
 	int idx;
 	cell ret = 0;
 
-	if(!pNetGame->GetPlayerPool()->GetSlotState((BYTE)playerid))
+	if(!pNetGame->GetPlayerPool()->GetSlotState(playerid))
 		return (int)ret;
 
 	if (!amx_FindPublic(&m_amx, "OnPlayerEnterVehicle", &idx))
@@ -446,7 +446,7 @@ int CGameMode::OnPlayerExitVehicle(cell playerid, cell vehicleid)
 	int idx;
 	cell ret = 0;
 	
-	if(!pNetGame->GetPlayerPool()->GetSlotState((BYTE)playerid))
+	if(!pNetGame->GetPlayerPool()->GetSlotState(playerid))
 		return (int)ret;
 
 	if (!amx_FindPublic(&m_amx, "OnPlayerExitVehicle", &idx))
@@ -468,7 +468,7 @@ int CGameMode::OnPlayerStateChange(cell playerid, cell newstate, cell oldstate)
 	int idx;
 	cell ret = 0;
 	
-	if(!pNetGame->GetPlayerPool()->GetSlotState((BYTE)playerid))
+	if(!pNetGame->GetPlayerPool()->GetSlotState(playerid))
 		return (int)ret;
 
 	if (!amx_FindPublic(&m_amx, "OnPlayerStateChange", &idx))
@@ -491,7 +491,7 @@ int CGameMode::OnPlayerInteriorChange(cell playerid, cell newid, cell oldid)
 	int idx;
 	cell ret = 0;
 	
-	if(!pNetGame->GetPlayerPool()->GetSlotState((BYTE)playerid))
+	if(!pNetGame->GetPlayerPool()->GetSlotState(playerid))
 		return (int)ret;
 
 	if (!amx_FindPublic(&m_amx, "OnPlayerInteriorChange", &idx))
@@ -514,7 +514,7 @@ int CGameMode::OnPlayerEnterCheckpoint(cell playerid)
 	int idx;
 	cell ret = 0;
 	
-	if(!pNetGame->GetPlayerPool()->GetSlotState((BYTE)playerid))
+	if(!pNetGame->GetPlayerPool()->GetSlotState(playerid))
 		return (int)ret;
 
 	if (!amx_FindPublic(&m_amx, "OnPlayerEnterCheckpoint", &idx))

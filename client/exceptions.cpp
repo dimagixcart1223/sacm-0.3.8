@@ -36,7 +36,7 @@ void DumpNetworkStateInformation(PCHAR sz)
 	sprintf(sz,"\r\nState Information: L: %u\r\n",*pbyteCurrentPlayer);
 
 	SACMPLAYER x=0;
-	while(x!=MAX_PLAYERS) {
+	while(x < MAX_PLAYERS) {
 		if(pPlayerPool->GetSlotState(x)) {
 			pThisPlayer = pPlayerPool->GetAt(x);
 			sprintf(tmp,"P%u (%u,%u) ",x,pThisPlayer->GetState(),pThisPlayer->m_VehicleID);

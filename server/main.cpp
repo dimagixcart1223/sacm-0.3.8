@@ -6,7 +6,7 @@ CPlugins					*pPlugins = NULL;
 
 SERVER_SETTINGS				gServerSettings;
 
-BYTE						byteRconUser = INVALID_ID;
+SACMPLAYER					byteRconUser = INVALID_ID;
 SOCKET						sockRconReply = INVALID_SOCKET;
 void*						dataRconReply = NULL;
 DWORD						dwdlRconReply = 0;
@@ -87,7 +87,7 @@ void ServerPasswordChanged()
 
 void ServerMaxPlayersChanged()
 {
-	int maxplayers = pConsole->GetIntVariable("maxplayers");
+	SACMPLAYER maxplayers = pConsole->GetIntVariable("maxplayers");
 	if (maxplayers < 0)
 		pConsole->SetIntVariable("maxplayers", 0);
 	if (maxplayers > MAX_PLAYERS)
@@ -207,7 +207,7 @@ int main(int argc, char** argv)
 #endif
 
 	bool bEnableAnnounce = true;
-	int iMaxPlayers = DEFAULT_MAX_PLAYERS;
+	SACMPLAYER iMaxPlayers = DEFAULT_MAX_PLAYERS;
 	int iListenPort = DEFAULT_LISTEN_PORT;
 	int iRconPort = DEFAULT_RCON_PORT;
 	int iRconMaxAdmins = DEFAULT_RCON_MAXUSERS;

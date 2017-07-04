@@ -92,33 +92,6 @@ void CObject::Process(float fElapsedTime)
 					m_bIsPlayerSurfing=false;
 				}
 			}
-
-			// basic object surfing - remote player (this method sucks, moving onto remoteplayer)
-/*			for (int i=1; i<=MAX_PLAYERS-1; i++)
-			{
-				CRemotePlayer *pRemotePlayer = pNetGame->GetPlayerPool()->GetAt(i);
-				if (pRemotePlayer) {
-					CPlayerPed *pPed = pRemotePlayer->GetPlayerPed();
-					if (pPed) {
-						if (pPed->GetGtaContactEntity() == m_pEntity) {
-							VECTOR vMoveSpeed;
-							VECTOR vMoveTo;
-							pPed->GetMoveSpeedVector(&vMoveSpeed);
-							MATRIX4X4 *matPlayer = NULL;
-							PED_TYPE *pPedType = pPed->m_pPed;
-							if ((pPedType)&&(pPed->IsOnGround())) {
-								matPlayer = pPed->m_pPed->entity.mat;
-								matPlayer->pos.X += (m_matTarget.pos.X - matPlayer->pos.X) / remaining;
-								matPlayer->pos.Y += (m_matTarget.pos.Y - matPlayer->pos.Y) / remaining;
-								matPlayer->pos.Z += (m_matTarget.pos.Z - matPlayer->pos.Z) / remaining;
-								pPed->SetMatrix(*matPlayer);
-
-							}
-						}
-					}
-				}
-			}*/
-
 		}
 	}
 }

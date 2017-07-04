@@ -33,18 +33,18 @@ public:
 		return m_bMenuSlotState[byteMenuID];
 	};
 	
-	void ResetPlayer(BYTE bytePlayerID)
+	void ResetPlayer(SACMPLAYER bytePlayerID)
 	{
 		for (BYTE i = 0; i < MAX_MENUS; i++) if (m_pMenus[i]) m_pMenus[i]->ResetPlayer(bytePlayerID);
 	}
 	
-	BYTE GetPlayerMenu(BYTE bytePlayer)
+	BYTE GetPlayerMenu(SACMPLAYER bytePlayer)
 	{
 		if (bytePlayer >= MAX_PLAYERS) return 255;
 		return m_bytePlayerMenu[bytePlayer];
 	}
 	
-	void SetPlayerMenu(BYTE bytePlayer, BYTE byteMenu)
+	void SetPlayerMenu(SACMPLAYER bytePlayer, BYTE byteMenu)
 	{
 		if (bytePlayer < MAX_PLAYERS && byteMenu < MAX_MENUS || byteMenu == 255) {
 			m_bytePlayerMenu[bytePlayer] = byteMenu;

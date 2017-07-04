@@ -48,6 +48,7 @@ CNetGame::CNetGame(PCHAR szHostOrIp, int iPort, PCHAR szPlayerName, PCHAR szPass
 	RegisterScriptRPCs(pRPC4Plugin);
 
 	pRakClient->Startup(1, &RakNet::SocketDescriptor(), 1);
+	pRakClient->SetTimeoutTime(10000, RakNet::UNASSIGNED_SYSTEM_ADDRESS);
 
 	m_dwLastConnectAttempt = GetTickCount();
 	m_iGameState = GAMESTATE_WAIT_CONNECT;
@@ -86,6 +87,7 @@ CNetGame::~CNetGame()
 	pRakClient->Shutdown(500);
 	UnRegisterRPCs(pRPC4Plugin);
 	UnRegisterScriptRPCs(pRPC4Plugin);	// Unregister server-side scripting RPCs.
+
 	SAFE_DELETE(m_pPlayerPool);
 	SAFE_DELETE(m_pVehiclePool);
 	SAFE_DELETE(m_pPickupPool);
@@ -217,11 +219,15 @@ void CNetGame::Process()
 	if (!pGame->IsModelLoaded(330)) pGame->RequestModel(330);
 
 	if (GetGameState() == GAMESTATE_CONNECTED) {
-
 		DWORD dwStartTick = GetTickCount();
 
-		if (m_pPlayerPool) m_pPlayerPool->Process();
-		if (m_pActorPool) m_pActorPool->Process();
+		if (m_pPlayerPool) {
+			m_pPlayerPool->Process();
+		}
+		
+		if (m_pActorPool) {
+			m_pActorPool->Process();
+		}
 
 		iPlayersBench += GetTickCount() - dwStartTick;
 
@@ -306,7 +312,7 @@ void CNetGame::Process()
 	}
 
 	if (GetGameState() == GAMESTATE_WAIT_CONNECT &&
-		(GetTickCount() - m_dwLastConnectAttempt) > 3000)
+		(GetTickCount() - m_dwLastConnectAttempt) > 1000)
 	{
 		if (pChatWindow) pChatWindow->AddDebugMessage("Connecting to {FFFFFF}%s:%d{A9C4E4}...", m_szHostOrIp, m_iPort);
 		pRakClient->Connect(m_szHostOrIp, m_iPort, m_szPassword, strlen(m_szPassword));
@@ -324,8 +330,6 @@ void CNetGame::UpdateNetwork()
 	RakNet::Packet* pkt = NULL;
 	while (pkt = GetRakClient()->Receive()) {
 		switch (pkt->data[0]) {
-		case ID_INCOMPATIBLE_PROTOCOL_VERSION:
-			Packet_IncompatibleProtocolVersion(pkt);
 		case ID_CONNECTION_BANNED:
 			Packet_ConnectionBanned(pkt);
 			break;
@@ -520,20 +524,6 @@ void CNetGame::Packet_TrailerSync(RakNet::Packet *p)
 
 //----------------------------------------------------
 
-void CNetGame::Packet_IncompatibleProtocolVersion(RakNet::Packet* packet)
-{
-	pChatWindow->AddDebugMessage("You're using an invalid version of RakNet.");
-}
-
-//----------------------------------------------------
-
-void CNetGame::Packet_RSAPublicKeyMismatch(RakNet::Packet* packet)
-{
-	pChatWindow->AddDebugMessage("Failed to initialize encryption.");
-}
-
-//----------------------------------------------------
-
 void CNetGame::Packet_ConnectionBanned(RakNet::Packet* packet)
 {
 	pChatWindow->AddDebugMessage("You're banned from this server.");
@@ -577,19 +567,6 @@ void CNetGame::Packet_InvalidPassword(RakNet::Packet* packet)
 {
 	pChatWindow->AddDebugMessage("Wrong server password.");
 	pRakClient->Shutdown(0);
-}
-
-//----------------------------------------------------
-
-void CNetGame::Packet_ModifiedPacket(RakNet::Packet* packet)
-{
-#ifdef _DEBUG
-	char szBuffer[256];
-	sprintf(szBuffer, "Packet was modified, sent by id: %d, ip: %s",
-		(unsigned int)packet->systemIndex, packet->systemAddress.ToString());
-	pChatWindow->AddDebugMessage(szBuffer);
-	//pRakClient->Disconnect(0);
-#endif
 }
 
 //----------------------------------------------------

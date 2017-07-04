@@ -442,7 +442,7 @@ void CLocalPlayer::ProcessUndrivenSync(SACMVEHICLE VehicleID, CVehicle *pVehicle
 		// Shouldn't this be INVALID_PLAYER_ID?
 		int iClosestPlayerID=0;
 
-		for (int i=0; i<MAX_PLAYERS; i++) {
+		for (SACMPLAYER i=0; i<MAX_PLAYERS; i++) {
 			CPlayerPed* pPlayer = NULL;
 
 			if (i == pPlayerPool->GetLocalPlayerID()) {
@@ -1571,7 +1571,7 @@ int CLocalPlayer::DetermineNumberOfPlayersInLocalRange()
 	iNumPlayersInRange = 0;
 
 	if(pPlayerPool) {		
-		while(x!=MAX_PLAYERS) {
+		while(x < MAX_PLAYERS) {
 			if(pPlayerPool->GetSlotState(x)) {
 				if(pPlayerPool->GetAt(x)->IsActive()) {
 					iNumPlayersInRange++;
@@ -1630,8 +1630,8 @@ void CLocalPlayer::ProcessSpectating()
 	// HANDLE SPECTATE PLAYER IS NO LONGER ACTIVE (ie Died)
 	if (m_byteSpectateType == SPECTATE_TYPE_PLAYER &&
 		pPlayerPool->GetSlotState((BYTE)m_SpectateID) &&
-		(!pPlayerPool->GetAt((BYTE)m_SpectateID)->IsActive() ||
-		pPlayerPool->GetAt((BYTE)m_SpectateID)->GetState() == PLAYER_STATE_WASTED)) {
+		(!pPlayerPool->GetAt(m_SpectateID)->IsActive() ||
+		pPlayerPool->GetAt(m_SpectateID)->GetState() == PLAYER_STATE_WASTED)) {
 			m_byteSpectateType = SPECTATE_TYPE_NONE;
 			m_bSpectateProcessed = false;
 	}
@@ -1650,8 +1650,8 @@ void CLocalPlayer::ProcessSpectating()
 		DWORD dwGTAId = 0;
 		CPlayerPed *pPlayerPed = NULL;
 
-		if (pPlayerPool->GetSlotState((BYTE)m_SpectateID)) {
-			pPlayerPed = pPlayerPool->GetAt((BYTE)m_SpectateID)->GetPlayerPed();
+		if (pPlayerPool->GetSlotState(m_SpectateID)) {
+			pPlayerPed = pPlayerPool->GetAt(m_SpectateID)->GetPlayerPed();
 			if(pPlayerPed) {
 				dwGTAId = pPlayerPed->m_dwGTAId;
 				//pChatWindow->AddDebugMessage("Spectating Player: 0x%X", dwGTAId);

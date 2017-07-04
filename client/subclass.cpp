@@ -128,7 +128,7 @@ BOOL HandleKeyPress(DWORD vKey)
 			
 				CPlayerPool* pPlayerPool = pNetGame->GetPlayerPool();
 				int playercount = 0;
-				for (int x=0; x<MAX_PLAYERS; x++)
+				for (SACMPLAYER x=0; x<MAX_PLAYERS; x++)
 					if (pPlayerPool->GetSlotState(x) == TRUE)
 						playercount++;
 				if (pScoreBoard->m_iOffset > (playercount-19))

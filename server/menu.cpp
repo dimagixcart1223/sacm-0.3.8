@@ -32,7 +32,7 @@ CMenu::CMenu(PCHAR pTitle, float fX, float fY, BYTE byteColumns, float fCol1Widt
 
 void CMenu::ResetForAll()
 {
-	for (BYTE i = 0; i < MAX_PLAYERS; i++)
+	for (SACMPLAYER i = 0; i < MAX_PLAYERS; i++)
 	{
 		m_bInitedForPlayer[i] = FALSE;
 	}
@@ -60,7 +60,7 @@ void CMenu::SetColumnTitle(BYTE byteColumn, PCHAR pText)
 	strcpy(m_charHeader[byteColumn], pText);
 }
 
-void CMenu::InitForPlayer(BYTE bytePlayerID)
+void CMenu::InitForPlayer(SACMPLAYER bytePlayerID)
 {
 	if (bytePlayerID >= MAX_PLAYERS) return;
 	
@@ -105,7 +105,7 @@ void CMenu::InitForPlayer(BYTE bytePlayerID)
 	pNetGame->SendRPC(RPC_ScrInitMenu, &bsMenu, bytePlayerID, FALSE);
 }
 
-void CMenu::ShowForPlayer(BYTE bytePlayerID)
+void CMenu::ShowForPlayer(SACMPLAYER bytePlayerID)
 {
 	if (bytePlayerID >= MAX_PLAYERS) return;
 	
@@ -117,7 +117,7 @@ void CMenu::ShowForPlayer(BYTE bytePlayerID)
 	pNetGame->SendRPC(RPC_ScrShowMenu, &bsMenu, bytePlayerID, FALSE);
 }
 
-void CMenu::HideForPlayer(BYTE bytePlayerID)
+void CMenu::HideForPlayer(SACMPLAYER bytePlayerID)
 {
 	if (bytePlayerID >= MAX_PLAYERS) return;
 	RakNet::BitStream bsMenu;

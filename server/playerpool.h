@@ -104,10 +104,10 @@ public:
 	void InitPlayersForPlayer(SACMPLAYER PlayerId);
 	void InitSpawnsForPlayer(SACMPLAYER PlayerId);
 
-	BYTE GetKillType(BYTE byteWhoKilled, BYTE byteWhoDied);
+	BYTE GetKillType(SACMPLAYER byteWhoKilled, SACMPLAYER byteWhoDied);
 
-	float GetDistanceFromPlayerToPlayer(BYTE bytePlayer1, BYTE bytePlayer2);
-	float GetDistanceSquaredFromPlayerToPlayer(BYTE bytePlayer1, BYTE bytePlayer2);
+	float GetDistanceFromPlayerToPlayer(SACMPLAYER bytePlayer1, SACMPLAYER bytePlayer2);
+	float GetDistanceSquaredFromPlayerToPlayer(SACMPLAYER bytePlayer1, SACMPLAYER bytePlayer2);
 	BOOL  IsNickInUse(PCHAR szNick);
 
 	int GetPlayerCount() { return m_iPlayerCount; };

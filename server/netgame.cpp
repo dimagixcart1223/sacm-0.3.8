@@ -79,6 +79,13 @@ CNetGame::CNetGame()
 	}
 
 	pRakServer->SetMaximumIncomingConnections(dwMaxPlayers);
+	char* szPass = pConsole->GetStringVariable("password");
+	if ((szPass) && (szPass[0] != 0)) {
+		pNetGame->GetRakServer()->SetIncomingPassword(szPass, sizeof(szPass));
+	}
+
+	pRakServer->SetLimitIPConnectionFrequency(true);
+	pRakServer->SetTimeoutTime(10000, RakNet::UNASSIGNED_SYSTEM_ADDRESS);
 
 	LoadBanList();
 
@@ -87,11 +94,6 @@ CNetGame::CNetGame()
 		logprintf("It needs a gamemode0 line at the very least.");
 		fcloseall();
 		exit(1);
-	}
-
-	char* szPass = pConsole->GetStringVariable("password");
-	if ((szPass) && (szPass[0] != 0)) {
-		pNetGame->GetRakServer()->SetIncomingPassword(szPass, sizeof(szPass));
 	}
 
 	char szTime[256];
@@ -420,9 +422,8 @@ void CNetGame::ReInitWhenRestarting()
 {
 	Init();
 
-	BYTE bytePlayerID = 0;
-
-	while (bytePlayerID != MAX_PLAYERS) {
+	SACMPLAYER bytePlayerID = 0;
+	while (bytePlayerID < MAX_PLAYERS) {
 		if (m_pPlayerPool->GetSlotState(bytePlayerID)) {
 			//m_pVehiclePool->InitForPlayer(bytePlayerID); // give them all the existing vehicles
 			m_pPickupPool->InitForPlayer(bytePlayerID);
@@ -558,7 +559,6 @@ void CNetGame::UpdateNetwork()
 {
 	RakNet::Packet* pkt = NULL;
 	while (pkt = GetRakServer()->Receive()) {
-		logprintf("got packet %d w first byte %d", pkt->data[0], pkt->data[1]);
 		switch (pkt->data[0]) {
 		case ID_NEW_INCOMING_CONNECTION:
 			Packet_NewIncomingConnection(pkt);
@@ -633,14 +633,14 @@ void CNetGame::BroadcastData(RakNet::BitStream *bitStream,
 {
 	// Use UNASSIGNED_SYSTEM_ADDRESS to broadcast to all.
 
-	BYTE x = 0;
+	SACMPLAYER x = 0;
 	int r = 0, send_rate = 0;
 	float fDistance;
 	CPlayer *pPlayer;
 
 	int iExVW = m_pPlayerPool->GetPlayerVirtualWorld(byteExcludedPlayer);
 
-	while (x != MAX_PLAYERS)
+	while (x < MAX_PLAYERS)
 	{
 		if ((m_pPlayerPool->GetSlotState(x) == TRUE) &&
 			(x != byteExcludedPlayer))
@@ -696,13 +696,13 @@ void CNetGame::BroadcastData(RakNet::BitStream *bitStream,
 
 void CNetGame::BroadcastDistanceRPC(char *szUniqueID, RakNet::BitStream *bitStream, PacketReliability reliability, BYTE byteExcludedPlayer, float fUseDistance)
 {
-	BYTE x = 0;
+	SACMPLAYER x = 0;
 	float fDistance;
 	CPlayer *pPlayer;
 
 	int iExVW = m_pPlayerPool->GetPlayerVirtualWorld(byteExcludedPlayer);
 
-	while (x != MAX_PLAYERS)
+	while (x < MAX_PLAYERS)
 	{
 		if ((m_pPlayerPool->GetSlotState(x) == TRUE) &&
 			(x != byteExcludedPlayer))
@@ -806,7 +806,7 @@ void CNetGame::Packet_AimSync(RakNet::Packet *p)
 
 void CNetGame::Packet_VehicleSync(RakNet::Packet *p)
 {
-	CPlayer * pPlayer = GetPlayerPool()->GetAt((BYTE)p->systemAddress.systemIndex);
+	CPlayer * pPlayer = GetPlayerPool()->GetAt(p->systemAddress.systemIndex);
 	RakNet::BitStream bsVehicleSync((unsigned char *)p->data, p->length, false);
 
 	if (GetGameState() != GAMESTATE_RUNNING) return;
@@ -820,7 +820,7 @@ void CNetGame::Packet_VehicleSync(RakNet::Packet *p)
 	if (pPlayer) {
 		if (icSync.VehicleID == 0xFFFF) {
 			// Syncing a manually added/bad vehicle
-			KickPlayer((BYTE)p->systemAddress.systemIndex);
+			KickPlayer(p->systemAddress.systemIndex);
 			return;
 		}
 		pPlayer->StoreInCarFullSyncData(&icSync);
@@ -831,7 +831,7 @@ void CNetGame::Packet_VehicleSync(RakNet::Packet *p)
 
 void CNetGame::Packet_PassengerSync(RakNet::Packet *p)
 {
-	CPlayer * pPlayer = GetPlayerPool()->GetAt((BYTE)p->systemAddress.systemIndex);
+	CPlayer * pPlayer = GetPlayerPool()->GetAt(p->systemAddress.systemIndex);
 	RakNet::BitStream bsPassengerSync((unsigned char *)p->data, p->length, false);
 
 	if (GetGameState() != GAMESTATE_RUNNING) return;
@@ -844,7 +844,7 @@ void CNetGame::Packet_PassengerSync(RakNet::Packet *p)
 
 	if (pPlayer) {
 		if (psSync.VehicleID == 0xFFFF) {
-			KickPlayer((BYTE)p->systemAddress.systemIndex);
+			KickPlayer(p->systemAddress.systemIndex);
 			return;
 		}
 		pPlayer->StorePassengerFullSyncData(&psSync);
@@ -855,7 +855,7 @@ void CNetGame::Packet_PassengerSync(RakNet::Packet *p)
 
 void CNetGame::Packet_SpectatorSync(RakNet::Packet *p)
 {
-	CPlayer * pPlayer = GetPlayerPool()->GetAt((BYTE)p->systemAddress.systemIndex);
+	CPlayer * pPlayer = GetPlayerPool()->GetAt(p->systemAddress.systemIndex);
 	RakNet::BitStream bsSpectatorSync((unsigned char *)p->data, p->length, false);
 
 	if (GetGameState() != GAMESTATE_RUNNING) return;
@@ -873,7 +873,7 @@ void CNetGame::Packet_SpectatorSync(RakNet::Packet *p)
 
 void CNetGame::Packet_TrailerSync(RakNet::Packet *p)
 {
-	CPlayer * pPlayer = GetPlayerPool()->GetAt((BYTE)p->systemAddress.systemIndex);
+	CPlayer * pPlayer = GetPlayerPool()->GetAt(p->systemAddress.systemIndex);
 	RakNet::BitStream bsTrailerSync((unsigned char *)p->data, p->length, false);
 
 	if (GetGameState() != GAMESTATE_RUNNING) return;
@@ -896,7 +896,7 @@ void CNetGame::Packet_StatsUpdate(RakNet::Packet *p)
 {
 	RakNet::BitStream bsStats((unsigned char *)p->data, p->length, false);
 	CPlayerPool *pPlayerPool = GetPlayerPool();
-	BYTE bytePlayerID = (BYTE)p->systemAddress.systemIndex;
+	SACMPLAYER bytePlayerID = p->systemAddress.systemIndex;
 	int iMoney;
 	WORD wAmmo;
 	BYTE bytePacketID;
@@ -921,7 +921,7 @@ void CNetGame::Packet_WeaponsUpdate(RakNet::Packet *p)
 	RakNet::BitStream bsData((unsigned char *)p->data, p->length, false);
 	CPlayerPool *pPlayerPool = GetPlayerPool();
 
-	BYTE bytePlayerID = (BYTE)p->systemAddress.systemIndex;
+	SACMPLAYER bytePlayerID = p->systemAddress.systemIndex;
 	BYTE byteLength = (p->length - 1) / 4; // Should be number of changed weapons
 	BYTE byteIndex;
 	BYTE byteWeapon;
@@ -976,7 +976,7 @@ void CNetGame::Packet_ConnectionLost(RakNet::Packet* packet)
 
 void CNetGame::Packet_InGameRcon(RakNet::Packet* packet)
 {
-	CPlayer* pPlayer = GetPlayerPool()->GetAt((BYTE)packet->systemAddress.systemIndex);
+	CPlayer* pPlayer = GetPlayerPool()->GetAt(packet->systemAddress.systemIndex);
 	if (pPlayer)
 	{
 		DWORD dwCmdLen;
@@ -985,15 +985,15 @@ void CNetGame::Packet_InGameRcon(RakNet::Packet* packet)
 		memcpy(cmd, &packet->data[5], dwCmdLen);
 		cmd[dwCmdLen] = 0;
 
-		if (GetPlayerPool()->IsAdmin((BYTE)packet->systemAddress.systemIndex))
+		if (GetPlayerPool()->IsAdmin(packet->systemAddress.systemIndex))
 		{
 			if (strlen(cmd) == 0)
 			{
 				SendClientMessage(packet->systemAddress.systemIndex, 0xFFFFFFFF, "You forgot the RCON command!");
 				return;
 			}
-			logprintf("RCON (In-Game): Player [%s] sent command: %s", GetPlayerPool()->GetPlayerName((BYTE)packet->systemAddress.systemIndex), cmd);
-			byteRconUser = (BYTE)packet->systemAddress.systemIndex;
+			logprintf("RCON (In-Game): Player [%s] sent command: %s", GetPlayerPool()->GetPlayerName(packet->systemAddress.systemIndex), cmd);
+			byteRconUser = packet->systemAddress.systemIndex;
 			pConsole->Execute(cmd);
 			byteRconUser = INVALID_ID;
 		}
@@ -1008,12 +1008,12 @@ void CNetGame::Packet_InGameRcon(RakNet::Packet* packet)
 					{
 						if (strcmp(szTemp, pConsole->GetStringVariable("rcon_password")) == 0)
 						{
-							GetPlayerPool()->SetAdmin((BYTE)packet->systemAddress.systemIndex);
-							logprintf("RCON (In-Game): Player #%d (%s) has logged in.", packet->systemAddress.systemIndex, GetPlayerPool()->GetPlayerName((BYTE)packet->systemAddress.systemIndex));
+							GetPlayerPool()->SetAdmin(packet->systemAddress.systemIndex);
+							logprintf("RCON (In-Game): Player #%d (%s) has logged in.", packet->systemAddress.systemIndex, GetPlayerPool()->GetPlayerName(packet->systemAddress.systemIndex));
 							SendClientMessage(packet->systemAddress.systemIndex, 0xFFFFFFFF, "SERVER: You are logged in as admin.");
 						}
 						else {
-							logprintf("RCON (In-Game): Player #%d (%s) <%s> failed login.", packet->systemAddress.systemIndex, GetPlayerPool()->GetPlayerName((BYTE)packet->systemAddress.systemIndex), szTemp, pConsole->GetStringVariable("rcon_password"));
+							logprintf("RCON (In-Game): Player #%d (%s) <%s> failed login.", packet->systemAddress.systemIndex, GetPlayerPool()->GetPlayerName(packet->systemAddress.systemIndex), szTemp, pConsole->GetStringVariable("rcon_password"));
 							SendClientMessage(packet->systemAddress.systemIndex, 0xFFFFFFFF, "SERVER: Bad admin password. Repeated attempts will get you banned.");
 						}
 					}
@@ -1194,7 +1194,6 @@ void CNetGame::SetGravity(float fGravity)
 void CNetGame::KickPlayer(BYTE byteKickPlayer)
 {
 	SACMPLAYER plr = byteKickPlayer;
-
 	if (byteKickPlayer < MAX_PLAYERS) {
 		if (m_pPlayerPool->GetSlotState(byteKickPlayer)) {
 			pRakServer->CloseConnection(pRakServer->GetSystemAddressFromIndex(plr), true);

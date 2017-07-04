@@ -52,23 +52,20 @@ private:
 	void				UpdateNetwork();
 
 	// Packet handlers
-	void Packet_AimSync(RakNet::Packet *p);
-	void Packet_PlayerSync(RakNet::Packet *p);
-	void Packet_VehicleSync(RakNet::Packet *p);
-	void Packet_PassengerSync(RakNet::Packet *p);
-	void Packet_ConnectionSucceeded(RakNet::Packet *p);
-	void Packet_UnoccupiedSync(RakNet::Packet *p);
-	void Packet_IncompatibleProtocolVersion(RakNet::Packet* packet);
-	void Packet_RSAPublicKeyMismatch(RakNet::Packet* packet);
-	void Packet_ConnectionBanned(RakNet::Packet* packet);
-	void Packet_ConnectionRequestAccepted(RakNet::Packet* packet);
-	void Packet_NoFreeIncomingConnections(RakNet::Packet* packet);
-	void Packet_DisconnectionNotification(RakNet::Packet* packet);
-	void Packet_ConnectionLost(RakNet::Packet* packet);
-	void Packet_InvalidPassword(RakNet::Packet* packet);
-	void Packet_ModifiedPacket(RakNet::Packet* packet);
-	void Packet_ConnectAttemptFailed(RakNet::Packet* packet);
-	void Packet_TrailerSync(RakNet::Packet *p);
+	void Packet_ConnectionBanned(RakNet::Packet *);
+	void Packet_ConnectionRequestAccepted(RakNet::Packet *);
+	void Packet_NoFreeIncomingConnections(RakNet::Packet *);
+	void Packet_DisconnectionNotification(RakNet::Packet *);
+	void Packet_ConnectionLost(RakNet::Packet *);
+	void Packet_InvalidPassword(RakNet::Packet *);
+	void Packet_ConnectAttemptFailed(RakNet::Packet *);
+	void Packet_AimSync(RakNet::Packet *);
+	void Packet_PlayerSync(RakNet::Packet *);
+	void Packet_VehicleSync(RakNet::Packet *);
+	void Packet_PassengerSync(RakNet::Packet *);
+	void Packet_ConnectionSucceeded(RakNet::Packet *);
+	void Packet_UnoccupiedSync(RakNet::Packet *);
+	void Packet_TrailerSync(RakNet::Packet *);
 
 public:
 	CNetGame(PCHAR szHostOrIp, int iPort, PCHAR szPlayerName, PCHAR szPass);

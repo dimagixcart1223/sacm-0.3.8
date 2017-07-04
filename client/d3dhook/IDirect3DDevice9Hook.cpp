@@ -66,7 +66,7 @@ void __stdcall RenderPlayerTags()
 		CPlayerPool* pPlayerPool = pNetGame->GetPlayerPool();
 		pGame->FindPlayerPed()->GetMatrix(&matLocal);
 
-		for (int x = 0; x < MAX_PLAYERS; x++)
+		for (SACMPLAYER x = 0; x < MAX_PLAYERS; x++)
 		{
 			if (pPlayerPool->GetSlotState(x) == TRUE) // player is in use
 			{
@@ -269,7 +269,6 @@ HRESULT __stdcall IDirect3DDevice9Hook::Present(CONST RECT* pSourceRect, CONST R
 	{
 		if (pNetGame)
 		{
-
 			CVehiclePool* pVehiclePool = pNetGame->GetVehiclePool();
 			CPlayerPool* pPlayerPool = pNetGame->GetPlayerPool();
 
@@ -305,32 +304,6 @@ HRESULT __stdcall IDirect3DDevice9Hook::Present(CONST RECT* pSourceRect, CONST R
 						}
 					}
 				}
-
-				/*
-				for (BYTE x=0; x < MAX_PLAYERS; x++)
-				{
-					if (pPlayerPool->GetSlotState(x) == TRUE)
-					{
-						CPlayerPed*	PlayerPed = pPlayerPool->GetAt(x)->GetPlayerPed();
-						if (PlayerPed && PlayerPed->GetDistanceFromLocalPlayerPed() <= 80.0f)
-						{
-							MATRIX4X4 matPlayer;
-							PlayerPed->GetMatrix(&matPlayer);
-							D3DXVECTOR3 vPlayerPos;
-							vPlayerPos.x = matPlayer.pos.X;
-							vPlayerPos.y = matPlayer.pos.Y;
-							vPlayerPos.z = matPlayer.pos.Z+0.5f;
-							char label[255];
-							sprintf(label, "Offset: %x\nPlayer [id: %d]\nHealth: %.1f\n Distance: %.2fm\nAction: %d",
-								PlayerPed->m_pEntity,
-								x,
-								PlayerPed->GetHealth(),
-								PlayerPed->GetDistanceFromLocalPlayerPed(),
-								PlayerPed->GetActionTrigger());
-							pLabel->Draw(&vPlayerPos, label, 0xFF358BD4);
-						}
-					}
-				}*/
 			}
 		}
 

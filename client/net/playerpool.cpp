@@ -141,7 +141,7 @@ SACMPLAYER CPlayerPool::FindRemotePlayerIDFromGtaPtr(PED_TYPE * pActor)
 int CPlayerPool::GetCount()
 {
 	int Count=0;
-	for(int playerId = 0; playerId < MAX_PLAYERS; playerId++) {
+	for(SACMPLAYER playerId = 0; playerId < MAX_PLAYERS; playerId++) {
 		if(TRUE == m_bPlayerSlotState[playerId]) {
 			Count++;
 		}

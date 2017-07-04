@@ -42,7 +42,7 @@ WORD CTextDrawPool::New(float fX, float fY, char* szText)
 		wText++;
 	}
 	if (wText == MAX_TEXT_DRAWS) return 0xFFFF;
-	for (int i = 0; i < MAX_PLAYERS; i++)
+	for (SACMPLAYER i = 0; i < MAX_PLAYERS; i++)
 	{
 		m_bHasText[wText][i] = false;
 	}
@@ -112,7 +112,7 @@ void CTextDrawPool::ShowForAll(WORD wText)
 	bsParams.Write((PCHAR)m_TextDraw[wText], sizeof(TEXT_DRAW_TRANSMIT));
 	bsParams.Write(m_szFontText[wText], MAX_TEXT_DRAW_LINE);
 	pNetGame->SendRPC(RPC_ScrShowTextDraw, &bsParams, -1, TRUE);
-	for (int i = 0; i < MAX_PLAYERS; i++)
+	for (SACMPLAYER i = 0; i < MAX_PLAYERS; i++)
 	{
 		m_bHasText[wText][i] = true;
 	}
@@ -131,7 +131,7 @@ void CTextDrawPool::HideForAll(WORD wText)
 	RakNet::BitStream bsParams;
 	bsParams.Write(wText);
 
-	for (int i = 0; i < MAX_PLAYERS; i++)
+	for (SACMPLAYER i = 0; i < MAX_PLAYERS; i++)
 	{
 		if (m_bHasText[wText][i])
 		{
@@ -161,7 +161,7 @@ void CTextDrawPool::SetTextString(WORD wText, char* szText)
 		RakNet::BitStream bsParams;
 		bsParams.Write(wText);
 		bsParams.Write(szText, MAX_TEXT_DRAW_LINE);
-		for (int i = 0; i < MAX_PLAYERS; i++)
+		for (SACMPLAYER i = 0; i < MAX_PLAYERS; i++)
 		{
 			if (m_bHasText[wText][i])
 			{
