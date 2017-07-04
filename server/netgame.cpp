@@ -558,6 +558,7 @@ void CNetGame::UpdateNetwork()
 {
 	RakNet::Packet* pkt = NULL;
 	while (pkt = GetRakServer()->Receive()) {
+		logprintf("got packet %d w first byte %d", pkt->data[0], pkt->data[1]);
 		switch (pkt->data[0]) {
 		case ID_NEW_INCOMING_CONNECTION:
 			Packet_NewIncomingConnection(pkt);
