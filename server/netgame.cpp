@@ -1,8 +1,5 @@
 #include "main.h"
 
-RakNet::RakPeerInterface	*pRakServer = NULL;
-RakNet::RPC4				*pRPC4Plugin = NULL;
-
 float fRestartWaitTime = 0.0f;
 int CanFileBeOpenedForReading(char * filename);
 char szGameModeFile[256];
@@ -509,17 +506,7 @@ void CNetGame::MasterServerAnnounce(float fElapsedTime)
 		fRemainingTime = 300.0f; // 300secs = 5mins.
 		sprintf(szPort, "%d", pConsole->GetIntVariable("port"));
 
-#ifdef WIN32
-		ShellExecute(0, "open", "announce.exe", szPort, NULL, SW_HIDE);
-#else
-		char szCurrentDir[256];
-		char szAnnounceCmd[256];
-		getcwd(szCurrentDir, 256);
-		sprintf(szAnnounceCmd, "%s/announce %s &", szCurrentDir, szPort);
-		//printf("Running announce. %s",szAnnounceCmd);
-		system(szAnnounceCmd);
-#endif
-
+		//TODO: Announcing in masterlist here!
 	}
 }
 
@@ -569,7 +556,7 @@ void CNetGame::Process()
 void CNetGame::UpdateNetwork()
 {
 	RakNet::Packet* pkt = NULL;
-	while ((pkt = pRakServer->Receive())) {
+	while (pkt = GetRakServer()->Receive()) {
 		switch (pkt->data[0]) {
 		case ID_NEW_INCOMING_CONNECTION:
 			Packet_NewIncomingConnection(pkt);
@@ -705,11 +692,7 @@ void CNetGame::BroadcastData(RakNet::BitStream *bitStream,
 
 //--------------------------------------------------------
 
-void CNetGame::BroadcastDistanceRPC(char *szUniqueID,
-	RakNet::BitStream *bitStream,
-	PacketReliability reliability,
-	BYTE byteExcludedPlayer,
-	float fUseDistance)
+void CNetGame::BroadcastDistanceRPC(char *szUniqueID, RakNet::BitStream *bitStream, PacketReliability reliability, BYTE byteExcludedPlayer, float fUseDistance)
 {
 	BYTE x = 0;
 	float fDistance;
@@ -763,6 +746,16 @@ void CNetGame::AdjustAimSync(RakNet::BitStream *bitStream, BYTE byteTargetPlayer
 	adjbitStream->Write(bytePacketID);
 	adjbitStream->Write(bytePlayerID);
 	adjbitStream->Write((PCHAR)&aimSync, sizeof(AIM_SYNC_DATA));
+}
+
+//----------------------------------------------------
+
+void CNetGame::SendRPC(char *szPacket, RakNet::BitStream *bsData, BYTE bPlayerId, bool bBroadcast) {
+	if(bPlayerId != 1) {
+		GetRPC()->Call(szPacket, bsData, IMMEDIATE_PRIORITY, RELIABLE, NULL, GetRakServer()->GetSystemAddressFromIndex(bPlayerId), bBroadcast);
+	} else {
+		GetRPC()->Call(szPacket, bsData, IMMEDIATE_PRIORITY, RELIABLE, NULL, RakNet::UNASSIGNED_SYSTEM_ADDRESS, bBroadcast);
+	}
 }
 
 //----------------------------------------------------
@@ -925,34 +918,26 @@ void CNetGame::Packet_WeaponsUpdate(RakNet::Packet *p)
 {
 	RakNet::BitStream bsData((unsigned char *)p->data, p->length, false);
 	CPlayerPool *pPlayerPool = GetPlayerPool();
+
 	BYTE bytePlayerID = (BYTE)p->systemAddress.systemIndex;
-
 	BYTE byteLength = (p->length - 1) / 4; // Should be number of changed weapons
-
-	//printf("Original: %d New: %d", p->length, byteLength);
-
 	BYTE byteIndex;
 	BYTE byteWeapon;
 	WORD wordAmmo;
 
 	if (pPlayerPool)
 	{
-		//printf("1");
 		if (pPlayerPool->GetSlotState(bytePlayerID))
 		{
-			//printf("2");
 			CPlayer* pPlayer = pPlayerPool->GetAt(bytePlayerID);
 			bsData.Read(byteIndex); // Dump the first byte, we don't need it
 			while (byteLength)
 			{
-				//printf("3");
 				bsData.Read(byteIndex);
 				bsData.Read(byteWeapon);
 				bsData.Read(wordAmmo);
-				//printf("\n%u %u %i", byteIndex, byteWeapon, wordAmmo);
 				if (byteIndex < (BYTE)13)
 				{
-					//printf("\n%d %d %d", byteIndex, byteWeapon, wordAmmo);
 					pPlayer->m_dwSlotAmmo[byteIndex] = (DWORD)wordAmmo;
 					pPlayer->m_byteSlotWeapon[byteIndex] = byteWeapon;
 				}
@@ -973,21 +958,14 @@ void CNetGame::Packet_NewIncomingConnection(RakNet::Packet* packet)
 
 void CNetGame::Packet_DisconnectionNotification(RakNet::Packet* packet)
 {
-	m_pPlayerPool->Delete((BYTE)packet->systemAddress.systemIndex, 1);
+	m_pPlayerPool->Delete(packet->systemAddress.systemIndex, 1);
 }
 
 //----------------------------------------------------
 
 void CNetGame::Packet_ConnectionLost(RakNet::Packet* packet)
 {
-	m_pPlayerPool->Delete((BYTE)packet->systemAddress.systemIndex, 0);
-}
-
-//----------------------------------------------------
-
-void CNetGame::Packet_RemotePortRefused(RakNet::Packet* packet)
-{
-	logprintf("Remote Port Refused for Player: %u\n", packet->systemAddress.systemIndex);
+	m_pPlayerPool->Delete(packet->systemAddress.systemIndex, 0);
 }
 
 //----------------------------------------------------

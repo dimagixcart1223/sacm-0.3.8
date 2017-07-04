@@ -2,9 +2,6 @@
 #include "../game/util.h"
 #include "../mod.h"
 
-RakNet::RakPeerInterface	*pRakClient = NULL;
-RakNet::RPC4				*pRPC4Plugin = NULL;
-
 extern CGame		 *pGame;
 extern CChatWindow   *pChatWindow;
 extern CCmdWindow	 *pCmdWindow;
@@ -24,8 +21,7 @@ extern int iSyncedRandomNumber;
 
 //----------------------------------------------------
 
-CNetGame::CNetGame(PCHAR szHostOrIp, int iPort,
-	PCHAR szPlayerName, PCHAR szPass)
+CNetGame::CNetGame(PCHAR szHostOrIp, int iPort, PCHAR szPlayerName, PCHAR szPass)
 {
 	strcpy(m_szHostName, "San Andreas Cooperative Mode");
 	strncpy(m_szHostOrIp, szHostOrIp, sizeof(m_szHostOrIp));
@@ -49,7 +45,7 @@ CNetGame::CNetGame(PCHAR szHostOrIp, int iPort,
 	pRakClient->AttachPlugin(pRPC4Plugin);
 
 	RegisterRPCs();
-	RegisterScriptRPCs();	// Register server-side scripting RPCs.
+	RegisterScriptRPCs();
 
 	pRakClient->Startup(1, &RakNet::SocketDescriptor(), 1);
 
@@ -326,7 +322,7 @@ void CNetGame::Process()
 void CNetGame::UpdateNetwork()
 {
 	RakNet::Packet* pkt = NULL;
-	while ((pkt = pRakClient->Receive())) {
+	while (pkt = GetRakClient()->Receive()) {
 		switch (pkt->data[0]) {
 		case ID_INCOMPATIBLE_PROTOCOL_VERSION:
 			Packet_IncompatibleProtocolVersion(pkt);
@@ -749,6 +745,12 @@ void CNetGame::ResetMapIcons()
 	{
 		if (m_dwMapIcon[i] != NULL) DisableMapIcon(i);
 	}
+}
+
+//----------------------------------------------------
+
+void CNetGame::SendRPC(char *szPacket, RakNet::BitStream *bsData) {
+	GetRPC()->Call(szPacket, bsData, IMMEDIATE_PRIORITY, RELIABLE, NULL, RakNet::UNASSIGNED_SYSTEM_ADDRESS, TRUE);
 }
 
 //----------------------------------------------------

@@ -6,7 +6,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved
 //-----------------------------------------------------------------------------
 #define STRICT
-#include "../../main.h"
+#include "../main.h"
 #include <mmsystem.h>
 #include <stdio.h>
 #include <assert.h>

@@ -2,9 +2,6 @@
 
 #include "../../raknet/RPC4Plugin.h"
 
-extern RakNet::RakPeerInterface	*pRakClient;
-extern RakNet::RPC4				*pRPC4Plugin;
-
 #define GAMESTATE_NONE			0 // used for debugging modes and such
 #define GAMESTATE_CONNECTING	1
 #define GAMESTATE_CONNECTED		2
@@ -12,8 +9,6 @@ extern RakNet::RPC4				*pRPC4Plugin;
 #define GAMESTATE_DISCONNECTED  4
 #define GAMESTATE_RESTARTING	5
 #define GAMESTATE_WAIT_CONNECT	6
-
-#define LOCAL_CLIENT_PORT		8150
 
 #define PACK_VEHICLE_HEALTH(f)		(BYTE)(f / 4)
 #define UNPACK_VEHICLE_HEALTH(b)	(float)b * 4
@@ -38,6 +33,9 @@ extern RakNet::RPC4				*pRPC4Plugin;
 class CNetGame
 {
 private:
+	RakNet::RakPeerInterface	*pRakClient = NULL;
+	RakNet::RPC4				*pRPC4Plugin = NULL;
+
 	CPlayerPool			*m_pPlayerPool;
 	CPickupPool			*m_pPickupPool;
 	CVehiclePool		*m_pVehiclePool;
@@ -110,9 +108,7 @@ public:
 	BOOL GetWalkStyle() { return m_bUseCJWalk; };
 	void SetLanMode(BOOL bMode) { m_bLanMode = bMode; };
 
-	void SendRPC(char *szPacket, RakNet::BitStream *bsData) {
-		pRPC4Plugin->Call(szPacket, bsData, HIGH_PRIORITY, RELIABLE, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, TRUE);
-	}
+	void SendRPC(char *szPacket, RakNet::BitStream *bsData);
 
 	void InitGameLogic();
 	void Process();

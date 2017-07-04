@@ -323,17 +323,11 @@ void TheGraphicsLoop()
 	_asm pushad // because we're called from a hook
 
 	DoInitStuff();
-
 	SetupD3DFog(TRUE);
-
-	// Process the netgame if it's active.
 	if (pNetGame) {
 		pNetGame->Process();
-		pGame->ForceFrameLimiterOn();
 	}
 
-	// We have to call the real Render2DStuff
-	// because we overwrote its call to get here.
 	_asm popad
 
 	_asm mov edx, ADDR_RENDER2DSTUFF

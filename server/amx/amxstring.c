@@ -154,13 +154,7 @@ static cell extractchar(cell *string,int index,int mklower)
   else
     c=string[index];
   if (mklower) {
-    #if defined __WIN32__ || defined _WIN32 || defined WIN32
-      c=(cell)CharLower((LPTSTR)c);
-    #elif defined _Windows
-      c=(cell)AnsiLower((LPSTR)c);
-    #else
-      c=tolower((int)c);
-    #endif
+    c=tolower((int)c);
   } /* if */
   return c;
 }

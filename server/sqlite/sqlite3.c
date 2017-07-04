@@ -16424,7 +16424,7 @@ static BOOL winceCreateLock(const char *zFilename, winFile *pFile){
 
   /* Replace the backslashes from the filename and lowercase it
   ** to derive a mutex name. */
-  zTok = CharLowerW(zName);
+  zTok = CharLower(zName);
   for (;*zTok;zTok++){
     if (*zTok == '\\') *zTok = '_';
   }
@@ -16443,7 +16443,7 @@ static BOOL winceCreateLock(const char *zFilename, winFile *pFile){
   ** case-sensitive, take advantage of that by uppercasing the mutex name
   ** and using that as the shared filemapping name.
   */
-  CharUpperW(zName);
+  CharUpper(zName);
   pFile->hShared = CreateFileMappingW(INVALID_HANDLE_VALUE, NULL,
                                        PAGE_READWRITE, 0, sizeof(winceLock),
                                        zName);  

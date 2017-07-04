@@ -368,7 +368,7 @@ int main(int argc, char** argv)
 		WaitForSingleObject(hConsoleExecuteEvent, INFINITE);
 #endif
 
-		SLEEP(10);
+		SLEEP(5);
 	}
 
 	delete pNetGame;

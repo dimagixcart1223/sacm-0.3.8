@@ -267,25 +267,13 @@ static cell AMX_NATIVE_CALL swapchars(AMX *amx,cell *params)
 static cell AMX_NATIVE_CALL core_tolower(AMX *amx,cell *params)
 {
   (void)amx;
-  #if defined __WIN32__ || defined _WIN32 || defined WIN32
-    return (cell)CharLower((LPTSTR)params[1]);
-  #elif defined _Windows
-    return (cell)AnsiLower((LPSTR)params[1]);
-  #else
-    return tolower((int)params[1]);
-  #endif
+  return tolower((int)params[1]);
 }
 
 static cell AMX_NATIVE_CALL core_toupper(AMX *amx,cell *params)
 {
   (void)amx;
-  #if defined __WIN32__ || defined _WIN32 || defined WIN32
-    return (cell)CharUpper((LPTSTR)params[1]);
-  #elif defined _Windows
-    return (cell)AnsiUpper((LPSTR)params[1]);
-  #else
-    return toupper((int)params[1]);
-  #endif
+  return toupper((int)params[1]);
 }
 
 static cell AMX_NATIVE_CALL core_min(AMX *amx,cell *params)

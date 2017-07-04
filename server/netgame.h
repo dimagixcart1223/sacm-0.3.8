@@ -10,9 +10,6 @@
 #include "vehiclepool.h"
 #include "netrpc.h"
 
-extern RakNet::RakPeerInterface	*pRakServer;
-extern RakNet::RPC4				*pRPC4Plugin;
-
 #define IS_FIRING(x) (x & 0x200) // for checking the keystate firing bit
 
 #define MAX_SPAWNS 500
@@ -33,6 +30,9 @@ extern RakNet::RPC4				*pRPC4Plugin;
 class CNetGame
 {
 private:
+	RakNet::RakPeerInterface	*pRakServer = NULL;
+	RakNet::RPC4				*pRPC4Plugin = NULL;
+
 	CPlayerPool					*m_pPlayerPool;
 	CVehiclePool				*m_pVehiclePool;
 	CPickupPool					*m_pPickupPool;
@@ -43,7 +43,7 @@ private:
 	CTextDrawPool				*m_pTextPool;
 	CGangZonePool				*m_pGangZonePool;
 
-    int							m_iCurrentGameModeIndex;
+	int							m_iCurrentGameModeIndex;
 	int							m_iCurrentGameModeRepeat;
 	BOOL						m_bFirstGameModeLoaded;
 
@@ -51,7 +51,7 @@ private:
 
 	void UpdateNetwork();
 	CScriptTimers* m_pScriptTimers;
-	
+
 public:
 	CNetGame();
 	~CNetGame();
@@ -83,16 +83,16 @@ public:
 	int m_iNetModeSendMultiplier;
 
 	long long m_longSynchedWeapons;
-	
-	#ifndef WIN32
-		double m_dElapsedTime;
-	#endif
+
+#ifndef WIN32
+	double m_dElapsedTime;
+#endif
 
 	void Init(BOOL bFirst);
 	void ShutdownForGameModeRestart();
 	void ReInitWhenRestarting();
 	BOOL SetNextScriptFile(char *szFile);
-	
+
 	int GetGameState() { return m_iGameState; };
 
 	void ProcessClientJoin(SACMPLAYER bytePlayerID);
@@ -103,52 +103,36 @@ public:
 	void MasterServerAnnounce(float fElapsedTime);
 	char *GetNextScriptFile();
 	void LoadAllFilterscripts();
-	
+
 	void Process();
 
 	int GetBroadcastSendRateFromPlayerDistance(float fDistance);
 
-	void BroadcastData( RakNet::BitStream *bitStream, PacketPriority priority,
-						PacketReliability reliability,
-						char orderingStream,
-						BYTE byteExcludedPlayer,
-						BOOL bBroadcastLocalRangeOnly = FALSE,
-						BOOL bAimSync = FALSE );
-
-	void BroadcastDistanceRPC( char *szUniqueID, 
-							   RakNet::BitStream *bitStream,
-							   PacketReliability reliability,
-							   BYTE byteExcludedPlayer,
-							   float fUseDistance );
-							   
-	void SendRPC(char *szPacket, RakNet::BitStream *bsData, BYTE bPlayerId, bool bBroadcast) {
-		pRPC4Plugin->Call(szPacket, bsData, HIGH_PRIORITY, RELIABLE, 0, (bPlayerId != -1) ? pRakServer->GetSystemAddressFromIndex(bPlayerId) : RakNet::UNASSIGNED_SYSTEM_ADDRESS, bBroadcast);
-	}
+	void BroadcastData(RakNet::BitStream *bitStream, PacketPriority priority, PacketReliability reliability, char orderingStream, BYTE byteExcludedPlayer, BOOL bBroadcastLocalRangeOnly = FALSE, BOOL bAimSync = FALSE);
+	void BroadcastDistanceRPC(char *szUniqueID, RakNet::BitStream *bitStream, PacketReliability reliability, BYTE byteExcludedPlayer, float fUseDistance);
+	void SendRPC(char *szPacket, RakNet::BitStream *bsData, BYTE bPlayerId, bool bBroadcast);
 
 	void AdjustAimSync(RakNet::BitStream *bitStream, BYTE byteTargetPlayerID, RakNet::BitStream *adjbitStream);
 
 	// Packet Handlers
-	void Packet_AimSync(RakNet::Packet *p);
-	void Packet_PlayerSync(RakNet::Packet *p);
-	void Packet_VehicleSync(RakNet::Packet *p);
-	void Packet_PassengerSync(RakNet::Packet *p);
-	void Packet_SpectatorSync(RakNet::Packet *p);
-	void Packet_NewIncomingConnection(RakNet::Packet* packet);
-	void Packet_DisconnectionNotification(RakNet::Packet* packet);
-	void Packet_ConnectionLost(RakNet::Packet* packet);
-	void Packet_ModifiedPacket(RakNet::Packet* packet);
-	void Packet_RemotePortRefused(RakNet::Packet* packet);
-	void Packet_InGameRcon(RakNet::Packet* packet);
-	void Packet_StatsUpdate(RakNet::Packet *p);
-	void Packet_WeaponsUpdate(RakNet::Packet *p);
-	void Packet_TrailerSync(RakNet::Packet *p);
-
+	void Packet_NewIncomingConnection(RakNet::Packet *);
+	void Packet_DisconnectionNotification(RakNet::Packet *);
+	void Packet_ConnectionLost(RakNet::Packet *);
+	void Packet_PlayerSync(RakNet::Packet *);
+	void Packet_VehicleSync(RakNet::Packet *);
+	void Packet_PassengerSync(RakNet::Packet *);
+	void Packet_SpectatorSync(RakNet::Packet *);
+	void Packet_AimSync(RakNet::Packet *);
+	void Packet_InGameRcon(RakNet::Packet *);
+	void Packet_StatsUpdate(RakNet::Packet *);
+	void Packet_WeaponsUpdate(RakNet::Packet *);
+	void Packet_TrailerSync(RakNet::Packet *);
 
 	void KickPlayer(BYTE byteKickPlayer);
 	void AddBan(char * nick, char * ip_mask, char * reason);
 	void RemoveBan(char * ip_mask);
 	void LoadBanList();
-		
+
 	BOOL IsLanMode() { return m_bLanMode; };
 
 	// CLASS SYSTEM
@@ -174,7 +158,7 @@ public:
 	CScriptTimers* GetTimers() { return m_pScriptTimers; };
 
 	RakNet::RakPeerInterface *GetRakServer() { return pRakServer; };
-	RakNet::RPC4 *GetRPC() { return pRPC4Plugin; };
+	RakNet::RPC4 *GetRPC() { if (pRPC4Plugin != nullptr) { return pRPC4Plugin; } };
 };
 
 //----------------------------------------------------

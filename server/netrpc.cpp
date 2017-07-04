@@ -134,10 +134,8 @@ void RequestClass(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 	bitStream->Read(iRequestedClass);
 
 	CPlayer *pPlayer = pNetGame->GetPlayerPool()->GetAt(sender);
-	if (pPlayer && (iRequestedClass <= (pNetGame->m_iSpawnsAvailable - 1)))
-	{
+	if (pPlayer && (iRequestedClass <= (pNetGame->m_iSpawnsAvailable - 1))) {
 		pPlayer->SetSpawnInfo(&pNetGame->m_AvailableSpawns[iRequestedClass]);
-		//logprintf("SetSpawnInfo - iSkin = %d", pNetGame->m_AvailableSpawns[iRequestedClass].iSkin);
 	}
 
 	pNetGame->GetFilterScripts()->OnPlayerRequestClass((cell)sender, (cell)iRequestedClass);
