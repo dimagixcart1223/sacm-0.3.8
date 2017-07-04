@@ -157,8 +157,8 @@ public:
 	CGangZonePool * GetGangZonePool() { return m_pGangZonePool; };
 	CScriptTimers* GetTimers() { return m_pScriptTimers; };
 
-	RakNet::RakPeerInterface *GetRakServer() { return pRakServer; };
-	RakNet::RPC4 *GetRPC() { if (pRPC4Plugin != nullptr) { return pRPC4Plugin; } };
+	RakNet::RakPeerInterface *GetRakServer();
+	RakNet::RPC4 *GetRPC();
 };
 
 //----------------------------------------------------

@@ -754,4 +754,18 @@ void CNetGame::SendRPC(char *szPacket, RakNet::BitStream *bsData) {
 }
 
 //----------------------------------------------------
+
+RakNet::RakPeerInterface *CNetGame::GetRakClient()
+{ 
+	return pRakClient; 
+}
+
+//----------------------------------------------------
+
+RakNet::RPC4 *CNetGame::GetRPC()
+{ 
+	return pRPC4Plugin; 
+}
+
+//----------------------------------------------------
 // EOF

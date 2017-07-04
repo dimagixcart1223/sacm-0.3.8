@@ -53,8 +53,9 @@ CNetGame::CNetGame()
 	}
 
 	CHAR *szBindAddress = pConsole->GetStringVariable("bind");
-	if (szBindAddress && szBindAddress[0] == 0)
+	if (szBindAddress && szBindAddress[0] == 0) {
 		szBindAddress = NULL;
+	}
 
 	DWORD dwPort = pConsole->GetIntVariable("port");
 	DWORD dwMaxPlayers = pConsole->GetIntVariable("maxplayers");
@@ -65,9 +66,9 @@ CNetGame::CNetGame()
 	pRPC4Plugin = RakNet::RPC4::GetInstance();
 	pRakServer->AttachPlugin(pRPC4Plugin);
 
-	RegisterRPCs();
+	//RegisterRPCs();
 
-	if (pRakServer->Startup(dwMaxPlayers, &RakNet::SocketDescriptor(dwPort, 0), 1) != RakNet::RAKNET_STARTED)
+	if (pRakServer->Startup(dwMaxPlayers, &RakNet::SocketDescriptor(dwPort, szBindAddress), 1) != RakNet::RAKNET_STARTED)
 	{
 		if (szBindAddress)
 			logprintf("Unable to start server on %s:%d. Port in use?",
@@ -1407,6 +1408,20 @@ const PCHAR CNetGame::GetWeaponName(int iWeaponID)
 	}
 
 	return "";
+}
+
+//----------------------------------------------------
+
+RakNet::RakPeerInterface *CNetGame::GetRakServer() 
+{
+	return pRakServer; 
+}
+
+//----------------------------------------------------
+
+RakNet::RPC4 *CNetGame::GetRPC() 
+{ 
+	return pRPC4Plugin; 
 }
 
 //----------------------------------------------------

@@ -137,8 +137,8 @@ public:
 	CTextDrawPool * GetTextDrawPool() { return m_pTextDrawPool; };
 	CGangZonePool * GetGangZonePool() { return m_pGangZonePool; };
 
-	RakNet::RakPeerInterface *GetRakClient() { return pRakClient; };
-	RakNet::RPC4 *GetRPC() { return pRPC4Plugin; };
+	RakNet::RakPeerInterface *GetRakClient();
+	RakNet::RPC4 *GetRPC();
 
 };
 
