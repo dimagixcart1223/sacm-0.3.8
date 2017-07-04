@@ -10,8 +10,8 @@
 #include <tchar.h>
 #include <windows.h>
 #include <D3DX9.h>
-#include "include/D3DFont.h"
-#include "include/DXUtil.h"
+#include "d3dFont.h"
+#include "dxutil.h"
 
 
 

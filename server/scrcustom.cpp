@@ -2233,11 +2233,9 @@ static cell AMX_NATIVE_CALL n_GetPlayerIp(AMX *amx, cell *params)
 	CHECK_PARAMS(3);
 
 	if (pNetGame->GetPlayerPool()->GetSlotState((BYTE)params[1])) {
-		//		RakPeerInterface* pRak = pRakServer;
-		//		in.s_addr = pRak->GetSystemAddressFromIndex(params[1]).binaryAddress;
-		//		return set_amxstring(amx, params[2], inet_ntoa(in), params[3]);
+		return set_amxstring(amx, params[2], pNetGame->GetRakServer()->GetSystemAddressFromIndex(params[1]).ToString(false), params[3]);
 	}
-	else { return -1; }
+	return -1;
 }
 //----------------------------------------------------------------------------------
 
@@ -2247,9 +2245,9 @@ static cell AMX_NATIVE_CALL n_GetPlayerPing(AMX *amx, cell *params)
 	CHECK_PARAMS(1);
 
 	if (pNetGame->GetPlayerPool()->GetSlotState((BYTE)params[1])) {
-		return pRakServer->GetLastPing(pRakServer->GetSystemAddressFromIndex(params[1]));
+		return pNetGame->GetRakServer()->GetLastPing(pNetGame->GetRakServer()->GetSystemAddressFromIndex(params[1]));
 	}
-	else { return -1; }
+	return -1;
 }
 //----------------------------------------------------------------------------------
 
@@ -2260,24 +2258,20 @@ static cell AMX_NATIVE_CALL n_GetPlayerWeapon(AMX *amx, cell *params)
 	CPlayer* pPlayer = pNetGame->GetPlayerPool()->GetAt((BYTE)params[1]);
 	if (!pPlayer) return -1;
 	BYTE byteState = pPlayer->GetState();
-	if ((byteState != PLAYER_STATE_DRIVER) || (byteState != PLAYER_STATE_PASSENGER))
-	{
+	if ((byteState != PLAYER_STATE_DRIVER) || (byteState != PLAYER_STATE_PASSENGER)) {
 		return pPlayer->GetCurrentWeapon();
 	}
-	else { return 0; }
+	return 0;
 
 }
 
 // native SetTimerEx(funcname[], interval, repeating, parameter)
 static cell AMX_NATIVE_CALL n_SetTimerEx(AMX *amx, cell *params)
 {
-	if (params[0] < 4 * sizeof(cell))
-	{
+	if (params[0] < 4 * sizeof(cell)) {
 		logprintf("SCRIPT: Bad parameter count (%d < 4): ", params[0]);
 		return 0;
-	}
-	else if (params[0] > 260 * sizeof(cell))
-	{
+	} else if (params[0] > 260 * sizeof(cell)) {
 		logprintf("SCRIPT: Bad parameter count (%d > 260): ", params[0]);
 		return 0;
 	}

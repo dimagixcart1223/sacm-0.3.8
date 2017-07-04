@@ -15,7 +15,7 @@ void logprintf(char* format, ...);
 extern "C" RakNet::RakPeerInterface* PluginGetRakServer()
 {
 	if (pNetGame != NULL)
-		return pRakServer;
+		return pNetGame->GetRakServer();
 	else
 		return NULL;
 }

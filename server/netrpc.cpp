@@ -45,7 +45,7 @@ void ClientJoin(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 		byteRejectReason = REJECT_REASON_BAD_VERSION;
 		bsReject.Write(byteRejectReason);
 		pNetGame->SendRPC(RPC_ConnectionRejected, &bsReject, bytePlayerID, FALSE);
-		pRakServer->CloseConnection(packet->guid, true);
+		pNetGame->GetRakServer()->CloseConnection(packet->systemAddress, true);
 		return;
 	}
 
@@ -54,13 +54,13 @@ void ClientJoin(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 		byteRejectReason = REJECT_REASON_BAD_NICKNAME;
 		bsReject.Write(byteRejectReason);
 		pNetGame->SendRPC(RPC_ConnectionRejected, &bsReject, bytePlayerID, FALSE);
-		pRakServer->CloseConnection(packet->guid, true);
+		pNetGame->GetRakServer()->CloseConnection(packet->systemAddress, true);
 		return;
 	}
 
 	// Add this client to the player pool.
 	if (!pPlayerPool->New(bytePlayerID, szPlayerName)) {
-		pRakServer->CloseConnection(packet->guid, true);
+		pNetGame->GetRakServer()->CloseConnection(packet->systemAddress, true);
 		return;
 	}
 
@@ -644,50 +644,50 @@ void MenuQuit(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 
 void RegisterRPCs()
 {
-	pRPC4Plugin->RegisterFunction(RPC_ClientJoin, ClientJoin);
-	pRPC4Plugin->RegisterFunction(RPC_Chat, Chat);
-	pRPC4Plugin->RegisterFunction(RPC_RequestClass, RequestClass);
-	pRPC4Plugin->RegisterFunction(RPC_RequestSpawn, RequestSpawn);
-	pRPC4Plugin->RegisterFunction(RPC_Spawn, Spawn);
-	pRPC4Plugin->RegisterFunction(RPC_Death, Death);
-	pRPC4Plugin->RegisterFunction(RPC_EnterVehicle, EnterVehicle);
-	pRPC4Plugin->RegisterFunction(RPC_ExitVehicle, ExitVehicle);
-	pRPC4Plugin->RegisterFunction(RPC_ServerCommand, ServerCommand);
-	//pRPC4Plugin->RegisterFunction(RPC_UpdateScoresPingsIPs, UpdateScoresPingsIPs);
-	pRPC4Plugin->RegisterFunction(RPC_SetInteriorId, SetInteriorId);
-	pRPC4Plugin->RegisterFunction(RPC_ScmEvent, ScmEvent);
-	pRPC4Plugin->RegisterFunction(RPC_AdminMapTeleport, AdminMapTeleport);
-	pRPC4Plugin->RegisterFunction(RPC_VehicleDestroyed, VehicleDestroyed);
-	pRPC4Plugin->RegisterFunction(RPC_PickedUpWeapon, PickedUpWeapon);
-	pRPC4Plugin->RegisterFunction(RPC_PickedUpPickup, PickedUpPickup);
-	pRPC4Plugin->RegisterFunction(RPC_MenuSelect, MenuSelect);
-	pRPC4Plugin->RegisterFunction(RPC_MenuQuit, MenuQuit);
-	pRPC4Plugin->RegisterFunction(RPC_DamageVehicle, DamageVehicle);
+	pNetGame->GetRPC()->RegisterFunction(RPC_ClientJoin, ClientJoin);
+	pNetGame->GetRPC()->RegisterFunction(RPC_Chat, Chat);
+	pNetGame->GetRPC()->RegisterFunction(RPC_RequestClass, RequestClass);
+	pNetGame->GetRPC()->RegisterFunction(RPC_RequestSpawn, RequestSpawn);
+	pNetGame->GetRPC()->RegisterFunction(RPC_Spawn, Spawn);
+	pNetGame->GetRPC()->RegisterFunction(RPC_Death, Death);
+	pNetGame->GetRPC()->RegisterFunction(RPC_EnterVehicle, EnterVehicle);
+	pNetGame->GetRPC()->RegisterFunction(RPC_ExitVehicle, ExitVehicle);
+	pNetGame->GetRPC()->RegisterFunction(RPC_ServerCommand, ServerCommand);
+	//pNetGame->GetRPC()->RegisterFunction(RPC_UpdateScoresPingsIPs, UpdateScoresPingsIPs);
+	pNetGame->GetRPC()->RegisterFunction(RPC_SetInteriorId, SetInteriorId);
+	pNetGame->GetRPC()->RegisterFunction(RPC_ScmEvent, ScmEvent);
+	pNetGame->GetRPC()->RegisterFunction(RPC_AdminMapTeleport, AdminMapTeleport);
+	pNetGame->GetRPC()->RegisterFunction(RPC_VehicleDestroyed, VehicleDestroyed);
+	pNetGame->GetRPC()->RegisterFunction(RPC_PickedUpWeapon, PickedUpWeapon);
+	pNetGame->GetRPC()->RegisterFunction(RPC_PickedUpPickup, PickedUpPickup);
+	pNetGame->GetRPC()->RegisterFunction(RPC_MenuSelect, MenuSelect);
+	pNetGame->GetRPC()->RegisterFunction(RPC_MenuQuit, MenuQuit);
+	pNetGame->GetRPC()->RegisterFunction(RPC_DamageVehicle, DamageVehicle);
 }
 
 //----------------------------------------------------
 
 void UnRegisterRPCs()
 {
-	pRPC4Plugin->UnregisterFunction(RPC_ClientJoin);
-	pRPC4Plugin->UnregisterFunction(RPC_Chat);
-	pRPC4Plugin->UnregisterFunction(RPC_RequestClass);
-	pRPC4Plugin->UnregisterFunction(RPC_RequestSpawn);
-	pRPC4Plugin->UnregisterFunction(RPC_Spawn);
-	pRPC4Plugin->UnregisterFunction(RPC_Death);
-	pRPC4Plugin->UnregisterFunction(RPC_EnterVehicle);
-	pRPC4Plugin->UnregisterFunction(RPC_ExitVehicle);
-	pRPC4Plugin->UnregisterFunction(RPC_ServerCommand);
-	//pRPC4Plugin->UnregisterFunction(RPC_UpdateScoresPingsIPs);
-	pRPC4Plugin->UnregisterFunction(RPC_SetInteriorId);
-	pRPC4Plugin->UnregisterFunction(RPC_ScmEvent);
-	pRPC4Plugin->UnregisterFunction(RPC_AdminMapTeleport);
-	pRPC4Plugin->UnregisterFunction(RPC_VehicleDestroyed);
-	pRPC4Plugin->UnregisterFunction(RPC_PickedUpWeapon);
-	pRPC4Plugin->UnregisterFunction(RPC_PickedUpPickup);
-	pRPC4Plugin->UnregisterFunction(RPC_MenuSelect);
-	pRPC4Plugin->UnregisterFunction(RPC_MenuQuit);
-	pRPC4Plugin->UnregisterFunction(RPC_DamageVehicle);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_ClientJoin);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_Chat);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_RequestClass);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_RequestSpawn);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_Spawn);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_Death);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_EnterVehicle);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_ExitVehicle);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_ServerCommand);
+	//pNetGame->GetRPC()->UnregisterFunction(RPC_UpdateScoresPingsIPs);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_SetInteriorId);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_ScmEvent);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_AdminMapTeleport);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_VehicleDestroyed);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_PickedUpWeapon);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_PickedUpPickup);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_MenuSelect);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_MenuQuit);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_DamageVehicle);
 }
 
 //----------------------------------------------------

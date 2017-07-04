@@ -89,7 +89,7 @@ void con_kick()
 
 		if(pPlayerPool->GetSlotState(bytePlayerId))
 		{
-			logprintf("%s <#%d - %s> has been kicked.",pPlayerPool->GetPlayerName(bytePlayerId), bytePlayerId, pRakServer->GetSystemAddressFromIndex(bytePlayerId).ToString(true));
+			logprintf("%s <#%d - %s> has been kicked.",pPlayerPool->GetPlayerName(bytePlayerId), bytePlayerId, pNetGame->GetRakServer()->GetSystemAddressFromIndex(bytePlayerId).ToString(true));
 			pNetGame->KickPlayer(bytePlayerId);
 		}
 	}
@@ -104,8 +104,8 @@ void con_ban()
 		BYTE bytePlayerId = atoi(arg);
 		if (pPlayerPool->GetSlotState(bytePlayerId))
 		{
-			logprintf("%s <#%d - %s> has been banned.",pPlayerPool->GetPlayerName(bytePlayerId), bytePlayerId, pRakServer->GetSystemAddressFromIndex(bytePlayerId).ToString(true));
-			pNetGame->AddBan(pPlayerPool->GetPlayerName(bytePlayerId), (char *)pRakServer->GetSystemAddressFromIndex(bytePlayerId).ToString(true), "CONSOLE BAN");
+			logprintf("%s <#%d - %s> has been banned.",pPlayerPool->GetPlayerName(bytePlayerId), bytePlayerId, pNetGame->GetRakServer()->GetSystemAddressFromIndex(bytePlayerId).ToString(true));
+			pNetGame->AddBan(pPlayerPool->GetPlayerName(bytePlayerId), (char *)pNetGame->GetRakServer()->GetSystemAddressFromIndex(bytePlayerId).ToString(true), "CONSOLE BAN");
 			pNetGame->KickPlayer(bytePlayerId);
 		}
 	}
@@ -213,7 +213,7 @@ void con_players() {
 	{
 		if ( pPlayerPool->GetSlotState(i) == TRUE)
 		{
-			logprintf("%d\t%s\t%d\t%s", i, pPlayerPool->GetPlayerName(i), pRakServer->GetLastPing(pRakServer->GetSystemAddressFromIndex(i)), pRakServer->GetSystemAddressFromIndex(i).ToString(true));
+			logprintf("%d\t%s\t%d\t%s", i, pPlayerPool->GetPlayerName(i), pNetGame->GetRakServer()->GetLastPing(pNetGame->GetRakServer()->GetSystemAddressFromIndex(i)), pNetGame->GetRakServer()->GetSystemAddressFromIndex(i).ToString(true));
 		}
 	}
 }

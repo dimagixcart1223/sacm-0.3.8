@@ -3,8 +3,6 @@
 CNetGame					*pNetGame = NULL;
 CConsole					*pConsole = NULL;
 CPlugins					*pPlugins = NULL;
-RakNet::RakPeerInterface	*pRakServer = NULL;
-RakNet::RPC4				*pRPC4Plugin = NULL;
 
 SERVER_SETTINGS				gServerSettings;
 
@@ -76,11 +74,11 @@ void ServerPasswordChanged()
 		if ((szPass) && (szPass[0] != 0) && (szPass[0] != '0'))
 		{
 			logprintf("Setting server password to: \"%s\"", szPass);
-			pRakServer->SetIncomingPassword(szPass, sizeof(szPass));
+			pNetGame->GetRakServer()->SetIncomingPassword(szPass, sizeof(szPass));
 		}
 		else {
 			logprintf("Server password has been removed.");
-			pRakServer->SetIncomingPassword("", 0);
+			pNetGame->GetRakServer()->SetIncomingPassword("", 0);
 		}
 	}
 }
@@ -100,7 +98,7 @@ void ServerMaxPlayersChanged()
 		if (pConsole->GetIntVariable("maxplayers") > MAX_PLAYERS) {
 			pConsole->SetIntVariable("maxplayers", MAX_PLAYERS);
 		}
-		pRakServer->SetMaximumIncomingConnections((WORD)pConsole->GetIntVariable("maxplayers"));
+		pNetGame->GetRakServer()->SetMaximumIncomingConnections((WORD)pConsole->GetIntVariable("maxplayers"));
 	}
 }
 

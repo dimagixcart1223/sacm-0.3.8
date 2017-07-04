@@ -1,11 +1,20 @@
 #ifndef NETGAME_H
 #define NETGAME_H
 
-//----------------------------------------------------
+#include "main.h"
+#include "../raknet/MessageIdentifiers.h"
+#include "../raknet/RPC4Plugin.h"
+#include "player.h"
+#include "playerpool.h"
+#include "vehicle.h"
+#include "vehiclepool.h"
+#include "netrpc.h"
+
+extern RakNet::RakPeerInterface	*pRakServer;
+extern RakNet::RPC4				*pRPC4Plugin;
 
 #define IS_FIRING(x) (x & 0x200) // for checking the keystate firing bit
 
-//----------------------------------------------------
 #define MAX_SPAWNS 500
 
 #define UPDATE_TYPE_NONE	0
@@ -16,21 +25,8 @@
 #define GAMESTATE_RUNNING	 1
 #define GAMESTATE_RESTARTING 2
 
-#include "main.h"
-#include "../raknet/MessageIdentifiers.h"
-#include "../raknet/RPC4Plugin.h"
-#include "player.h"
-#include "playerpool.h"
-#include "vehicle.h"
-#include "vehiclepool.h"
-#include "netrpc.h"
-
 #define INVALID_ID			0xFF
-
-// 0b0000 0000 0000 0000 0111 1110 0111 1111 1111 1111 1100 0111 1111 1111 1111 1111
-//                       47   43   39   35   31   27   23   19   15   11   7    3
-
-#define DEFAULT_WEAPONS 0x00007E7FFFC7FFFFLL
+#define DEFAULT_WEAPONS		0x00007E7FFFC7FFFFLL
 
 //----------------------------------------------------
 
@@ -57,8 +53,8 @@ private:
 	CScriptTimers* m_pScriptTimers;
 	
 public:
-	
-	CScriptTimers* GetTimers() { return m_pScriptTimers; };
+	CNetGame();
+	~CNetGame();
 
 	bool m_bShowPlayerMarkers;
 	bool m_bShowNameTags;
@@ -77,15 +73,20 @@ public:
 	float m_fGlobalChatRadius; // limit global chat radius
 	float m_fNameTagDrawDistance; // The distance which players will start rendering nametags
 	bool m_bDisableEnterExits; // Interior enter/exits disabled?
-	
+	BYTE m_byteVehicleModels[212];
+	bool m_bNameTagLOS;
+	int m_iNetModeIdleOnfootSendRate;
+	int m_iNetModeNormalOnfootSendRate;
+	int m_iNetModeIdleIncarSendRate;
+	int m_iNetModeNormalIncarSendRate;
+	int m_iNetModeFiringSendRate;
+	int m_iNetModeSendMultiplier;
+
 	long long m_longSynchedWeapons;
 	
 	#ifndef WIN32
 		double m_dElapsedTime;
 	#endif
-
-	CNetGame();
-	~CNetGame();
 
 	void Init(BOOL bFirst);
 	void ShutdownForGameModeRestart();
@@ -93,16 +94,6 @@ public:
 	BOOL SetNextScriptFile(char *szFile);
 	
 	int GetGameState() { return m_iGameState; };
-
-	CPlayerPool * GetPlayerPool() { return m_pPlayerPool; };
-	CVehiclePool * GetVehiclePool() { return m_pVehiclePool; };
-	CPickupPool * GetPickupPool() { return m_pPickupPool; };
-	CObjectPool	* GetObjectPool() { return m_pObjectPool; };
-	CGameMode * GetGameMode() { return m_pGameMode; };
-	CFilterScripts * GetFilterScripts() { return m_pFilterScripts; };
-	CMenuPool * GetMenuPool() { return m_pMenuPool; };
-	CTextDrawPool * GetTextDrawPool() { return m_pTextPool; };
-	CGangZonePool * GetGangZonePool() { return m_pGangZonePool; };
 
 	void ProcessClientJoin(SACMPLAYER bytePlayerID);
 
@@ -171,14 +162,19 @@ public:
 	void UpdateInstagib();
 	const PCHAR GetWeaponName(int iWeaponID);
 
-	BYTE				m_byteVehicleModels[212];
-	bool				m_bNameTagLOS;
-	int					m_iNetModeIdleOnfootSendRate;
-	int					m_iNetModeNormalOnfootSendRate;
-	int					m_iNetModeIdleIncarSendRate;
-	int					m_iNetModeNormalIncarSendRate;
-	int					m_iNetModeFiringSendRate;
-	int					m_iNetModeSendMultiplier;
+	CPlayerPool * GetPlayerPool() { return m_pPlayerPool; };
+	CVehiclePool * GetVehiclePool() { return m_pVehiclePool; };
+	CPickupPool * GetPickupPool() { return m_pPickupPool; };
+	CObjectPool	* GetObjectPool() { return m_pObjectPool; };
+	CGameMode * GetGameMode() { return m_pGameMode; };
+	CFilterScripts * GetFilterScripts() { return m_pFilterScripts; };
+	CMenuPool * GetMenuPool() { return m_pMenuPool; };
+	CTextDrawPool * GetTextDrawPool() { return m_pTextPool; };
+	CGangZonePool * GetGangZonePool() { return m_pGangZonePool; };
+	CScriptTimers* GetTimers() { return m_pScriptTimers; };
+
+	RakNet::RakPeerInterface *GetRakServer() { return pRakServer; };
+	RakNet::RPC4 *GetRPC() { return pRPC4Plugin; };
 };
 
 //----------------------------------------------------

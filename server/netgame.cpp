@@ -1,9 +1,10 @@
 #include "main.h"
 
+RakNet::RakPeerInterface	*pRakServer = NULL;
+RakNet::RPC4				*pRPC4Plugin = NULL;
+
 float fRestartWaitTime = 0.0f;
-
 int CanFileBeOpenedForReading(char * filename);
-
 char szGameModeFile[256];
 
 #define LOCAL_RANGE		210.0f
@@ -92,7 +93,7 @@ CNetGame::CNetGame()
 
 	char* szPass = pConsole->GetStringVariable("password");
 	if ((szPass) && (szPass[0] != 0)) {
-		pRakServer->SetIncomingPassword(szPass, sizeof(szPass));
+		pNetGame->GetRakServer()->SetIncomingPassword(szPass, sizeof(szPass));
 	}
 
 	char szTime[256];
@@ -671,7 +672,7 @@ void CNetGame::BroadcastData(RakNet::BitStream *bitStream,
 				if (bBroadcastLocalRangeOnly) {
 					// data is synced/broadcast in range of near players only.
 					if (fDistance < LOCAL_RANGE) {
-						pRakServer->Send(bitStream, priority, reliability, orderingStream,
+						pNetGame->GetRakServer()->Send(bitStream, priority, reliability, orderingStream,
 							pRakServer->GetSystemAddressFromIndex(x), FALSE);
 					}
 				}
@@ -692,7 +693,7 @@ void CNetGame::BroadcastData(RakNet::BitStream *bitStream,
 					// Over time, random averages out to be the same.
 
 					if (!r) {
-						pRakServer->Send(bitStream, priority, reliability, orderingStream,
+						pNetGame->GetRakServer()->Send(bitStream, priority, reliability, orderingStream,
 							pRakServer->GetSystemAddressFromIndex(x), FALSE);
 					}
 				}

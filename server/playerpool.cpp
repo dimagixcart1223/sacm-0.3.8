@@ -53,7 +53,7 @@ BOOL CPlayerPool::New(SACMPLAYER PlayerId, PCHAR szPlayerName)
 
 		pNetGame->SendRPC(RPC_ServerJoin, &bsSend, PlayerId, TRUE);
 
-		logprintf("[join] %s has joined the server (%s)", GetPlayerName(PlayerId), pRakServer->GetSystemAddressFromIndex(PlayerId).ToString(true));
+		logprintf("[join] %s has joined the server (%s)", GetPlayerName(PlayerId), pNetGame->GetRakServer()->GetSystemAddressFromIndex(PlayerId).ToString(true));
 
 		pNetGame->GetFilterScripts()->OnPlayerConnect(PlayerId);
 		CGameMode *pGameMode = pNetGame->GetGameMode();

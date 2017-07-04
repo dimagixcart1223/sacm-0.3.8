@@ -2,12 +2,12 @@
 #include "../game/util.h"
 #include "../mod.h"
 
+RakNet::RakPeerInterface	*pRakClient = NULL;
+RakNet::RPC4				*pRPC4Plugin = NULL;
+
 extern CGame		 *pGame;
 extern CChatWindow   *pChatWindow;
 extern CCmdWindow	 *pCmdWindow;
-
-INCAR_SYNC_DATA DebugSync;
-BOOL bDebugUpdate = FALSE;
 
 int iExceptMessageDisplayed = 0;
 

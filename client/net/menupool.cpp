@@ -126,7 +126,7 @@ void CMenuPool::Process()
 	if (m_byteCurrentMenu == MAX_MENUS) return;
 
 	GTA_CONTROLSET * pControls = GameGetInternalKeys();
-	RakNet::RakPeerInterface* pRak = pRakClient;
+	RakNet::RakPeerInterface* pRak = pNetGame->GetRakClient();
 	if (pControls->wKeys1[16] && !pControls->wKeys2[16]) // Selected an item
 	{
 		BYTE row = m_pMenus[m_byteCurrentMenu]->GetSelectedRow();

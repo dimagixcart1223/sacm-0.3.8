@@ -43,13 +43,11 @@ typedef struct _GAME_SETTINGS {
 #include "d3d9/common/dxstdafx.h"
 #include "game/game.h"
 
+#include "../raknet/RakNetTypes.h"
 #include "../raknet/RakPeerInterface.h"
 #include "../raknet/BitStream.h"
 #include "../raknet/MessageIdentifiers.h"
 #include "../raknet/RPC4Plugin.h"
-
-extern RakNet::RakPeerInterface	*pRakClient;
-extern RakNet::RPC4				*pRPC4Plugin;
 
 #include "net/localplayer.h"
 #include "net/remoteplayer.h"

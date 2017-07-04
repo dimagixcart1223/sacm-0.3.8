@@ -503,7 +503,7 @@ void CLocalPlayer::ProcessUndrivenSync(SACMVEHICLE VehicleID, CVehicle *pVehicle
 
 			bsUnoccupiedSync.Write((BYTE)ID_UNOCCUPIED_SYNC);
 			bsUnoccupiedSync.Write((PCHAR)&UnSync,sizeof(UNOCCUPIED_SYNC_DATA));
-			pRakClient->Send(&bsUnoccupiedSync,HIGH_PRIORITY,UNRELIABLE_SEQUENCED,0,UNASSIGNED_SYSTEM_ADDRESS,true);
+			pNetGame->GetRakClient()->Send(&bsUnoccupiedSync,HIGH_PRIORITY,UNRELIABLE_SEQUENCED,0,UNASSIGNED_SYSTEM_ADDRESS,true);
 
 			CVehiclePool *pVehiclePool = pNetGame->GetVehiclePool();
 			if (pVehiclePool) {
@@ -831,7 +831,7 @@ void CLocalPlayer::SendOnFootFullSyncData()
 
 	bsPlayerSync.Write((BYTE)ID_PLAYER_SYNC);
 	bsPlayerSync.Write((PCHAR)&ofSync,sizeof(ONFOOT_SYNC_DATA));
-	pRakClient->Send(&bsPlayerSync,HIGH_PRIORITY,UNRELIABLE_SEQUENCED,0,UNASSIGNED_SYSTEM_ADDRESS,true);
+	pNetGame->GetRakClient()->Send(&bsPlayerSync,HIGH_PRIORITY,UNRELIABLE_SEQUENCED,0,UNASSIGNED_SYSTEM_ADDRESS,true);
 }
 
 //----------------------------------------------------------
@@ -867,7 +867,7 @@ void CLocalPlayer::SendAimSyncData()
 
 	bsAimSync.Write((BYTE)ID_AIM_SYNC);
 	bsAimSync.Write((PCHAR)&aimSync,sizeof(AIM_SYNC_DATA));
-	pRakClient->Send(&bsAimSync,HIGH_PRIORITY,UNRELIABLE_SEQUENCED,0,UNASSIGNED_SYSTEM_ADDRESS,true);
+	pNetGame->GetRakClient()->Send(&bsAimSync,HIGH_PRIORITY,UNRELIABLE_SEQUENCED,0,UNASSIGNED_SYSTEM_ADDRESS,true);
 }
 
 //----------------------------------------------------------
@@ -984,7 +984,7 @@ void CLocalPlayer::SendInCarFullSyncData()
 		// send
 		bsVehicleSync.Write((BYTE)ID_VEHICLE_SYNC);
 		bsVehicleSync.Write((PCHAR)&icSync,sizeof(INCAR_SYNC_DATA));
-		pRakClient->Send(&bsVehicleSync,HIGH_PRIORITY,UNRELIABLE_SEQUENCED,0,UNASSIGNED_SYSTEM_ADDRESS,true);
+		pNetGame->GetRakClient()->Send(&bsVehicleSync,HIGH_PRIORITY,UNRELIABLE_SEQUENCED,0,UNASSIGNED_SYSTEM_ADDRESS,true);
 
 		// For the tank/firetruck, we need some info on aiming
 		if (pGameVehicle->HasTurret()) SendAimSyncData();		
@@ -1010,7 +1010,7 @@ void CLocalPlayer::SendInCarFullSyncData()
 				RakNet::BitStream bsTrailerSync;
 				bsTrailerSync.Write((BYTE)ID_TRAILER_SYNC);
 				bsTrailerSync.Write((PCHAR)&trSync, sizeof (TRAILER_SYNC_DATA));
-				pRakClient->Send(&bsTrailerSync,HIGH_PRIORITY,UNRELIABLE_SEQUENCED,0,UNASSIGNED_SYSTEM_ADDRESS,true);
+				pNetGame->GetRakClient()->Send(&bsTrailerSync,HIGH_PRIORITY,UNRELIABLE_SEQUENCED,0,UNASSIGNED_SYSTEM_ADDRESS,true);
 			}
 		}
 	}
@@ -1050,7 +1050,7 @@ void CLocalPlayer::SendPassengerFullSyncData()
 
 	bsPassengerSync.Write((BYTE)ID_PASSENGER_SYNC);
 	bsPassengerSync.Write((PCHAR)&psSync,sizeof(PASSENGER_SYNC_DATA));
-	pRakClient->Send(&bsPassengerSync,HIGH_PRIORITY,UNRELIABLE_SEQUENCED,0,UNASSIGNED_SYSTEM_ADDRESS,true);
+	pNetGame->GetRakClient()->Send(&bsPassengerSync,HIGH_PRIORITY,UNRELIABLE_SEQUENCED,0,UNASSIGNED_SYSTEM_ADDRESS,true);
 
 	if(m_bPassengerDriveByMode)	SendAimSyncData();
 }
@@ -1391,7 +1391,7 @@ void CLocalPlayer::SendStatsUpdate()
 	bsStats.Write((BYTE)ID_STATS_UPDATE);
 	bsStats.Write(iMoney);
 	bsStats.Write(wAmmo);
-	pRakClient->Send(&bsStats,HIGH_PRIORITY,UNRELIABLE,0,UNASSIGNED_SYSTEM_ADDRESS,true);
+	pNetGame->GetRakClient()->Send(&bsStats,HIGH_PRIORITY,UNRELIABLE,0,UNASSIGNED_SYSTEM_ADDRESS,true);
 }
 
 //----------------------------------------------------------
@@ -1542,7 +1542,7 @@ void CLocalPlayer::CheckWeapons()
 	}
 	if (bMSend)
 	{
-		pRakClient->Send(&bsWeapons,HIGH_PRIORITY,UNRELIABLE,0,UNASSIGNED_SYSTEM_ADDRESS,true);
+		pNetGame->GetRakClient()->Send(&bsWeapons,HIGH_PRIORITY,UNRELIABLE,0,UNASSIGNED_SYSTEM_ADDRESS,true);
 	}
 }
 
@@ -1612,7 +1612,7 @@ void CLocalPlayer::ProcessSpectating()
 		m_dwLastSendSpecTick = GetTickCount();
 		bsSpectatorSync.Write((BYTE)ID_SPECTATOR_SYNC);
 		bsSpectatorSync.Write((PCHAR)&spSync,sizeof(SPECTATOR_SYNC_DATA));
-		pRakClient->Send(&bsSpectatorSync,HIGH_PRIORITY,UNRELIABLE,0,UNASSIGNED_SYSTEM_ADDRESS,true);
+		pNetGame->GetRakClient()->Send(&bsSpectatorSync,HIGH_PRIORITY,UNRELIABLE,0,UNASSIGNED_SYSTEM_ADDRESS,true);
 	}
 	
 	pGame->DisplayHud(FALSE);

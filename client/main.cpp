@@ -1,23 +1,17 @@
 #include "main.h"
 #include "game/util.h"
-//
-// TODO: Find the original file this was included in
 #include "filehooks.h"
-//
 #include <aclapi.h>
 
-RakNet::RakPeerInterface	*pRakClient;
-RakNet::RPC4				*pRPC4Plugin;
-
-int							iGtaVersion = 0;
-
-GAME_SETTINGS				tSettings;
+CNetGame					*pNetGame = 0;
 CChatWindow					*pChatWindow = 0;
 CCmdWindow					*pCmdWindow = 0;
 CDeathWindow				*pDeathWindow = 0;
 CSpawnScreen				*pSpawnScreen = 0;
-CNetGame					*pNetGame = 0;
 CFontRender					*pDefaultFont = 0;
+
+int							iGtaVersion = 0;
+GAME_SETTINGS				tSettings;
 
 BOOL						bGameInited = FALSE;
 BOOL						bNetworkInited = FALSE;
@@ -372,7 +366,7 @@ void TheGraphicsLoop()
 void QuitGame()
 {
 	if (pNetGame && pNetGame->GetGameState() == GAMESTATE_CONNECTED) {
-		pRakClient->Shutdown(500);
+		pNetGame->GetRakClient()->Shutdown(500);
 	}
 	bQuitGame = TRUE;
 	dwStartQuitTick = GetTickCount();

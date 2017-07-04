@@ -63,7 +63,7 @@ void cmdRcon(PCHAR szCmd)
 	DWORD dwCmdLen = (DWORD)strlen(szCmd);
 	bsCommand.Write(dwCmdLen);
 	bsCommand.Write(szCmd, dwCmdLen);
-	pRakClient->Send(&bsCommand, HIGH_PRIORITY, RELIABLE, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, true);
+	pNetGame->GetRakClient()->Send(&bsCommand, HIGH_PRIORITY, RELIABLE, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, true);
 }
 
 //----------------------------------------------------

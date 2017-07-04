@@ -2,6 +2,9 @@
 
 #include "../../raknet/RPC4Plugin.h"
 
+extern RakNet::RakPeerInterface	*pRakClient;
+extern RakNet::RPC4				*pRPC4Plugin;
+
 #define GAMESTATE_NONE			0 // used for debugging modes and such
 #define GAMESTATE_CONNECTING	1
 #define GAMESTATE_CONNECTED		2
@@ -48,7 +51,7 @@ private:
 	DWORD				m_dwLastConnectAttempt;
 	int					m_iCheckLoadedStuff;
 	
-	void UpdateNetwork();
+	void				UpdateNetwork();
 
 	// Packet handlers
 	void Packet_AimSync(RakNet::Packet *p);
@@ -70,6 +73,9 @@ private:
 	void Packet_TrailerSync(RakNet::Packet *p);
 
 public:
+	CNetGame(PCHAR szHostOrIp, int iPort, PCHAR szPlayerName, PCHAR szPass);
+	~CNetGame();
+
 	int			m_iSpawnsAvailable;
 	bool		m_bShowPlayerMarkers;
 	bool		m_bShowPlayerTags;
@@ -98,23 +104,11 @@ public:
 	int m_iPort;
 	char m_szPassword[128];
 
-	CNetGame(PCHAR szHostOrIp,int iPort,PCHAR szPlayerName,PCHAR szPass);
-	~CNetGame();
-
 	int GetGameState() { return m_iGameState; };
 	void SetGameState(int iGameState) { m_iGameState = iGameState; };
 	BOOL IsLanMode() { return m_bLanMode; };
 	BOOL GetWalkStyle() { return m_bUseCJWalk; };
 	void SetLanMode(BOOL bMode) { m_bLanMode = bMode; };
-
-	CPlayerPool * GetPlayerPool() { return m_pPlayerPool; };
-	CVehiclePool * GetVehiclePool() { return m_pVehiclePool; };
-	CActorPool * GetActorPool() { return m_pActorPool; };
-	CPickupPool * GetPickupPool() { return m_pPickupPool; };
-	CObjectPool	* GetObjectPool() { return m_pObjectPool; };
-	CMenuPool * GetMenuPool() { return m_pMenuPool; };
-	CTextDrawPool * GetTextDrawPool() { return m_pTextDrawPool; };
-	CGangZonePool * GetGangZonePool() { return m_pGangZonePool; };
 
 	void SendRPC(char *szPacket, RakNet::BitStream *bsData) {
 		pRPC4Plugin->Call(szPacket, bsData, HIGH_PRIORITY, RELIABLE, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, TRUE);
@@ -137,6 +131,18 @@ public:
 	void  ResetMapIcons();
 	void  SetMapIcon(BYTE byteIndex, float fX, float fY, float fZ, BYTE byteIcon, DWORD dwColor);
 	void  DisableMapIcon(BYTE byteIndex);
+
+	CPlayerPool * GetPlayerPool() { return m_pPlayerPool; };
+	CVehiclePool * GetVehiclePool() { return m_pVehiclePool; };
+	CActorPool * GetActorPool() { return m_pActorPool; };
+	CPickupPool * GetPickupPool() { return m_pPickupPool; };
+	CObjectPool	* GetObjectPool() { return m_pObjectPool; };
+	CMenuPool * GetMenuPool() { return m_pMenuPool; };
+	CTextDrawPool * GetTextDrawPool() { return m_pTextDrawPool; };
+	CGangZonePool * GetGangZonePool() { return m_pGangZonePool; };
+
+	RakNet::RakPeerInterface *GetRakClient() { return pRakClient; };
+	RakNet::RPC4 *GetRPC() { return pRPC4Plugin; };
 
 };
 

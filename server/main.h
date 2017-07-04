@@ -97,14 +97,11 @@ typedef struct _SERVER_SETTINGS {
 #include <vector>
 
 // Raknet
-#include "../raknet/SAMP/NetData.h"
-#include "../raknet/RakPeer.h"
+#include "../raknet/RakNetTypes.h"
+#include "../raknet/RakPeerInterface.h"
 #include "../raknet/BitStream.h"
 #include "../raknet/MessageIdentifiers.h"
 #include "../raknet/RPC4Plugin.h"
-
-extern RakNet::RakPeerInterface* pRakServer;
-extern RakNet::RPC4* pRPC4Plugin;
 
 // amx
 #include "amx/amx.h"

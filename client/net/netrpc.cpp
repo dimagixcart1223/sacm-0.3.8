@@ -550,7 +550,7 @@ void ConnectionRejected(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 		pChatWindow->AddInfoMessage("Unable to allocate a player slot. Try again.");
 	}
 
-	pRakClient->Shutdown(500);
+	pNetGame->GetRakClient()->Shutdown(500);
 }
 
 //----------------------------------------------------
@@ -687,75 +687,75 @@ void Instagib(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 
 void RegisterRPCs()
 {
-	pRPC4Plugin->RegisterFunction(RPC_ServerJoin, ServerJoin);
-	pRPC4Plugin->RegisterFunction(RPC_ServerQuit, ServerQuit);
-	pRPC4Plugin->RegisterFunction(RPC_InitGame, InitGame);
-	pRPC4Plugin->RegisterFunction(RPC_Chat, Chat);
-	pRPC4Plugin->RegisterFunction(RPC_RequestClass, RequestClass);
-	pRPC4Plugin->RegisterFunction(RPC_RequestSpawn, RequestSpawn);
-	pRPC4Plugin->RegisterFunction(RPC_WorldPlayerAdd, WorldPlayerAdd);
-	pRPC4Plugin->RegisterFunction(RPC_WorldPlayerDeath, WorldPlayerDeath);
-	pRPC4Plugin->RegisterFunction(RPC_WorldPlayerRemove, WorldPlayerRemove);
-	pRPC4Plugin->RegisterFunction(RPC_WorldVehicleAdd, WorldVehicleAdd);
-	pRPC4Plugin->RegisterFunction(RPC_WorldVehicleRemove, WorldVehicleRemove);
-	pRPC4Plugin->RegisterFunction(RPC_DamageVehicle, DamageVehicle);
-	pRPC4Plugin->RegisterFunction(RPC_EnterVehicle, EnterVehicle);
-	pRPC4Plugin->RegisterFunction(RPC_ExitVehicle, ExitVehicle);
-	pRPC4Plugin->RegisterFunction(RPC_SetCheckpoint, SetCheckpoint);
-	pRPC4Plugin->RegisterFunction(RPC_DisableCheckpoint, DisableCheckpoint);
-	pRPC4Plugin->RegisterFunction(RPC_SetRaceCheckpoint, SetRaceCheckpoint);
-	pRPC4Plugin->RegisterFunction(RPC_DisableRaceCheckpoint, DisableRaceCheckpoint);
-	pRPC4Plugin->RegisterFunction(RPC_UpdateScoresPingsIPs, UpdateScoresPingsIPs);
-	pRPC4Plugin->RegisterFunction(RPC_GameModeRestart, GameModeRestart);
-	pRPC4Plugin->RegisterFunction(RPC_ConnectionRejected, ConnectionRejected);
-	pRPC4Plugin->RegisterFunction(RPC_ClientMessage, ClientMessage);
-	pRPC4Plugin->RegisterFunction(RPC_WorldTime, WorldTime);
-	pRPC4Plugin->RegisterFunction(RPC_Pickup, Pickup);
-	pRPC4Plugin->RegisterFunction(RPC_DestroyPickup, DestroyPickup);
-	pRPC4Plugin->RegisterFunction(RPC_DestroyWeaponPickup, DestroyWeaponPickup);
-	pRPC4Plugin->RegisterFunction(RPC_ScmEvent, ScmEvent);
-	pRPC4Plugin->RegisterFunction(RPC_Weather, Weather);
-	pRPC4Plugin->RegisterFunction(RPC_Instagib, Instagib);
-	pRPC4Plugin->RegisterFunction(RPC_SetTimeEx, SetTimeEx);
-	pRPC4Plugin->RegisterFunction(RPC_ToggleClock, ToggleClock);
+	pNetGame->GetRPC()->RegisterFunction(RPC_ServerJoin, ServerJoin);
+	pNetGame->GetRPC()->RegisterFunction(RPC_ServerQuit, ServerQuit);
+	pNetGame->GetRPC()->RegisterFunction(RPC_InitGame, InitGame);
+	pNetGame->GetRPC()->RegisterFunction(RPC_Chat, Chat);
+	pNetGame->GetRPC()->RegisterFunction(RPC_RequestClass, RequestClass);
+	pNetGame->GetRPC()->RegisterFunction(RPC_RequestSpawn, RequestSpawn);
+	pNetGame->GetRPC()->RegisterFunction(RPC_WorldPlayerAdd, WorldPlayerAdd);
+	pNetGame->GetRPC()->RegisterFunction(RPC_WorldPlayerDeath, WorldPlayerDeath);
+	pNetGame->GetRPC()->RegisterFunction(RPC_WorldPlayerRemove, WorldPlayerRemove);
+	pNetGame->GetRPC()->RegisterFunction(RPC_WorldVehicleAdd, WorldVehicleAdd);
+	pNetGame->GetRPC()->RegisterFunction(RPC_WorldVehicleRemove, WorldVehicleRemove);
+	pNetGame->GetRPC()->RegisterFunction(RPC_DamageVehicle, DamageVehicle);
+	pNetGame->GetRPC()->RegisterFunction(RPC_EnterVehicle, EnterVehicle);
+	pNetGame->GetRPC()->RegisterFunction(RPC_ExitVehicle, ExitVehicle);
+	pNetGame->GetRPC()->RegisterFunction(RPC_SetCheckpoint, SetCheckpoint);
+	pNetGame->GetRPC()->RegisterFunction(RPC_DisableCheckpoint, DisableCheckpoint);
+	pNetGame->GetRPC()->RegisterFunction(RPC_SetRaceCheckpoint, SetRaceCheckpoint);
+	pNetGame->GetRPC()->RegisterFunction(RPC_DisableRaceCheckpoint, DisableRaceCheckpoint);
+	pNetGame->GetRPC()->RegisterFunction(RPC_UpdateScoresPingsIPs, UpdateScoresPingsIPs);
+	pNetGame->GetRPC()->RegisterFunction(RPC_GameModeRestart, GameModeRestart);
+	pNetGame->GetRPC()->RegisterFunction(RPC_ConnectionRejected, ConnectionRejected);
+	pNetGame->GetRPC()->RegisterFunction(RPC_ClientMessage, ClientMessage);
+	pNetGame->GetRPC()->RegisterFunction(RPC_WorldTime, WorldTime);
+	pNetGame->GetRPC()->RegisterFunction(RPC_Pickup, Pickup);
+	pNetGame->GetRPC()->RegisterFunction(RPC_DestroyPickup, DestroyPickup);
+	pNetGame->GetRPC()->RegisterFunction(RPC_DestroyWeaponPickup, DestroyWeaponPickup);
+	pNetGame->GetRPC()->RegisterFunction(RPC_ScmEvent, ScmEvent);
+	pNetGame->GetRPC()->RegisterFunction(RPC_Weather, Weather);
+	pNetGame->GetRPC()->RegisterFunction(RPC_Instagib, Instagib);
+	pNetGame->GetRPC()->RegisterFunction(RPC_SetTimeEx, SetTimeEx);
+	pNetGame->GetRPC()->RegisterFunction(RPC_ToggleClock, ToggleClock);
 }
 
 //----------------------------------------------------
 
 void UnRegisterRPCs()
 {
-	pRPC4Plugin->UnregisterFunction(RPC_ServerJoin);
-	pRPC4Plugin->UnregisterFunction(RPC_ServerQuit);
-	pRPC4Plugin->UnregisterFunction(RPC_InitGame);
-	pRPC4Plugin->UnregisterFunction(RPC_Chat);
-	pRPC4Plugin->UnregisterFunction(RPC_RequestClass);
-	pRPC4Plugin->UnregisterFunction(RPC_RequestSpawn);
-	pRPC4Plugin->UnregisterFunction(RPC_WorldPlayerAdd);
-	pRPC4Plugin->UnregisterFunction(RPC_WorldPlayerDeath);
-	pRPC4Plugin->UnregisterFunction(RPC_WorldPlayerRemove);
-	pRPC4Plugin->UnregisterFunction(RPC_WorldVehicleAdd);
-	pRPC4Plugin->UnregisterFunction(RPC_WorldVehicleRemove);
-	pRPC4Plugin->UnregisterFunction(RPC_DamageVehicle);
-	pRPC4Plugin->UnregisterFunction(RPC_EnterVehicle);
-	pRPC4Plugin->UnregisterFunction(RPC_ExitVehicle);
-	pRPC4Plugin->UnregisterFunction(RPC_SetCheckpoint);
-	pRPC4Plugin->UnregisterFunction(RPC_DisableCheckpoint);
-	pRPC4Plugin->UnregisterFunction(RPC_SetRaceCheckpoint);
-	pRPC4Plugin->UnregisterFunction(RPC_DisableRaceCheckpoint);
-	pRPC4Plugin->UnregisterFunction(RPC_UpdateScoresPingsIPs);
-	pRPC4Plugin->UnregisterFunction(RPC_SvrStats);
-	pRPC4Plugin->UnregisterFunction(RPC_GameModeRestart);
-	pRPC4Plugin->UnregisterFunction(RPC_ConnectionRejected);
-	pRPC4Plugin->UnregisterFunction(RPC_ClientMessage);
-	pRPC4Plugin->UnregisterFunction(RPC_WorldTime);
-	pRPC4Plugin->UnregisterFunction(RPC_Pickup);
-	pRPC4Plugin->UnregisterFunction(RPC_DestroyPickup);
-	pRPC4Plugin->UnregisterFunction(RPC_DestroyWeaponPickup);
-	pRPC4Plugin->UnregisterFunction(RPC_ScmEvent);
-	pRPC4Plugin->UnregisterFunction(RPC_Weather);
-	pRPC4Plugin->UnregisterFunction(RPC_Instagib);
-	pRPC4Plugin->UnregisterFunction(RPC_SetTimeEx);
-	pRPC4Plugin->UnregisterFunction(RPC_ToggleClock);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_ServerJoin);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_ServerQuit);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_InitGame);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_Chat);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_RequestClass);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_RequestSpawn);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_WorldPlayerAdd);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_WorldPlayerDeath);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_WorldPlayerRemove);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_WorldVehicleAdd);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_WorldVehicleRemove);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_DamageVehicle);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_EnterVehicle);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_ExitVehicle);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_SetCheckpoint);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_DisableCheckpoint);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_SetRaceCheckpoint);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_DisableRaceCheckpoint);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_UpdateScoresPingsIPs);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_SvrStats);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_GameModeRestart);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_ConnectionRejected);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_ClientMessage);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_WorldTime);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_Pickup);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_DestroyPickup);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_DestroyWeaponPickup);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_ScmEvent);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_Weather);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_Instagib);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_SetTimeEx);
+	pNetGame->GetRPC()->UnregisterFunction(RPC_ToggleClock);
 }
 
 //----------------------------------------------------

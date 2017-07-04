@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "../raknet/SAMP/NetData.h"
+
 #define PLAYER_STATE_NONE						0
 #define PLAYER_STATE_ONFOOT						1
 #define PLAYER_STATE_DRIVER						2
