@@ -109,59 +109,12 @@ void __stdcall RenderPlayerTags()
 								Player->GetPlayerColorAsARGB(),
 								Player->GetReportedHealth(), Player->GetReportedArmour(),
 								Player->GetDistanceFromLocalPlayer());
-
-							// Tags
-/*								TAG_INFO *pTagInfo = pPlayerPool->GetPlayerTag(x);
-								if (pTagInfo && pTagInfo->bActive) {
-									pChatWindow->AddDebugMessage("Drawing player %i's tag.", x);
-									PlayerPos.z += 1.5f;
-									pNewPlayerTags->Draw(&PlayerPos,pTagInfo->szTag,pTagInfo->dwColor,-1,0,Player->GetDistanceFromLocalPlayer());
-								}*/
-
 						}
-
-						// Yeah, it's dirty.. but so is dry-humping a bunch
-						/* of naked polygons.
-						_asm mov dwSavedEBP, ebp
-						_asm pushad
-						_asm push 0
-						_asm push 0
-						_asm push 0
-						_asm push 0
-						_asm push 0
-						_asm push 0
-						_asm push 0
-						_asm push 1
-						_asm push pHitEntity
-						_asm push offset vecColPoint
-						_asm push offset vecRemotePlayer
-						_asm push offset vecCam
-						_asm mov ecx, 0x56BA00
-						_asm call ecx
-						_asm add esp, 48
-						_asm popad
-						_asm mov ebp, dwSavedEBP*/
-
 					}
 				}
 			}
 		}
-
 		pNewPlayerTags->End();
-
-		/*
-		#ifdef _DEBUG
-		CLocalPlayer* pLocalPlayer = pPlayerPool->GetLocalPlayer();
-		CPlayerPed* pLocalPlayerPed = pLocalPlayer->GetPlayerPed();
-		MATRIX4X4 matLocPlayer;
-		pLocalPlayerPed->GetMatrix(&matLocPlayer);
-		D3DXVECTOR3 LocPlayerPos;
-		LocPlayerPos.x = matLocPlayer.pos.X;
-		LocPlayerPos.y = matLocPlayer.pos.Y;
-		LocPlayerPos.z = matLocPlayer.pos.Z;
-		pNewPlayerTags->Draw(&LocPlayerPos, pPlayerPool->GetLocalPlayerName(), pLocalPlayer->GetPlayerColorAsARGB(), 100.0f, 75.0f, 0.0f);
-		#endif*/
-
 	} // if(pNetGame->m_byteShowPlayerTags)
 }
 
@@ -186,19 +139,7 @@ void __stdcall RenderActorTags()
 					CActorPed* pActorPed = pActor->GetAtPed();
 					if (pActorPed && pActorPed->GetDistanceFromLocalPlayerPed() <= pNetGame->m_fNameTagDrawDistance)
 					{
-						/* if( pActorPed->GetState() == PLAYER_STATE_DRIVER &&
-							Player->m_pCurrentVehicle &&
-							Player->m_pCurrentVehicle->IsRCVehicle() ) {
-								// Use the vehicle pos for RC vehicles
-								Player->m_pCurrentVehicle->GetMatrix(&matPlayer);
-							} else {
-								if(!PlayerPed->IsAdded()) continue;
-								PlayerPed->GetMatrix(&matPlayer);
-							}	*/
-
 						pActorPed->GetMatrix(&matPlayer);
-
-						// -- LINE OF SIGHT TESTING --
 
 						PlayerPos.x = matPlayer.pos.X;
 						PlayerPos.y = matPlayer.pos.Y;
@@ -236,6 +177,7 @@ HRESULT __stdcall IDirect3DDevice9Hook::Present(CONST RECT* pSourceRect, CONST R
 	if (g_bTakeScreenshot)
 	{
 		g_bTakeScreenshot = FALSE;
+		
 		std::string sFileName;
 		D3DDISPLAYMODE displayMode;
 		LPDIRECT3DSURFACE9 pd3dsFront = NULL;
@@ -244,8 +186,7 @@ HRESULT __stdcall IDirect3DDevice9Hook::Present(CONST RECT* pSourceRect, CONST R
 		pD3DDevice->GetDisplayMode(0, &displayMode);
 		pD3DDevice->CreateOffscreenPlainSurface(displayMode.Width, displayMode.Height, D3DFMT_A8R8G8B8, D3DPOOL_SYSTEMMEM, &pd3dsFront, NULL);
 
-		if (SUCCEEDED(pD3DDevice->GetFrontBufferData(0, pd3dsFront))) // Cause of lag
-		{
+		if (SUCCEEDED(pD3DDevice->GetFrontBufferData(0, pd3dsFront))) {
 			POINT point = { 0, 0 };
 			ClientToScreen(pGame->GetMainWindowHwnd(), &point);
 			RECT rect;
@@ -254,15 +195,15 @@ HRESULT __stdcall IDirect3DDevice9Hook::Present(CONST RECT* pSourceRect, CONST R
 			rect.right += point.x;
 			rect.top += point.y;
 			rect.bottom += point.y;
-			D3DXSaveSurfaceToFile(sFileName.c_str(), D3DXIFF_PNG, pd3dsFront, NULL, &rect);
+			D3DXSaveSurfaceToFile(sFileName.c_str(), D3DXIFF_DIB, pd3dsFront, NULL, &rect);
 			pChatWindow->AddInfoMessage("Screenshot Taken - %s", sFileName.c_str());
-		}
-		else
-		{
+		} else {
 			pChatWindow->AddDebugMessage("Unable to save screenshot.");
 		}
 
-		if (pd3dsFront) pd3dsFront->Release();
+		if (pd3dsFront) {
+			pd3dsFront->Release();
+		}
 	}
 
 	if (!pGame->IsMenuActive())
