@@ -41,9 +41,6 @@ void ClientJoin(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 	bitStream->Read(szPlayerName, byteNickLen);
 	szPlayerName[byteNickLen] = '\0';
 
-
-	logprintf("--- PASSED: %d, NICK %s, ID %d", iVersion == NETGAME_VERSION, szPlayerName, MyPlayerID);
-
 	if (iVersion != NETGAME_VERSION) {
 		byteRejectReason = REJECT_REASON_BAD_VERSION;
 		bsReject.Write(byteRejectReason);
