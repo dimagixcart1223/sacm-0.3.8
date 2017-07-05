@@ -312,7 +312,7 @@ void CPlayer::BroadcastSyncData()
 		bsSync.Write((BYTE)ID_AIM_SYNC);
 		bsSync.Write(m_bytePlayerID);
 		bsSync.Write((PCHAR)&m_aimSync, sizeof(AIM_SYNC_DATA));
-		pNetGame->BroadcastData(&bsSync, IMMEDIATE_PRIORITY, RELIABLE, 0, m_bytePlayerID, TRUE, TRUE);
+		pNetGame->BroadcastData(&bsSync, IMMEDIATE_PRIORITY, RELIABLE, 0, m_bytePlayerID, TRUE);
 		m_bHasAimUpdates = FALSE;
 	}
 
