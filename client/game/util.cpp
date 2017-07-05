@@ -907,9 +907,9 @@ void __stdcall SetRadarColor(int nIndex,DWORD dwColor)
 DWORD __stdcall TranslateColorCodeToRGBA(int iCode)
 {
 	// Special internal colors
-	if(iCode == 500) return 0x888888FF;
-	if(iCode == 501) return 0xAA0000FF;
-	if(iCode == 502) return 0xE2C063FF;
+	if(iCode == 2000) return 0x88888844;
+	if(iCode == 2001) return 0xAA0000FF;
+	if(iCode == 2002) return 0xE2C063FF;
 
 	if(iCode < sizeof(dwUseHudColors)) {
 		return dwUseHudColors[iCode];

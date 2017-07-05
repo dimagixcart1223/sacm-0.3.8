@@ -565,7 +565,7 @@ void CVehicle::ProcessMarkers()
 				m_dwMarkerID = 0;
 			}
 			ScriptCommand(&tie_marker_to_car, m_dwGTAId, 1, 3, &m_dwMarkerID);
-			ScriptCommand(&set_marker_color, m_dwMarkerID, 1);
+			ScriptCommand(&set_marker_color, m_dwMarkerID, 2000);
 			ScriptCommand(&show_on_radar, m_dwMarkerID, 3);
 			m_bSpecialMarkerEnabled = TRUE;
 		}
@@ -586,7 +586,7 @@ void CVehicle::ProcessMarkers()
 		// SHOW IT
 		if(!m_dwMarkerID)  {
 			ScriptCommand(&tie_marker_to_car, m_dwGTAId, 1, 2, &m_dwMarkerID);
-			ScriptCommand(&set_marker_color,m_dwMarkerID,500);
+			ScriptCommand(&set_marker_color,m_dwMarkerID, 2000);
 		}	
 	} 
 	else if(IsOccupied() || GetDistanceFromLocalPlayerPed() >= CSCANNER_DISTANCE) {
