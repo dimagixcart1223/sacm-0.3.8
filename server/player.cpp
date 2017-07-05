@@ -199,7 +199,7 @@ void CPlayer::BroadcastSyncData()
 		bsSync.Write((BYTE)ID_PLAYER_SYNC);
 		bsSync.Write(m_bytePlayerID);
 		bsSync.Write((PCHAR)&ofSync, sizeof(ONFOOT_SYNC_DATA));
-		pNetGame->BroadcastData(&bsSync, IMMEDIATE_PRIORITY, RELIABLE, 0, m_bytePlayerID);
+		pNetGame->BroadcastData(&bsSync, IMMEDIATE_PRIORITY, RELIABLE, 0, m_bytePlayerID, TRUE);
 	}
 	else if (GetState() == PLAYER_STATE_DRIVER &&
 		m_byteUpdateFromNetwork == UPDATE_TYPE_INCAR)
@@ -293,7 +293,7 @@ void CPlayer::BroadcastSyncData()
 			bsSync.Write(false);
 		}
 
-		pNetGame->BroadcastData(&bsSync, IMMEDIATE_PRIORITY, RELIABLE, 0, m_bytePlayerID);
+		pNetGame->BroadcastData(&bsSync, IMMEDIATE_PRIORITY, RELIABLE, 0, m_bytePlayerID, TRUE);
 	}
 	else if (GetState() == PLAYER_STATE_PASSENGER &&
 		m_byteUpdateFromNetwork == UPDATE_TYPE_PASSENGER)
@@ -304,7 +304,7 @@ void CPlayer::BroadcastSyncData()
 		if (m_psSync.byteCurrentWeapon == 43) m_psSync.wKeys &= NOT_KEY_FIRE;
 		bsSync.Write((PCHAR)&m_psSync, sizeof(PASSENGER_SYNC_DATA));
 		m_psSync.wKeys = wKeys;
-		pNetGame->BroadcastData(&bsSync, IMMEDIATE_PRIORITY, RELIABLE, 0, m_bytePlayerID);
+		pNetGame->BroadcastData(&bsSync, IMMEDIATE_PRIORITY, RELIABLE, 0, m_bytePlayerID, TRUE);
 	}
 
 	if (m_bHasAimUpdates) {

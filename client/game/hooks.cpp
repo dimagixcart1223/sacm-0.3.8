@@ -120,7 +120,9 @@ NUDE GameProcessHook()
 	_asm pushad
 
 	if(pGame && !pGame->IsMenuActive()) {
-		if(pNetGame && pNetGame->GetTextDrawPool())	pNetGame->GetTextDrawPool()->Draw();
+		if (pNetGame && pNetGame->GetTextDrawPool()) {
+			pNetGame->GetTextDrawPool()->Draw();
+		}
 	}
 	
 	_asm popad

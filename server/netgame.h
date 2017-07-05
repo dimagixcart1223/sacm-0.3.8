@@ -108,7 +108,7 @@ public:
 
 	int GetBroadcastSendRateFromPlayerDistance(float fDistance);
 
-	void BroadcastData(RakNet::BitStream *bitStream, PacketPriority priority, PacketReliability reliability, char orderingStream, SACMPLAYER byteExcludedPlayer, BOOL bBroadcastLocalRangeOnly = FALSE, BOOL bAimSync = FALSE);
+	void BroadcastData(RakNet::BitStream *bitStream, PacketPriority priority, PacketReliability reliability, char orderingStream, SACMPLAYER byteExcludedPlayer, BOOL bBroadcastLocalRangeOnly = FALSE);
 	void BroadcastDistanceRPC(char *szUniqueID, RakNet::BitStream *bitStream, PacketReliability reliability, SACMPLAYER byteExcludedPlayer, float fUseDistance);
 	void SendRPC(char *szPacket, RakNet::BitStream *bsData, SACMPLAYER bPlayerId, bool bBroadcast);
 

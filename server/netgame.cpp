@@ -628,8 +628,7 @@ void CNetGame::BroadcastData(RakNet::BitStream *bitStream,
 	PacketReliability reliability,
 	char orderingStream,
 	SACMPLAYER byteExcludedPlayer,
-	BOOL bBroadcastLocalRangeOnly,
-	BOOL bAimSync)
+	BOOL bBroadcastLocalRangeOnly)
 {
 	// Use UNASSIGNED_SYSTEM_ADDRESS to broadcast to all.
 

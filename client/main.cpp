@@ -349,7 +349,7 @@ void TheGraphicsLoop()
 
 	if (pGame) {
 		pGame->ProcessInputDisabling();
-		pGame->ForceFrameLimiterOn(); //off FPS limiter causes vehicle autobrake :|
+		//pGame->ForceFrameLimiterOn(); //off FPS limiter causes vehicle autobrake :|
 	}
 
 	_asm popad
