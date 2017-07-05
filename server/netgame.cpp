@@ -4,7 +4,7 @@ float fRestartWaitTime = 0.0f;
 int CanFileBeOpenedForReading(char * filename);
 char szGameModeFile[256];
 
-#define LOCAL_RANGE		210.0f
+#define LOCAL_RANGE		160.0f
 
 //----------------------------------------------------
 
@@ -627,7 +627,7 @@ void CNetGame::BroadcastData(RakNet::BitStream *bitStream,
 	PacketPriority priority,
 	PacketReliability reliability,
 	char orderingStream,
-	BYTE byteExcludedPlayer,
+	SACMPLAYER byteExcludedPlayer,
 	BOOL bBroadcastLocalRangeOnly,
 	BOOL bAimSync)
 {
@@ -694,7 +694,7 @@ void CNetGame::BroadcastData(RakNet::BitStream *bitStream,
 
 //--------------------------------------------------------
 
-void CNetGame::BroadcastDistanceRPC(char *szUniqueID, RakNet::BitStream *bitStream, PacketReliability reliability, BYTE byteExcludedPlayer, float fUseDistance)
+void CNetGame::BroadcastDistanceRPC(char *szUniqueID, RakNet::BitStream *bitStream, PacketReliability reliability, SACMPLAYER byteExcludedPlayer, float fUseDistance)
 {
 	SACMPLAYER x = 0;
 	float fDistance;
@@ -723,7 +723,7 @@ void CNetGame::BroadcastDistanceRPC(char *szUniqueID, RakNet::BitStream *bitStre
 
 //--------------------------------------------------------
 
-void CNetGame::AdjustAimSync(RakNet::BitStream *bitStream, BYTE byteTargetPlayerID, RakNet::BitStream *adjbitStream)
+void CNetGame::AdjustAimSync(RakNet::BitStream *bitStream, SACMPLAYER byteTargetPlayerID, RakNet::BitStream *adjbitStream)
 {
 	BYTE bytePlayerID, bytePacketID;
 	int iPlayerPing, iTargetPing;
@@ -752,11 +752,11 @@ void CNetGame::AdjustAimSync(RakNet::BitStream *bitStream, BYTE byteTargetPlayer
 
 //----------------------------------------------------
 
-void CNetGame::SendRPC(char *szPacket, RakNet::BitStream *bsData, BYTE bPlayerId, bool bBroadcast) {
-	if(bPlayerId != 1) {
-		GetRPC()->Call(szPacket, bsData, IMMEDIATE_PRIORITY, RELIABLE, NULL, GetRakServer()->GetSystemAddressFromIndex(bPlayerId), bBroadcast);
+void CNetGame::SendRPC(char *szPacket, RakNet::BitStream *bsData, SACMPLAYER bPlayerId, bool bBroadcast) {
+	if(bPlayerId != -1) {
+		GetRPC()->Call(szPacket, bsData, HIGH_PRIORITY, RELIABLE, NULL, pRakServer->GetGUIDFromIndex(bPlayerId), bBroadcast);
 	} else {
-		GetRPC()->Call(szPacket, bsData, IMMEDIATE_PRIORITY, RELIABLE, NULL, RakNet::UNASSIGNED_SYSTEM_ADDRESS, bBroadcast);
+		GetRPC()->Call(szPacket, bsData, HIGH_PRIORITY, RELIABLE, NULL, RakNet::UNASSIGNED_SYSTEM_ADDRESS, bBroadcast);
 	}
 }
 
@@ -1029,10 +1029,8 @@ void CNetGame::Packet_InGameRcon(RakNet::Packet* packet)
 
 void CNetGame::ProcessClientJoin(SACMPLAYER bytePlayerID)
 {
-
 	// Perform all init operations.
 	if (GetGameState() == GAMESTATE_RUNNING) {
-		//m_pVehiclePool->InitForPlayer(bytePlayerID); // give them all the existing vehicles
 		m_pPickupPool->InitForPlayer(bytePlayerID); // give them all the existing pickups
 		m_pObjectPool->InitForPlayer(bytePlayerID); // give them all the existing map objects
 		InitGameForPlayer(bytePlayerID);
@@ -1191,11 +1189,12 @@ void CNetGame::SetGravity(float fGravity)
 
 //----------------------------------------------------
 
-void CNetGame::KickPlayer(BYTE byteKickPlayer)
+void CNetGame::KickPlayer(SACMPLAYER byteKickPlayer)
 {
 	SACMPLAYER plr = byteKickPlayer;
 	if (byteKickPlayer < MAX_PLAYERS) {
 		if (m_pPlayerPool->GetSlotState(byteKickPlayer)) {
+			logprintf("[part] %s has left the server (%u:2)", m_pPlayerPool->GetPlayerName(byteKickPlayer), byteKickPlayer);
 			pRakServer->CloseConnection(pRakServer->GetSystemAddressFromIndex(plr), true);
 			m_pPlayerPool->Delete(byteKickPlayer, 2);
 		}

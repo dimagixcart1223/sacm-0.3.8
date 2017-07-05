@@ -1,22 +1,30 @@
 #pragma once
 
-#include "../main.h"
+#include <windows.h>
 #include <assert.h>
+#include "../../raknet/SAMP/NetData.h"
 
-#define MAX_PLAYERS			502
-#define MAX_VEHICLES		2004
+//-----------------------------------------------------------
+
+#define MAX_PLAYERS			2002
+#define MAX_VEHICLES		5004
 #define MAX_ACTORS			50
-
 #define MAX_OBJECTS			255
 #define MAX_MENUS			128
 #define MAX_TEXT_DRAWS		1024
 #define MAX_GANG_ZONES		1024
 #define PLAYER_PED_SLOTS	210
 
+//-----------------------------------------------------------
+
 #define RS_DEGTORAD(X) ((X)*3.1415926f/180.0f)
 #define RS_RADTODEG(X) ((X)*180.0f/3.1415926f)
 
+//-----------------------------------------------------------
+
 #define PADDING(x,y) BYTE x[y]
+
+//-----------------------------------------------------------
 
 #define IN_VEHICLE(x) ((x->dwStateFlags & 256) >> 8)
 
@@ -28,10 +36,10 @@ typedef struct _WEAPON_SLOT_TYPE
 	DWORD dwState;
 	DWORD dwAmmoInClip;
 	DWORD dwAmmo;
-	PADDING(_pwep1,12);
+	PADDING(_pwep1, 12);
 } WEAPON_SLOT_TYPE;  // MUST BE EXACTLY ALIGNED TO 28 bytes
 
-//-----------------------------------------------------------
+					 //-----------------------------------------------------------
 
 typedef struct _PED_TASKS_TYPE
 {
@@ -57,23 +65,23 @@ typedef struct _ENTITY_TYPE
 {
 	// ENTITY STUFF
 	DWORD vtable; // 0-4
-	PADDING(_pad0,12); // 4-16
+	PADDING(_pad0, 12); // 4-16
 	FLOAT fRotZBeforeMat; // 16-20 (likely contains the rotation of the entity when mat==0);
 	MATRIX4X4 *mat; // 20-24
 	DWORD *pdwRenderWare; // 24-28
 	DWORD dwProcessingFlags; // 28-32
-	PADDING(_pad1,2); // 32-34
+	PADDING(_pad1, 2); // 32-34
 	WORD nModelIndex; // 34-36
-	PADDING(_pad2,18); // 36-54
+	PADDING(_pad2, 18); // 36-54
 	BYTE nControlFlags; // 54-55
-	PADDING(_pad3,11); // 55-66
+	PADDING(_pad3, 11); // 55-66
 	BYTE byteImmunities; // 66-67
 	BYTE byteUnkEntFlags; // 67-68
 	VECTOR vecMoveSpeed; // 68-80
 	VECTOR vecTurnSpeed; // 80-92
-	PADDING(_pad5,72); // 92-164
+	PADDING(_pad5, 72); // 92-164
 	BYTE byteAudio[5]; // 164-169
-	PADDING(_pad5a,11); // 169-180
+	PADDING(_pad5a, 11); // 169-180
 	DWORD dwUnkModelRel; // 180-184
 } ENTITY_TYPE;
 
@@ -84,27 +92,27 @@ typedef struct _PED_TYPE
 {
 	ENTITY_TYPE entity; // 0-184
 
-	// CPED STUFF
-	PADDING(_pad100,948); // 184-1132
+						// CPED STUFF
+	PADDING(_pad100, 948); // 184-1132
 	DWORD dwStateFlags; // 1132-1136
 	DWORD dwInvulFlags; // 1136-1140		0x1000 = can_decap
 	DWORD dwUnkFlags; // 1140-1444
-	PADDING(_pad104,4); // 1144-1148
+	PADDING(_pad104, 4); // 1144-1148
 	PED_TASKS_TYPE *Tasks; // 1148-1152
 	DWORD dwPlayerInfoOffset; // 1152-1156
-	PADDING(_pad200,124); // 1156-1280
+	PADDING(_pad200, 124); // 1156-1280
 	DWORD dwActiveVision; // 1280-1284
-	PADDING(_pad133,16); // 1284-1300
+	PADDING(_pad133, 16); // 1284-1300
 	float fAimZ; // 1300-1304
-	PADDING(_pad201,16); // 1304-1320
+	PADDING(_pad201, 16); // 1304-1320
 	BYTE byteAimAnimState; // 1320-1321
-	PADDING(_pad202,7); // 1321-1328
+	PADDING(_pad202, 7); // 1321-1328
 	DWORD dwAction; // 1328-1332
-	PADDING(_pad203,12); // 1332-1344
+	PADDING(_pad203, 12); // 1332-1344
 	float fHealth;		 // 1344-1348
 	float fMaxHealth;	// 1348-1352
 	float fArmour;		// 1352-1356
-	PADDING(_pad250,4); // 1356-1360
+	PADDING(_pad250, 4); // 1356-1360
 	float fMoveRot1;	// 1360
 	float fMoveRot2;	// 1364
 	float fRotation1;	// 1368-1372
@@ -116,23 +124,23 @@ typedef struct _PED_TYPE
 	DWORD pContactEntity; // 1412 - 1416
 	PADDING(_pad224, 4);
 	DWORD pVehicle;	// 1420-1424
-	PADDING(_pad261,8); // 1424-1432
+	PADDING(_pad261, 8); // 1424-1432
 	DWORD dwPedType; // 1432-1436
 	DWORD dwUnk1;	 // 1436-1440
 	WEAPON_SLOT_TYPE WeaponSlots[13]; // 1440-1804
-	PADDING(_pad270,12); // 1804-1816
+	PADDING(_pad270, 12); // 1804-1816
 	BYTE byteCurWeaponSlot; // 1816-1817
-	PADDING(_pad280,20); // 1817-1837
+	PADDING(_pad280, 20); // 1817-1837
 	BYTE byteFightingStyle; // 1837-1838
 	BYTE byteFightingType; // 1838-1839
 	BYTE _pad282;			// 1839-1840
 	DWORD pFireObject;	 // 1840-1844
-	PADDING(_pad281,44); // 1844-1888
+	PADDING(_pad281, 44); // 1844-1888
 	DWORD  dwWeaponUsed; // 1888-1892
 	PDWORD pdwDamageEntity; // 1892-1896
-	PADDING(_pad290,52); // 1896-1948
+	PADDING(_pad290, 52); // 1896-1948
 	DWORD pTarget; // 1948
-	
+
 } PED_TYPE;
 
 //-----------------------------------------------------------
@@ -141,40 +149,40 @@ typedef struct _VEHICLE_TYPE
 {
 	ENTITY_TYPE entity; // 0-184
 
-	// CVEHICLE STUFF
-	PADDING(_pad200,708); // 184-892
+						// CVEHICLE STUFF
+	PADDING(_pad200, 708); // 184-892
 	BYTE bNitroOn;        // 892-893
-	PADDING(_pad201,171); // 893-1064
+	PADDING(_pad201, 171); // 893-1064
 	BYTE byteFlags;		  // 1064-1065
-	PADDING(_pad210,4);  // 1065-1069
-	BYTE _pad211  : 7;   // 1069-1070 (bits 0..6)
+	PADDING(_pad210, 4);  // 1065-1069
+	BYTE _pad211 : 7;   // 1069-1070 (bits 0..6)
 	BYTE bSirenOn : 1;   // 1069-1070 (bit 7)
-	PADDING(_pad212,6);  // 1070-1076
+	PADDING(_pad212, 6);  // 1070-1076
 	BYTE byteColor1;      // 1076-1077
 	BYTE byteColor2;      // 1077-1078
-	PADDING(_pad230,42);  // 1078-1120
+	PADDING(_pad230, 42);  // 1078-1120
 	PED_TYPE * pDriver;   // 1120-1124
 	PED_TYPE * pPassengers[7]; // 1124-1152
-	PADDING(_pad235,8);  // 1152-1160
+	PADDING(_pad235, 8);  // 1152-1160
 	BYTE byteMaxPassengers; // 1160-1161
-	PADDING(_pad2139,7);  // 1161-1168
+	PADDING(_pad2139, 7);  // 1161-1168
 	DWORD pFireObject;	 // 1168-1172
 
 	float fSteerAngle1; // 1172-1176
 	float fSteerAngle2; // 1176-1180
 	float fAcceleratorPedal; // 1180-1184
 	float fBrakePedal; // 1184-1188
-	PADDING(_pad241,4); // 1188-1192
+	PADDING(_pad241, 4); // 1188-1192
 	BYTE byteMoreFlags;	// 1192-1193
-	PADDING(_pad275,23); // 1183-1216
+	PADDING(_pad275, 23); // 1183-1216
 	float fHealth;			// 1216-1220
-	PADDING(_pad240,4);		// 1220-1224
+	PADDING(_pad240, 4);		// 1220-1224
 	DWORD dwTrailer;		// 1224-1228
-	PADDING(_pad242,44);	// 1228-1272
+	PADDING(_pad242, 44);	// 1228-1272
 	DWORD dwDoorsLocked;	// 1272-1276
-	PADDING(_pad2423,24);	// 1276-1300
+	PADDING(_pad2423, 24);	// 1276-1300
 	DWORD dwSirenOnAlt;		// 1300-1304
-	PADDING(_pad2424,136);	// 1304-1440
+	PADDING(_pad2424, 136);	// 1304-1440
 	union {
 		struct {
 			DWORD dwDamageBase;     // 1440-1444
@@ -189,7 +197,7 @@ typedef struct _VEHICLE_TYPE
 		struct {
 			DWORD dwTrainUnk;	 // 1440-1444
 			float fTrainSpeed;   // 1444-1448
-			PADDING(_pad2422,18); // 1448-1464
+			PADDING(_pad2422, 18); // 1448-1464
 		};
 	};
 	PADDING(_pad203, 24);  // 1464-1488
@@ -346,58 +354,58 @@ typedef struct _VEHICLE_TYPE
 
 /*
 enum eWeaponType {
- WEAPON_BRASSKNUCKLE=1,
- WEAPON_GOLFCLUB=	2,
- WEAPON_NITESTICK=3,
- WEAPON_KNIFE=	4,
- WEAPON_BAT=		5,
- WEAPON_SHOVEL=	6,
- WEAPON_POOLSTICK=7,
- WEAPON_KATANA=	8,
- WEAPON_CHAINSAW=	9,
- WEAPON_DILDO=	10,
- WEAPON_DILDO2=	11,
- WEAPON_VIBRATOR=	12,
- WEAPON_VIBRATOR2=13,
- WEAPON_FLOWER=	14,
- WEAPON_CANE=		15,
- WEAPON_GRENADE=	16,
- WEAPON_TEARGAS=	17,
- WEAPON_MOLTOV=	18,
- WEAPON_ROCKET=	19,
- WEAPON_ROCKET_HS=20,
- WEAPON_FREEFALLBOMB=21,
- WEAPON_COLT45=	22,
- WEAPON_SILENCED=	23,
- WEAPON_DEAGLE=	24,
- WEAPON_SHOTGUN=	25,
- WEAPON_SAWEDOFF=	26,
- WEAPON_SHOTGSPA=	27,
- WEAPON_UZI=		28,
- WEAPON_MP5=		29,
- WEAPON_AK47=		30,
- WEAPON_M4=		31,
- WEAPON_TEC9=		32,
- WEAPON_RIFLE=	33,
- WEAPON_SNIPER=	34,
- WEAPON_ROCKETLAUNCHER=35,
- WEAPON_HEATSEEKER=36,
- WEAPON_FLAMETHROWER=37,
- WEAPON_MINIGUN=	38,
- WEAPON_SATCHEL=	39,
- WEAPON_BOMB=		40,
- WEAPON_SPRAYCAN=	41,
- WEAPON_FIREEXTINGUISHER=42,
- WEAPON_CAMERA=	43,
- WEAPON_NIGHTVISION=44,
- WEAPON_INFRARED=	45,
- WEAPON_PARACHUTE=46,
- WEAPON_ARMOUR=	47,
- WEAPON_UNKNOWN1=	48,
- WEAPON_VEHICLE=	49,
- WEAPON_HELIBLADES=50,
- WEAPON_EXPLOSION=51,
- WEAPON_UNKNOWN2=	52,
- WEAPON_DROWN=	53,
- WEAPON_COLLISION=54
+WEAPON_BRASSKNUCKLE=1,
+WEAPON_GOLFCLUB=	2,
+WEAPON_NITESTICK=3,
+WEAPON_KNIFE=	4,
+WEAPON_BAT=		5,
+WEAPON_SHOVEL=	6,
+WEAPON_POOLSTICK=7,
+WEAPON_KATANA=	8,
+WEAPON_CHAINSAW=	9,
+WEAPON_DILDO=	10,
+WEAPON_DILDO2=	11,
+WEAPON_VIBRATOR=	12,
+WEAPON_VIBRATOR2=13,
+WEAPON_FLOWER=	14,
+WEAPON_CANE=		15,
+WEAPON_GRENADE=	16,
+WEAPON_TEARGAS=	17,
+WEAPON_MOLTOV=	18,
+WEAPON_ROCKET=	19,
+WEAPON_ROCKET_HS=20,
+WEAPON_FREEFALLBOMB=21,
+WEAPON_COLT45=	22,
+WEAPON_SILENCED=	23,
+WEAPON_DEAGLE=	24,
+WEAPON_SHOTGUN=	25,
+WEAPON_SAWEDOFF=	26,
+WEAPON_SHOTGSPA=	27,
+WEAPON_UZI=		28,
+WEAPON_MP5=		29,
+WEAPON_AK47=		30,
+WEAPON_M4=		31,
+WEAPON_TEC9=		32,
+WEAPON_RIFLE=	33,
+WEAPON_SNIPER=	34,
+WEAPON_ROCKETLAUNCHER=35,
+WEAPON_HEATSEEKER=36,
+WEAPON_FLAMETHROWER=37,
+WEAPON_MINIGUN=	38,
+WEAPON_SATCHEL=	39,
+WEAPON_BOMB=		40,
+WEAPON_SPRAYCAN=	41,
+WEAPON_FIREEXTINGUISHER=42,
+WEAPON_CAMERA=	43,
+WEAPON_NIGHTVISION=44,
+WEAPON_INFRARED=	45,
+WEAPON_PARACHUTE=46,
+WEAPON_ARMOUR=	47,
+WEAPON_UNKNOWN1=	48,
+WEAPON_VEHICLE=	49,
+WEAPON_HELIBLADES=50,
+WEAPON_EXPLOSION=51,
+WEAPON_UNKNOWN2=	52,
+WEAPON_DROWN=	53,
+WEAPON_COLLISION=54
 }; */

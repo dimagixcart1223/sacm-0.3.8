@@ -41,6 +41,9 @@ void ClientJoin(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 	bitStream->Read(szPlayerName, byteNickLen);
 	szPlayerName[byteNickLen] = '\0';
 
+
+	logprintf("--- PASSED: %d, NICK %s, ID %d", iVersion == NETGAME_VERSION, szPlayerName, MyPlayerID);
+
 	if (iVersion != NETGAME_VERSION) {
 		byteRejectReason = REJECT_REASON_BAD_VERSION;
 		bsReject.Write(byteRejectReason);
@@ -60,6 +63,7 @@ void ClientJoin(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 
 	// Add this client to the player pool.
 	if (!pPlayerPool->New(bytePlayerID, szPlayerName)) {
+		logprintf("Error while creating player %s in player pool. Kicking", szPlayerName);
 		pNetGame->GetRakServer()->CloseConnection(packet->systemAddress, true);
 		return;
 	}

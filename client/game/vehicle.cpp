@@ -13,7 +13,6 @@ extern BOOL			bAllowVehicleCreation;
 DWORD	dwLastCreatedVehicleID=0;
 VEHICLE_TYPE *pLastVehicle;
 DWORD	dwNumVehicles=0;
-BYTE	*pbvCurrentPlayer = (BYTE *)0xB7CD74;
 
 //-----------------------------------------------------------
 // CONSTRUCTOR
@@ -32,6 +31,7 @@ CVehicle::CVehicle( int iType, float fPosX, float fPosY,
 
 	// empty vehicle sync stuff
 	m_fReportedHealth = 1000.0f;
+
 	m_dwReportedPanelDamage = 0;
 	m_dwReportedDoorDamage = 0;
 	m_byteReportedLightDamage = 0;
@@ -43,13 +43,12 @@ CVehicle::CVehicle( int iType, float fPosX, float fPosY,
 		(iType != TRAIN_TRAM)) {
 
 		// NORMAL VEHICLE
-		if(!pGame->IsModelLoaded(iType)) {
-			//pChatWindow->AddDebugMessage("Warning: car model not preloaded. %d",iType);
+		if (!pGame->IsModelLoaded(iType)) {
 			pGame->RequestModel(iType);
 			pGame->LoadRequestedModels();
-			while(!pGame->IsModelLoaded(iType)) Sleep(0);
-		} else {
-			//pChatWindow->AddDebugMessage("Car model was preloaded. %d",iType);
+			while (!pGame->IsModelLoaded(iType)) {
+				Sleep(0);
+			}
 		}
 
 		if (szNumberPlate && szNumberPlate[0]) {
@@ -96,7 +95,9 @@ CVehicle::CVehicle( int iType, float fPosX, float fPosY,
 		pGame->RequestModel(TRAIN_FREIGHT_LOCO);
 		pGame->RequestModel(TRAIN_FREIGHT);
 		pGame->RequestModel(TRAIN_TRAM);
+
 		pGame->LoadRequestedModels();
+
 		while(!pGame->IsModelLoaded(TRAIN_PASSENGER_LOCO)) Sleep(0);
 		while(!pGame->IsModelLoaded(TRAIN_PASSENGER)) Sleep(0);
 		while(!pGame->IsModelLoaded(TRAIN_FREIGHT_LOCO)) Sleep(0);
@@ -211,67 +212,6 @@ void CVehicle::Remove()
 		CEntity::Remove();
 	}
 }
-
-//-----------------------------------------------------------
-/*
-void CVehicle::ResetAudio()
-{
-	if(m_pVehicle) {
-		DWORD dwVeh = (DWORD)m_pVehicle;
-		_asm mov esi, dwVeh
-		_asm lea ecx, [esi+312]
-		_asm mov [ecx+165],0
-	}
-}
-void CVehicle::ProcessEngineAudio(BYTE byteDriverID)
-{
-	DWORD dwVehicle = (DWORD)m_pVehicle;
-
-	if(!m_pVehicle || !m_pVehicle->pDriver) return;
-	BYTE byteCurPlayer = FindPlayerNumFromPedPtr((DWORD)m_pVehicle->pDriver);
-
-	if(byteCurPlayer != 0) {
-		// We need to context switch
-		GameStoreLocalPlayerKeys(); // save local player keys
-		GameSetRemotePlayerKeys(byteCurPlayer); // set remote player keys.
-		*pbvCurrentPlayer = byteCurPlayer; // set internal ID to this remote player
-	}
-
-	if(m_pVehicle && IsAdded()) {
-
-		_asm mov esi, dwVehicle
-		_asm lea ecx, [esi+312]
-		_asm mov bl, [ecx+165]
-		_asm cmp bl, 0
-		_asm jne engine_started
-
-        _asm mov edx, 0x4F5700
-		_asm call edx
-		_asm mov esi, dwVehicle
-		_asm lea ecx, [esi+312]
-		_asm mov [ecx+165], 1
-		_asm jmp bye_bye
-		
-engine_started:
-
-		*(DWORD *)0xB6B990 = (DWORD)m_pVehicle->pDriver;
-		_asm mov esi, dwVehicle
-		_asm lea ecx, [esi+312]
-		_asm push esi
-		_asm mov edx, 0x501E10
-		_asm call edx
-
-
-bye_bye:
-		_asm nop
-
-	}
-
-	if(byteCurPlayer != 0) {
-		GameSetLocalPlayerKeys();
-		*pbvCurrentPlayer = 0;
-	}
-}*/
 
 //-----------------------------------------------------------
 
@@ -625,8 +565,8 @@ void CVehicle::ProcessMarkers()
 				m_dwMarkerID = 0;
 			}
 			ScriptCommand(&tie_marker_to_car, m_dwGTAId, 1, 3, &m_dwMarkerID);
-			ScriptCommand(&set_marker_color,m_dwMarkerID,502);
-			ScriptCommand(&show_on_radar,m_dwMarkerID,3);
+			ScriptCommand(&set_marker_color, m_dwMarkerID, 1);
+			ScriptCommand(&show_on_radar, m_dwMarkerID, 3);
 			m_bSpecialMarkerEnabled = TRUE;
 		}
 		return;

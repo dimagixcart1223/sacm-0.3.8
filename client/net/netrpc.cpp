@@ -31,8 +31,6 @@ void ServerJoin(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 
 	// Add this client to the player pool.
 	pPlayerPool->New(playerId, szPlayerName);
-
-	pChatWindow->AddDebugMessage("%s joined", szPlayerName);
 }
 
 //----------------------------------------------------
@@ -129,7 +127,9 @@ void InitGame(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 	}
 
 	pNetGame->SetGameState(GAMESTATE_CONNECTED);
-	if (pLocalPlayer) pLocalPlayer->HandleClassSelection();
+	if (pLocalPlayer) {
+		pLocalPlayer->HandleClassSelection();
+	}
 
 	pChatWindow->AddDebugMessage("Connected to {FFFFFF}%.64s", pNetGame->m_szHostName);
 
@@ -190,7 +190,7 @@ void RequestClass(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 
 	bitStream->Read(byteRequestOutcome);
 	bitStream->Read((PCHAR)&SpawnInfo, sizeof(PLAYER_SPAWN_INFO));
-
+	
 	if (pPlayer) {
 		if (byteRequestOutcome) {
 			pPlayer->SetSpawnInfo(&SpawnInfo);

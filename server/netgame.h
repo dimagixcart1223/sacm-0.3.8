@@ -108,11 +108,11 @@ public:
 
 	int GetBroadcastSendRateFromPlayerDistance(float fDistance);
 
-	void BroadcastData(RakNet::BitStream *bitStream, PacketPriority priority, PacketReliability reliability, char orderingStream, BYTE byteExcludedPlayer, BOOL bBroadcastLocalRangeOnly = FALSE, BOOL bAimSync = FALSE);
-	void BroadcastDistanceRPC(char *szUniqueID, RakNet::BitStream *bitStream, PacketReliability reliability, BYTE byteExcludedPlayer, float fUseDistance);
-	void SendRPC(char *szPacket, RakNet::BitStream *bsData, BYTE bPlayerId, bool bBroadcast);
+	void BroadcastData(RakNet::BitStream *bitStream, PacketPriority priority, PacketReliability reliability, char orderingStream, SACMPLAYER byteExcludedPlayer, BOOL bBroadcastLocalRangeOnly = FALSE, BOOL bAimSync = FALSE);
+	void BroadcastDistanceRPC(char *szUniqueID, RakNet::BitStream *bitStream, PacketReliability reliability, SACMPLAYER byteExcludedPlayer, float fUseDistance);
+	void SendRPC(char *szPacket, RakNet::BitStream *bsData, SACMPLAYER bPlayerId, bool bBroadcast);
 
-	void AdjustAimSync(RakNet::BitStream *bitStream, BYTE byteTargetPlayerID, RakNet::BitStream *adjbitStream);
+	void AdjustAimSync(RakNet::BitStream *bitStream, SACMPLAYER byteTargetPlayerID, RakNet::BitStream *adjbitStream);
 
 	// Packet Handlers
 	void Packet_NewIncomingConnection(RakNet::Packet *);
@@ -128,7 +128,7 @@ public:
 	void Packet_WeaponsUpdate(RakNet::Packet *);
 	void Packet_TrailerSync(RakNet::Packet *);
 
-	void KickPlayer(BYTE byteKickPlayer);
+	void KickPlayer(SACMPLAYER byteKickPlayer);
 	void AddBan(char * nick, char * ip_mask, char * reason);
 	void RemoveBan(char * ip_mask);
 	void LoadBanList();

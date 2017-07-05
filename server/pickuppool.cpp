@@ -57,7 +57,7 @@ int CPickupPool::Destroy(int iPickup)
 
 //----------------------------------------------------
 
-void CPickupPool::InitForPlayer(BYTE bytePlayerID)
+void CPickupPool::InitForPlayer(SACMPLAYER bytePlayerID)
 {
 	RakNet::BitStream *pbsPickup;
 

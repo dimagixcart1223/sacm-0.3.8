@@ -25,9 +25,6 @@ CVehicle::CVehicle( int byteModel, VECTOR *vecPos, float fRotation, int iColor1,
 	m_iRespawnDelay = iRespawnTime;
 
 	Reset();
-
-	/*logprintf("CVehicle::New(%u,%.2f,%.2f,%.2f,%.2f,%d,%d)",
-		byteModel,vecPos->X,vecPos->Y,vecPos->Z,fRotation,iColor1,iColor2);*/
 }
 
 //----------------------------------------------------
@@ -39,23 +36,32 @@ void CVehicle::Reset()
 	m_bIsWasted = FALSE;
 	m_bHasHadUpdate = FALSE;
 	m_DriverID = INVALID_ID;
+
 	m_SpawnInfo.vecPos = m_vecSpawnPosition;
+
 	m_SpawnInfo.fHealth = 1000.0f;
-	m_SpawnInfo.byteInterior = 0;
-	m_SpawnInfo.dwPanelDamageStatus = 1;
-	m_SpawnInfo.dwDoorDamageStatus = 1;
-	m_SpawnInfo.byteLightDamageStatus = 1;
-	m_vecPosition = m_vecSpawnPosition;
-	memset(&m_vecMoveSpeed, 0, sizeof(VECTOR));
-	memset(&m_vecTurnSpeed, 0, sizeof(VECTOR));
 	m_fHealth = 1000.0f;
+
+	m_SpawnInfo.byteInterior = 0;
 	m_iInterior = 0;
+
+	m_SpawnInfo.dwPanelDamageStatus = 0;
+	m_SpawnInfo.dwDoorDamageStatus = 0;
+	m_SpawnInfo.byteLightDamageStatus = 0;
+
+	m_dwPanelDamage = 0;
+	m_dwDoorDamage = 0;
+	m_byteLightDamage = 0;
+
 	m_cColor1 = m_SpawnInfo.aColor1;
 	m_cColor2 = m_SpawnInfo.aColor2;
+
+	m_vecPosition = m_vecSpawnPosition;
+
+	memset(&m_vecMoveSpeed, 0, sizeof(VECTOR));
+	memset(&m_vecTurnSpeed, 0, sizeof(VECTOR));
+
 	m_dwWasteTick = GetTickCount();
-	m_dwPanelDamage = 1;
-	m_dwDoorDamage = 1;
-	m_byteLightDamage = 1;
 }
 
 //----------------------------------------------------

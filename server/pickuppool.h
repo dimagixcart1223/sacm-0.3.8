@@ -36,7 +36,7 @@ public:
 
 	int New(int iModel, int iType, float fX, float fY, float fZ, BYTE staticp = 0);
 	int Destroy(int iPickup);
-	void InitForPlayer(BYTE SACMPLAYER);
+	void InitForPlayer(SACMPLAYER SACMPLAYER);
 };
 
 //----------------------------------------------------

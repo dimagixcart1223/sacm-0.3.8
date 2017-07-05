@@ -366,11 +366,7 @@ BOOL CLocalPlayer::Process()
 		if( IsClearedToSpawn() && 
 			!m_bWantsAnotherClass &&
 			pNetGame->GetGameState() == GAMESTATE_CONNECTED ) {
-
-			//pGame->ToggleKeyInputsDisabled(TRUE);
-			
-			if (m_pPlayerPed->GetHealth() > 0.0f)
-			{
+			if (m_pPlayerPed->GetHealth() > 0.0f) {
 				Spawn();
 			}
 

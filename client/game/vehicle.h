@@ -54,9 +54,6 @@ public:
 	float GetTrainSpeed();
 	void  SetTrainSpeed(float fSpeed);
 
-	void  Explode();
-
-	void  ClearLastWeaponDamage();
 	UINT  GetPassengersMax();
 
 	void    SetSirenOn(BOOL state);
@@ -89,10 +86,6 @@ public:
 	BOOL	IsOccupied();
 	void    Recreate();
 	BOOL	UpdateLastDrivenTime();
-
-	/*
-	void	ProcessEngineAudio(BYTE byteDriverID);
-	void	ResetAudio();*/
 
 	void	RemoveEveryoneFromVehicle();
 

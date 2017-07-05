@@ -10,8 +10,8 @@
 // -------
 
 #define MAX_PLAYER_NAME			24
-#define MAX_PLAYERS				500
-#define MAX_VEHICLES			2000
+#define MAX_PLAYERS				2000
+#define MAX_VEHICLES			5000
 
 #define MAX_FILTER_SCRIPTS		16
 #define MAX_OBJECTS				255
